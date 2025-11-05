@@ -1848,9 +1848,8 @@
     <Content Include="Content\Admin\vendor\jquery\jquery.min.js" />
     <Content Include="Content\Admin\vendor\jquery\jquery.slim.js" />
     <Content Include="Content\Admin\vendor\jquery\jquery.slim.min.js" />
-    <Content Include="Content\Client\layout-custom.css" />
+    <Content Include="Content\Client\Layout.css" />
     <Content Include="Content\Images\Logo3.png" />
-    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
