@@ -1,5 +1,4 @@
-﻿/* custom-style.css */
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -28,13 +27,30 @@ body {
     text-decoration: none;
 }
 
+.navbar-nav {
+    display: flex;
+    align-items: baseline !important;
+    justify-content: center;
+    gap: 10px;
+}
+
 .nav-link {
     color: #333 !important;
     font-weight: 500;
     margin: 0 10px;
     transition: all 0.3s ease;
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.2;
+    white-space: nowrap;
 }
+
+    .nav-link i {
+        font-size: 1rem;
+        vertical-align: middle;
+    }
 
     .nav-link:hover {
         color: #667eea !important;
