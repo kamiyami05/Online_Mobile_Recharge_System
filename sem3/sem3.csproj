@@ -132,6 +132,7 @@
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RechargeController.cs" />
     <Compile Include="Controllers\SiteMapController.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,6 +157,8 @@
       <DependentUpon>Recharge_System.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelViews\AdminAuthorizeAttribute .cs" />
+    <Compile Include="Models\ModelViews\ChangeEmail.cs" />
+    <Compile Include="Models\ModelViews\ChangePassword.cs" />
     <Compile Include="Models\ModelViews\Login.cs" />
     <Compile Include="Models\ModelViews\Register.cs" />
     <Compile Include="Models\ModelViews\UserM.cs" />
@@ -2082,6 +2085,7 @@
     <Content Include="Views\BillPayment\Index.cshtml" />
     <Content Include="Views\Recharge\Index.cshtml" />
     <Content Include="Views\CustomerCare\Index.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

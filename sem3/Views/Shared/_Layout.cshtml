@@ -55,9 +55,10 @@
                 @if (Session["CurrentUser"] != null)
                 {
                     var user = Session["CurrentUser"] as sem3.Models.ModelViews.UserM;
-                    <span class="nav-link text-dark fw-bold" style="cursor:default;">
+
+                    <a class="nav-link text-dark fw-bold" href="@Url.Action("Index", "Profile")" title="View Profile">
                         <i class="fas fa-user"></i> Hello, @user.FullName
-                    </span>
+                    </a>
                     <a href="@Url.Action("Logout", "Login")" class="btn btn-danger ms-2">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
