@@ -1,0 +1,34 @@
+﻿@model List<RechargePlans>
+
+@{
+    ViewBag.Title = "Top Up";
+}
+
+<h2>Top Up Packs for @ViewBag.Mobile</h2>
+
+<form method="post" action="/Recharge/SubmitTopUp">
+    <input type="hidden" name="mobile" value="@ViewBag.Mobile" />
+
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Pack Name</th>
+            <th>Talktime</th>
+            <th>Price</th>
+            <th>Select</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.PackName</td>
+                <td>@item.TalkTime</td>
+                <td>@item.Price</td>
+                <td>
+                    <input type="radio" name="selectedPackId" value="@item.Id" required />
+                </td>
+            </tr>
+        }
+    </table>
+
+    <button type="submit">Submit</button>
+</form>

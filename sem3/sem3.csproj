@@ -138,28 +138,68 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Recharge_System.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Recharge_System.Context.tt</DependentUpon>
+    <Compile Include="Models\Entities\AdminUser.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Recharge_System.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Recharge_System.tt</DependentUpon>
+    <Compile Include="Models\Entities\ContactPoint.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Recharge_System.Designer.cs">
+    <Compile Include="Models\Entities\Feedback.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\OnlineRecharge.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Recharge_System.edmx</DependentUpon>
+      <DependentUpon>OnlineRecharge.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\OnlineRecharge.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\OnlineRecharge.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OnlineRecharge.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\PaymentDetail.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\PostpaidBill.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RechargePlan.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Role.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Service.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\SiteContent.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Transaction.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\TransactionScript.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\User.cs">
-      <DependentUpon>Recharge_System.tt</DependentUpon>
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\UserService.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\UserServiceSetting.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelViews\AdminAuthorizeAttribute .cs" />
     <Compile Include="Models\ModelViews\ChangeEmail.cs" />
     <Compile Include="Models\ModelViews\ChangePassword.cs" />
     <Compile Include="Models\ModelViews\Login.cs" />
+    <Compile Include="Models\ModelViews\RechargePlans.cs" />
     <Compile Include="Models\ModelViews\Register.cs" />
     <Compile Include="Models\ModelViews\UserM.cs" />
     <Compile Include="Models\Repositoties\UserRepository.cs" />
@@ -1856,15 +1896,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Models\Entities\Recharge_System.Context.tt">
+    <Content Include="Models\Entities\OnlineRecharge.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Recharge_System.edmx</DependentUpon>
-      <LastGenOutput>Recharge_System.Context.cs</LastGenOutput>
+      <DependentUpon>OnlineRecharge.edmx</DependentUpon>
+      <LastGenOutput>OnlineRecharge.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Entities\Recharge_System.tt">
+    <Content Include="Models\Entities\OnlineRecharge.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Recharge_System.edmx</DependentUpon>
-      <LastGenOutput>Recharge_System.cs</LastGenOutput>
+      <DependentUpon>OnlineRecharge.edmx</DependentUpon>
+      <LastGenOutput>OnlineRecharge.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -2045,14 +2085,14 @@
     <Content Include="Content\Admin\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Content\Admin\vendor\jquery\jquery.min.map" />
     <Content Include="Content\Admin\vendor\jquery\jquery.slim.min.map" />
-    <EntityDeploy Include="Models\Entities\Recharge_System.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Recharge_System.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Entities\Recharge_System.edmx.diagram">
-      <DependentUpon>Recharge_System.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <EntityDeploy Include="Models\Entities\OnlineRecharge.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OnlineRecharge.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Entities\OnlineRecharge.edmx.diagram">
+      <DependentUpon>OnlineRecharge.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -2086,6 +2126,8 @@
     <Content Include="Views\Recharge\Index.cshtml" />
     <Content Include="Views\CustomerCare\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Recharge\TopUp.cshtml" />
+    <Content Include="Views\Recharge\SpecialRecharge.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

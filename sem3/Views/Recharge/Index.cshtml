@@ -3,4 +3,25 @@
     ViewBag.Title = "Online Recharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Online Recharge</h1>
+
+<h2>Online Recharge</h2>
+
+<div>
+    <form method="post" action="/Recharge/Proceed">
+        <label for="mobile">Mobile Number:</label>
+        <input type="text" id="mobile" name="mobile" maxlength="10" required pattern="\d{10}" />
+
+        <button type="submit">Proceed</button>
+    </form>
+</div>
+
+@if (ViewBag.ShowOptions == true)
+{
+    <hr />
+    <h3>Select Recharge Type</h3>
+
+    <ul>
+        <li><a href="/Recharge/TopUp?mobile=@ViewBag.Mobile">Top Up</a></li>
+        <li><a href="/Recharge/SpecialRecharge?mobile=@ViewBag.Mobile">Special Recharge</a></li>
+    </ul>
+}
