@@ -1,4 +1,7 @@
-﻿﻿.customer-care-container {
+﻿﻿html {
+    scroll-behavior: smooth;
+}
+.customer-care-container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 2rem;

@@ -19,7 +19,7 @@
             <th>Role</th>
             <th>Address</th>
             <th>Created At</th>
-            <th>Active</th>
+            <th></th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -29,26 +29,24 @@
             foreach (var user in Model)
             {
                 <tr>
-                    <td>@user.Id</td>
+                    <td>@user.UserID</td>
                     <td>@user.FullName</td>
-                    <td>@user.Phone</td>
+                    <td>@user.MobileNumber</td>
                     <td>@user.Email</td>
                     <td>@user.Role</td>
                     <td>@user.Address</td>
-                    <td>@(user.CreatedAt.HasValue ? user.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm") : "")</td>
-                    <td>@(user.IsActive == true ? "Active" : "Inactive")</td>
+                    <td>@(user.RegistrationDate.HasValue ? user.RegistrationDate.Value.ToString("yyyy-MM-dd HH:mm") : "")</td>
                     <td>
                         <button type="button" class="btn btn-warning btn-sm edit-btn" data-toggle="modal" data-target="#editModal"
-                                data-id="@user.Id"
+                                data-id="@user.UserID"
                                 data-fullname="@user.FullName"
-                                data-phone="@user.Phone"
+                                data-phone="@user.MobileNumber"
                                 data-email="@user.Email"
                                 data-role="@user.Role"
                                 data-address="@user.Address"
-                                data-active="@user.IsActive">
                             <i class="fas fa-edit"></i> Edit
                         </button>
-                        <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="@user.Id">
+                        <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="@user.UserID">
                             <i class="fas fa-trash"></i> Delete
                         </button>
                     </td>
@@ -64,7 +62,6 @@
     </tbody>
 </table>
 
-<!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -120,7 +117,6 @@
     </div>
 </div>
 
-<!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -1,0 +1,181 @@
+﻿@model List<sem3.Models.Entities.Feedback>
+
+@{
+    ViewBag.Title = "Feedback Management";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Feedback Management</h1>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Rating</th>
+                    <th>Submitted On</th>
+                    <th>Feedback (Preview)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var fb in Model)
+                    {
+                        <tr>
+                            <td>@fb.FeedbackID</td>
+                            <td>@fb.Name</td>
+                            <td>@fb.Email</td>
+                            <td>
+                                @for (int i = 0; i < fb.Rating; i++)
+                                {
+                                    <i class="fas fa-star text-warning"></i>
+                                }
+                                @for (int i = (int)fb.Rating; i < 5; i++)
+                                {
+                                    <i class="far fa-star text-muted"></i>
+                                }
+                            </td>
+                            <td>@(fb.SubmitDate.HasValue ? fb.SubmitDate.Value.ToString("yyyy-MM-dd HH:mm") : "")</td>
+                            <td>
+                                @(fb.FeedbackText.Length > 50 ? fb.FeedbackText.Substring(0, 50) + "..." : fb.FeedbackText)
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm details-btn"
+                                        data-toggle="modal" data-target="#detailsModal" data-id="@fb.FeedbackID">
+                                    <i class="fas fa-eye"></i> Details
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="@fb.FeedbackID">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center">No feedback found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Feedback Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-3">From</dt>
+                    <dd class="col-sm-9" id="detailName"></dd>
+
+                    <dt class="col-sm-3">Email</dt>
+                    <dd class="col-sm-9" id="detailEmail"></dd>
+
+                    <dt class="col-sm-3">Date</dt>
+                    <dd class="col-sm-9" id="detailDate"></dd>
+
+                    <dt class="col-sm-3">Rating</dt>
+                    <dd class="col-sm-9" id="detailRating"></dd>
+
+                    <dt class="col-sm-3">Message</dt>
+                    <dd class="col-sm-9" id="detailText" style="white-space: pre-wrap;"></dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section myscript {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.details-btn').click(function () {
+            var id = $(this).data('id');
+
+            $('#detailName').text('Loading...');
+            $('#detailEmail').text('');
+            $('#detailDate').text('');
+            $('#detailRating').text('');
+            $('#detailText').text('');
+
+            $.ajax({
+                url: '@Url.Action("Details", "Feedbackmgmt")',
+                type: 'GET',
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        var data = response.data;
+                        $('#detailName').text(data.name);
+                        $('#detailEmail').text(data.email);
+                        $('#detailDate').text(data.date);
+                        $('#detailText').text(data.text);
+
+                        var ratingHtml = '';
+                        for(var i = 0; i < data.rating; i++) {
+                            ratingHtml += '<i class="fas fa-star text-warning"></i> ';
+                        }
+                        for(var i = data.rating; i < 5; i++) {
+                            ratingHtml += '<i class="far fa-star text-muted"></i> ';
+                        }
+                        $('#detailRating').html(ratingHtml);
+
+                    } else {
+                        alert('Error loading details.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: 'D + error);
+                }
+            });
+        });
+
+        $('.delete-btn').click(function () {
+            if (confirm('Are you sure you want to delete this feedback?')) {
+                var id = $(this).data('id');
+                var btn = $(this);
+
+                $.ajax({
+                    url: '@Url.Action("Delete", "Feedbackmgmt", new { area = "Admin" })',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (response) {
+                        if (response.success) {
+                            btn.closest('tr').fadeOut(500, function() {
+                                $(this).remove();
+                            });
+                        } else {
+                            alert('Delete failed: ' + response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error: ' + error);
+                    }
+                });
+            }
+        });
+
+    });
+    </script>
+}

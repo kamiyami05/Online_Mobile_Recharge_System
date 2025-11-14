@@ -28,6 +28,7 @@
     <Property Name="Email" Type="varchar" MaxLength="100" />
     <Property Name="FeedbackText" Type="text" Nullable="false" />
     <Property Name="SubmitDate" Type="datetime" />
+    <Property Name="Rating" Type="int" />
   </EntityType>
   <EntityType Name="PaymentDetails">
     <Key>

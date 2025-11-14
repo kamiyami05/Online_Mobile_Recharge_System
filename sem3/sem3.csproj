@@ -124,7 +124,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FeedbackmgmtController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsermgmtController.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\BillPaymentController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
@@ -198,9 +199,11 @@
     <Compile Include="Models\ModelViews\AdminAuthorizeAttribute .cs" />
     <Compile Include="Models\ModelViews\ChangeEmail.cs" />
     <Compile Include="Models\ModelViews\ChangePassword.cs" />
+    <Compile Include="Models\ModelViews\FeedbackM.cs" />
     <Compile Include="Models\ModelViews\Login.cs" />
     <Compile Include="Models\ModelViews\Register.cs" />
     <Compile Include="Models\ModelViews\UserM.cs" />
+    <Compile Include="Models\Repositoties\FeedbackRepository.cs" />
     <Compile Include="Models\Repositoties\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1900,6 +1903,7 @@
     <Content Include="Content\Client\login.css" />
     <Content Include="Content\Client\profile.css" />
     <Content Include="Content\Images\Logo3.png" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -2100,6 +2104,8 @@
     <Content Include="Models\Entities\OnlineRechargeDB.edmx.diagram">
       <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedbackmgmt\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

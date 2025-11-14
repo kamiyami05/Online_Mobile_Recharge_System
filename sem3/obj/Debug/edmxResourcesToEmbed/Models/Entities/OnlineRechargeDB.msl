@@ -24,6 +24,7 @@
     <EntitySetMapping Name="Feedbacks">
       <EntityTypeMapping TypeName="OnlineRechargeDBModel.Feedback">
         <MappingFragment StoreEntitySet="Feedback">
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Name" ColumnName="Name" />

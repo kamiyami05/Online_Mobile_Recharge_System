@@ -1,4 +1,5 @@
-﻿﻿@{
+﻿@model sem3.Models.ModelViews.FeedbackM
+@{
     ViewBag.Title = "Feedback";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,42 +12,57 @@
         <p class="subtitle">We value your opinion. Let us know how we are doing.</p>
     </div>
 
-    <form class="feedback-form">
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert-success" style="padding: 15px; margin-bottom: 20px; border-radius: 5px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
+            @ViewBag.SuccessMessage
+        </div>
+    }
+
+    @using (Html.BeginForm("Index", "Feedback", FormMethod.Post, new { @class = "feedback-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
         <div class="form-group">
-            <input type="text" placeholder="Your Name" required>
+            @Html.TextBoxFor(m => m.Name, new { placeholder = "Your Name", required = "required" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            <input type="email" placeholder="Your Email" required>
+            @Html.TextBoxFor(m => m.Email, new { placeholder = "Your Email", required = "required", type = "email" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
             <label class="rating-label">How satisfied are you with our service?</label>
+            @Html.ValidationMessageFor(m => m.Rating, "", new { @class = "text-danger" })
+
             <div class="emoji-rating">
-                <input type="radio" id="rating-1" name="rating" value="1">
+                @Html.RadioButtonFor(m => m.Rating, 1, new { id = "rating-1" })
                 <label for="rating-1" class="emoji-option">
                     <span class="emoji">😠</span>
                     <span class="rating-text">Very Unsatisfied</span>
                 </label>
 
-                <input type="radio" id="rating-2" name="rating" value="2">
+                @Html.RadioButtonFor(m => m.Rating, 2, new { id = "rating-2" })
                 <label for="rating-2" class="emoji-option">
                     <span class="emoji">😕</span>
                     <span class="rating-text">Unsatisfied</span>
                 </label>
 
-                <input type="radio" id="rating-3" name="rating" value="3">
+                @Html.RadioButtonFor(m => m.Rating, 3, new { id = "rating-3" })
                 <label for="rating-3" class="emoji-option">
                     <span class="emoji">😐</span>
                     <span class="rating-text">Neutral</span>
                 </label>
 
-                <input type="radio" id="rating-4" name="rating" value="4">
+                @Html.RadioButtonFor(m => m.Rating, 4, new { id = "rating-4" })
                 <label for="rating-4" class="emoji-option">
                     <span class="emoji">😊</span>
                     <span class="rating-text">Satisfied</span>
                 </label>
 
-                <input type="radio" id="rating-5" name="rating" value="5">
+                @Html.RadioButtonFor(m => m.Rating, 5, new { id = "rating-5" })
                 <label for="rating-5" class="emoji-option">
                     <span class="emoji">😍</span>
                     <span class="rating-text">Very Satisfied</span>
@@ -55,9 +71,9 @@
         </div>
 
         <div class="form-group">
-            <textarea rows="6" placeholder="Write your feedback here..." required></textarea>
+            @Html.TextAreaFor(m => m.FeedbackText, new { rows = 6, placeholder = "Write your feedback here...", required = "required" })
+            @Html.ValidationMessageFor(m => m.FeedbackText, "", new { @class = "text-danger" })
         </div>
-
         <button type="submit" class="submit-btn">Submit Feedback</button>
-    </form>
+    }
 </div>

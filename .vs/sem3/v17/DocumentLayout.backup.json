@@ -1,24 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\online_mobile_recharge_system\\sem3\\views\\customercare\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\views\\customercare\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\online_mobile_recharge_system\\sem3\\content\\client\\customer-care.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\content\\client\\customer-care.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\online_mobile_recharge_system\\sem3\\content\\client\\about-us.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\content\\client\\about-us.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -26,63 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "customer-care.css",
-              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\Content\\Client\\customer-care.css",
-              "RelativeDocumentMoniker": "sem3\\Content\\Client\\customer-care.css",
-              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\Content\\Client\\customer-care.css",
-              "RelativeToolTip": "sem3\\Content\\Client\\customer-care.css",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAawIcAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-14T04:12:09.942Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "about-us.css",
-              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\Content\\Client\\about-us.css",
-              "RelativeDocumentMoniker": "sem3\\Content\\Client\\about-us.css",
-              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\Content\\Client\\about-us.css",
-              "RelativeToolTip": "sem3\\Content\\Client\\about-us.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-14T04:12:05.915Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "sem3\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "sem3\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-14T04:00:59.17Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\Views\\CustomerCare\\Index.cshtml",
-              "RelativeDocumentMoniker": "sem3\\Views\\CustomerCare\\Index.cshtml",
-              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\Online_Mobile_Recharge_System\\sem3\\Views\\CustomerCare\\Index.cshtml",
-              "RelativeToolTip": "sem3\\Views\\CustomerCare\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-14T04:00:32.411Z",
-              "EditorCaption": ""
             }
           ]
         }

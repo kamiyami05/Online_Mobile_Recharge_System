@@ -198,3 +198,7 @@ GO
 -- Add Column Name for RechargePlans table
 alter table rechargeplans
 add PlanName nvarchar(100) NOT NULL Default N'Unnamed Plan';
+
+ALTER TABLE dbo.Feedback
+ADD Rating int 
+giy 

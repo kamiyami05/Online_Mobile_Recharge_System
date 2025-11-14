@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OnlineRechargeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OnlineRechargeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdminUsers">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -33,6 +33,7 @@
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="FeedbackText" Type="text" Nullable="false" />
           <Property Name="SubmitDate" Type="datetime" />
+          <Property Name="Rating" Type="int" />
         </EntityType>
         <EntityType Name="PaymentDetails">
           <Key>
@@ -322,8 +323,7 @@
             <End Role="UserServiceSettings" EntitySet="UserServiceSettings" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OnlineRechargeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -356,6 +356,7 @@
           <Property Name="FeedbackText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SubmitDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="Self.FK__Feedback__UserID__6B24EA82" FromRole="Feedback" ToRole="Users" />
+          <Property Name="Rating" Type="Int32" />
         </EntityType>
         <EntityType Name="PaymentDetail">
           <Key>
@@ -693,6 +694,7 @@
           <EntitySetMapping Name="Feedbacks">
             <EntityTypeMapping TypeName="OnlineRechargeDBModel.Feedback">
               <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

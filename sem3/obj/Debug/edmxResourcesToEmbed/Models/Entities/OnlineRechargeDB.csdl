@@ -29,6 +29,7 @@
     <Property Name="FeedbackText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="SubmitDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="User" Relationship="Self.FK__Feedback__UserID__6B24EA82" FromRole="Feedback" ToRole="Users" />
+    <Property Name="Rating" Type="Int32" />
   </EntityType>
   <EntityType Name="PaymentDetail">
     <Key>
