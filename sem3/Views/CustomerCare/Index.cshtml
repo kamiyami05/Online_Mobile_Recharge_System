@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/customer-care.css" rel="stylesheet" />
+<link href="~/Content/Client/customer-care.css" rel="stylesheet" />
 
 <div class="customer-care-container">
     <div class="care-header">
@@ -39,7 +39,7 @@
                 <i class="fas fa-envelope"></i>
                 <h4>Email Support</h4>
                 <p>Send us your queries via email</p>
-                <button class="option-btn">Send Email</button>
+                <a href="@Url.Action("Index", "ContactUs")" class="option-btn">Send Email</a>            
             </div>
 
             <div class="option-card">
