@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Payment";
+}
+
+<h2>Payment Details</h2>
+
+<p><strong>Phone:</strong> @ViewBag.Phone</p>
+<p><strong>Operator:</strong> @ViewBag.Operator</p>
+<p><strong>Selected Plan:</strong> @ViewBag.PlanName - @ViewBag.Amount đ</p>
+
+<form method="post" action="@Url.Action("ConfirmPayment", "Recharge")">
+
+    <label>Name on Card:</label>
+    <input type="text" name="cardName" required class="form-control" /><br />
+
+
+    <label>Card Number:</label>
+    <input type="text" name="cardNumber" required class="form-control" /><br />
+
+    <label>Cvv:</label>
+    <input type="text" name="Cvv" required class="form-control" /><br />
+
+    <label>OutDate:</label>
+    <input type="text" name="OutDate" required class="form-control" /><br />
+
+    <input type="hidden" name="phone" value="@ViewBag.Phone" />
+    <input type="hidden" name="operator" value="@ViewBag.Operator" />
+    <input type="hidden" name="planName" value="@ViewBag.PlanName" />
+    <input type="hidden" name="amount" value="@ViewBag.Amount" />
+
+    <button type="submit" class="btn btn-success">Pay Now</button>
+</form>

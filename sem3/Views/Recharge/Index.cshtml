@@ -1,27 +1,88 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Online Recharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Online Recharge</h2>
 
-<div>
-    <form method="post" action="/Recharge/Proceed">
-        <label for="mobile">Mobile Number:</label>
-        <input type="text" id="mobile" name="mobile" maxlength="10" required pattern="\d{10}" />
+<form id="frmPhone" method="post" action="@Url.Action("Proceed", "Recharge")">
+    <div class="form-group">
+        <label>Enter Phone Number</label>
+        <input type="text" name="phone" id="phone" class="form-control"
+               maxlength="10" placeholder="Enter 10-digit number" required
+               pattern="^\d{10}$" title="Nhập đúng 10 chữ số" />
 
-        <button type="submit">Proceed</button>
-    </form>
-</div>
+        <div id="operatorDisplay" style="margin-top: 10px;"></div>
+    </div>
 
-@if (ViewBag.ShowOptions == true)
-{
-    <hr />
-    <h3>Select Recharge Type</h3>
+    <button type="submit" id="btnProceed" class="btn btn-primary" disabled>Proceed</button>
 
-    <ul>
-        <li><a href="/Recharge/TopUp?mobile=@ViewBag.Mobile">Top Up</a></li>
-        <li><a href="/Recharge/SpecialRecharge?mobile=@ViewBag.Mobile">Special Recharge</a></li>
-    </ul>
-}
+    @if (ViewBag.Error != null)
+    {
+        <div class="text-danger" id="serverError">@ViewBag.Error</div>
+    }
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var $phone = $("#phone");
+        var $operatorDisplay = $("#operatorDisplay");
+        var $btnProceed = $("#btnProceed");
+        var xhr; // Biến để giữ request AJAX
+
+        $phone.on("input", function () {
+            // Xóa ký tự không phải số
+            this.value = this.value.replace(/\D/g, "");
+            var phoneNum = this.value;
+
+            // Xóa thông báo lỗi cũ
+            $("#serverError").remove();
+
+            // Hủy request AJAX cũ nếu đang chạy
+            if (xhr && xhr.readyState !== 4) {
+                xhr.abort();
+            }
+
+            if (phoneNum.length === 10) {
+                // Khi đủ 10 số, gọi AJAX
+                $operatorDisplay.html("<i>Đang kiểm tra...</i>").css("color", "grey");
+                $btnProceed.prop("disabled", true); // Vô hiệu hóa nút
+
+                xhr = $.post("@Url.Action("DetectOperatorAjax", "Recharge")", { phone: phoneNum })
+                    .done(function (response) {
+                        if (response.success) {
+                            // Thành công: Hiển thị nhà mạng, bật nút
+                            $operatorDisplay.html("✅ Nhà mạng: <strong>" + response.operatorName + "</strong>")
+                                            .css("color", "green");
+                            $btnProceed.prop("disabled", false); // Kích hoạt nút
+                        } else {
+                            // Thất bại: Hiển thị lỗi
+                            $operatorDisplay.html("❌ " + response.message)
+                                            .css("color", "red");
+                        }
+                    })
+                    .fail(function () {
+                        // Lỗi hệ thống/mạng
+                        $operatorDisplay.html("❌ Không thể kết nối máy chủ.")
+                                        .css("color", "red");
+                    });
+            } else {
+                // Nếu không đủ 10 số
+                $operatorDisplay.html(""); // Xóa hiển thị
+                $btnProceed.prop("disabled", true); // Vô hiệu hóa nút
+            }
+        });
+
+        // Kiểm tra validation HTML5 (pattern) trước khi submit
+        // Nút Proceed đã được kích hoạt (enabled) bởi AJAX
+        $("#frmPhone").on("submit", function (e) {
+            if ($btnProceed.is(":disabled")) {
+                e.preventDefault(); // Ngăn submit nếu nút đang bị vô hiệu hóa
+                return false;
+            }
+            // Cho phép submit
+            return true;
+        });
+    });
+</script>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Transaction Receipt";
+}
+
+<h2>Transaction Receipt</h2>
+
+<table class="table table-bordered">
+    <tr><th>Transaction ID</th><td>@ViewBag.TransactionId</td></tr>
+    <tr><th>Phone Number</th><td>@ViewBag.Phone</td></tr>
+    <tr><th>Operator</th><td>@ViewBag.Operator</td></tr>
+    <tr><th>Plan</th><td>@ViewBag.PlanName</td></tr>
+    <tr><th>Amount</th><td>@ViewBag.Amount đ</td></tr>
+    <tr><th>Date & Time</th><td>@ViewBag.Time</td></tr>
+</table>
+
+<button onclick="window.print()" class="btn btn-primary">🖨 Print Receipt</button>
+<a href="@Url.Action("Index", "Recharge")" class="btn btn-secondary">Back to Home</a>

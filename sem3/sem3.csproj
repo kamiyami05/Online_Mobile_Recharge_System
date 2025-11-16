@@ -2128,6 +2128,8 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Recharge\TopUp.cshtml" />
     <Content Include="Views\Recharge\SpecialRecharge.cshtml" />
+    <Content Include="Views\Recharge\Payment.cshtml" />
+    <Content Include="Views\Recharge\Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

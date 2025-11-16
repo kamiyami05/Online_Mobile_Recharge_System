@@ -1,34 +1,135 @@
-﻿@model List<RechargePlans>
-
-@{
-    ViewBag.Title = "Top Up";
+﻿@{
+    ViewBag.Title = "Select Recharge Plan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Top Up Packs for @ViewBag.Mobile</h2>
+<style>
+    .plan-type-selector {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
 
-<form method="post" action="/Recharge/SubmitTopUp">
-    <input type="hidden" name="mobile" value="@ViewBag.Mobile" />
+    .plan-type-btn {
+        flex: 1;
+        padding: 15px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
 
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>Pack Name</th>
-            <th>Talktime</th>
-            <th>Price</th>
-            <th>Select</th>
-        </tr>
+    #plansContainer {
+        margin-top: 20px;
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.PackName</td>
-                <td>@item.TalkTime</td>
-                <td>@item.Price</td>
-                <td>
-                    <input type="radio" name="selectedPackId" value="@item.Id" required />
-                </td>
-            </tr>
-        }
-    </table>
+    .plan-card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-    <button type="submit">Submit</button>
-</form>
+    .plan-details {
+        flex-grow: 1;
+    }
+
+    .plan-card h5 {
+        margin-top: 0;
+        color: #0056b3;
+    }
+</style>
+
+<h2>Select Recharge Plan</h2>
+
+<div class="alert alert-info">
+    <h4>
+        <strong>Số điện thoại:</strong> @ViewBag.Phone
+        <br />
+        <strong>Nhà mạng:</strong> @ViewBag.Operator
+    </h4>
+</div>
+
+<div class="plan-type-selector">
+    <button id="btnPrepaid" class="btn btn-outline-primary plan-type-btn"
+            data-type="Prepaid" data-op="@ViewBag.Operator">
+        @ViewBag.Operator Prepaid
+    </button>
+
+    <button id="btnData" class="btn btn-outline-success plan-type-btn"
+            data-type="Data" data-op="@ViewBag.Operator">
+        @ViewBag.Operator Data
+    </button>
+</div>
+
+<div id="loadingSpinner" style="display: none; text-align: center;">
+    <p><i>Đang tải các gói cước...</i></p>
+</div>
+<div id="plansContainer">
+    <p>Vui lòng chọn một loại gói cước ở trên.</p>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        // Bắt sự kiện click trên các nút chọn
+        $(".plan-type-btn").on("click", function () {
+            var $this = $(this);
+            var planType = $this.data("type");
+            var operator = $this.data("op");
+
+            // Hiển thị trạng thái active cho nút
+            $(".plan-type-btn").removeClass("active btn-primary btn-success").addClass("btn-outline-primary");
+            $this.removeClass("btn-outline-primary").addClass($this.data("type") === "Data" ? "btn-success active" : "btn-primary active");
+
+
+            var $container = $("#plansContainer");
+            var $loader = $("#loadingSpinner");
+
+            // Hiển thị loader, xóa gói cước cũ
+            $loader.show();
+            $container.html("");
+
+            // Gọi AJAX đến Action GetPlans
+            $.get("@Url.Action("GetPlans", "Recharge")", { op: operator, planType: planType })
+                .done(function (plans) {
+                    $loader.hide();
+                    if (plans && plans.length > 0) {
+                        // Lặp qua các gói cước và tạo HTML
+                        $.each(plans, function (i, plan) {
+                            var planHtml = `
+                                <div class="plan-card">
+                                    <div class="plan-details">
+                                        <h5>${plan.PlanName}</h5>
+                                        <p>${plan.Details}</p>
+                                        <strong>Giá: ${plan.Amount.toLocaleString('vi-VN')} VNĐ</strong>
+                                    </div>
+                                    <div class="plan-action">
+                                        <form action="@Url.Action("SubmitTopUp", "Recharge")" method="post">
+                                            <input type="hidden" name="planId" value="${plan.PlanID}" />
+                                            <input type="hidden" name="phone" value="@ViewBag.Phone" />
+                                            <input type="hidden" name="op" value="@ViewBag.Operator" />
+                                            <button type="submit" class="btn btn-danger">Chọn gói</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            `;
+                            $container.append(planHtml);
+                        });
+                    } else {
+                        // Không tìm thấy gói nào
+                        $container.html("<div class='alert alert-warning'>Không tìm thấy gói cước nào.</div>");
+                    }
+                })
+                .fail(function () {
+                    $loader.hide();
+                    $container.html("<div class='alert alert-danger'>Đã xảy ra lỗi khi tải gói cước.</div>");
+                });
+        });
+
+    });
+</script>
