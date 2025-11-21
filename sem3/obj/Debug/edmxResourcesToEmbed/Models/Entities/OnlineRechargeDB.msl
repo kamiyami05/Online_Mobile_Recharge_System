@@ -8,6 +8,7 @@
           <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -24,13 +25,13 @@
     <EntitySetMapping Name="Feedbacks">
       <EntityTypeMapping TypeName="OnlineRechargeDBModel.Feedback">
         <MappingFragment StoreEntitySet="Feedback">
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="FeedbackText" ColumnName="FeedbackText" />
           <ScalarProperty Name="SubmitDate" ColumnName="SubmitDate" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -67,14 +68,6 @@
           <ScalarProperty Name="DataMB" ColumnName="DataMB" />
           <ScalarProperty Name="Details" ColumnName="Details" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="OnlineRechargeDBModel.Role">
-        <MappingFragment StoreEntitySet="Roles">
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -130,7 +123,6 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
