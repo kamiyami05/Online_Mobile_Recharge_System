@@ -27,6 +27,12 @@ namespace sem3
 
             bundles.Add(new StyleBundle("~/Content/Client/layout-custom").Include(
                          "~/Content/Client/Layout.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Client/chatbox").Include(
+                        "~/Content/Client/chatbox.css"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/chatbox").Include(
+                        "~/Scripts/chatbox.js"));
         }
     }
 }

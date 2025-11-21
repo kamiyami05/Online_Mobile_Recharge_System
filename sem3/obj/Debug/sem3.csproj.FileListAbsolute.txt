@@ -65,6 +65,7 @@ D:\asp\sem3\sem3\obj\Debug\sem3.dll
 D:\asp\sem3\sem3\obj\Debug\sem3.pdb
 D:\asp\sem3\sem3\bin\Microsoft.AspNet.Identity.Core.dll
 D:\asp\sem3\sem3\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\.env
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\sem3.dll.config
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\sem3.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\sem3.pdb
@@ -100,12 +101,18 @@ C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\roslyn
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\roslyn\VBCSCompiler.exe
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Antlr3.Runtime.dll
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\DotNetEnv.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\EntityFramework.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\EntityFramework.SqlServer.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.Extensions.Configuration.dll
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.Extensions.Primitives.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Newtonsoft.Json.dll
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Sprache.dll
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\System.Web.Helpers.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\System.Web.Mvc.dll
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\System.Web.Optimization.dll
@@ -118,7 +125,12 @@ C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Entity
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\EntityFramework.SqlServer.xml
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.Extensions.Configuration.xml
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.Extensions.Configuration.Abstractions.xml
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Microsoft.Extensions.Primitives.xml
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Newtonsoft.Json.xml
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\Sprache.xml
+C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\System.Web.Helpers.xml
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\System.Web.Mvc.xml
 C:\Users\duc47\OneDrive\Máy tính\Online_Mobile_Recharge_System\sem3\bin\System.Web.Razor.xml
