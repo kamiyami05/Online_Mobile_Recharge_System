@@ -58,7 +58,7 @@
             </div>
         `;
     }
-/
+
     function scrollToBottom() {
         const messagesDiv = document.getElementById('chatbox-messages');
         if (messagesDiv) {
@@ -105,7 +105,18 @@
 
         } catch (error) {
             console.error('Error fetching chat response:', error);
-            messages.push({ from: 'bot', text: 'Sorry, I am having trouble connecting. Please try again later.' });
+
+            if (error.message.includes('429') || error.message.includes('saturated')) {
+                messages.push({
+                    from: 'bot',
+                    text: 'Our assistant is currently handling many requests. Please wait a moment and try again.'
+                });
+            } else {
+                messages.push({
+                    from: 'bot',
+                    text: 'Sorry, I am having trouble connecting. Please try again later.'
+                });
+            }
         } finally {
             isLoading = false;
             renderChatbox();

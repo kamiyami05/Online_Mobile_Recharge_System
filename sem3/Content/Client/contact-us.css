@@ -10,11 +10,21 @@
 }
 
     .contact-header h1 {
-        font-size: 3rem;
-        background: whitesmoke;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(45deg, #fff, #f0f0f0);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 1rem;
+    }
+
+    .contact-header p {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        line-height: 1.6;
+        color: white;
     }
 
 .subtitle {
