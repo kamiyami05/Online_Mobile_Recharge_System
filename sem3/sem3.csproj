@@ -180,6 +180,9 @@
     <Compile Include="Models\Entities\SiteContent.cs">
       <DependentUpon>OnlineRecharge.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\sysdiagram.cs">
+      <DependentUpon>OnlineRecharge.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Transaction.cs">
       <DependentUpon>OnlineRecharge.tt</DependentUpon>
     </Compile>
@@ -199,11 +202,12 @@
     <Compile Include="Models\ModelViews\ChangeEmail.cs" />
     <Compile Include="Models\ModelViews\ChangePassword.cs" />
     <Compile Include="Models\ModelViews\Login.cs" />
-    <Compile Include="Models\ModelViews\RechargePlans.cs" />
     <Compile Include="Models\ModelViews\Register.cs" />
     <Compile Include="Models\ModelViews\UserM.cs" />
     <Compile Include="Models\Repositoties\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Payment\IPaymentService.cs" />
+    <Compile Include="Services\Payment\VisaPayment.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\admin.css" />
@@ -2129,7 +2133,13 @@
     <Content Include="Views\Recharge\TopUp.cshtml" />
     <Content Include="Views\Recharge\SpecialRecharge.cshtml" />
     <Content Include="Views\Recharge\Payment.cshtml" />
-    <Content Include="Views\Recharge\Receipt.cshtml" />
+    <Content Include="Views\Recharge\PaymentSuccess.cshtml" />
+    <Content Include="Views\Recharge\Payments\VisaForm.cshtml" />
+    <Content Include="Views\Recharge\Payments\MomoForm.cshtml" />
+    <Content Include="Views\Recharge\Payments\ZaloForm.cshtml" />
+    <Content Include="Views\Recharge\Payments\BankForm.cshtml" />
+    <Content Include="Views\Recharge\PaymentForm.cshtml" />
+    <Content Include="Views\Recharge\PaymentFailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

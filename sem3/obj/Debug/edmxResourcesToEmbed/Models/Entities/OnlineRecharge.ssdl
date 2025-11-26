@@ -61,6 +61,8 @@
     <Property Name="DataMB" Type="int" />
     <Property Name="Details" Type="nvarchar" MaxLength="255" />
     <Property Name="IsActive" Type="bit" />
+    <Property Name="PlanName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Operator" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -85,6 +87,16 @@
     <Property Name="PageName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="100" />
     <Property Name="ContentText" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Transactions">
     <Key>
@@ -271,6 +283,7 @@
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SiteContent" EntityType="Self.SiteContent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TransactionScripts" EntityType="Self.TransactionScripts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />

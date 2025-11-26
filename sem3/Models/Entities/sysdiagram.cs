@@ -12,16 +12,12 @@ namespace sem3.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class RechargePlan
+    public partial class sysdiagram
     {
-        public int PlanID { get; set; }
-        public string PlanType { get; set; }
-        public decimal Amount { get; set; }
-        public Nullable<int> TalkTimeMinutes { get; set; }
-        public Nullable<int> DataMB { get; set; }
-        public string Details { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public string PlanName { get; set; }
-        public string Operator { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

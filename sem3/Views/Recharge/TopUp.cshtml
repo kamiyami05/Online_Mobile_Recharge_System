@@ -46,9 +46,9 @@
 
 <div class="alert alert-info">
     <h4>
-        <strong>Số điện thoại:</strong> @ViewBag.Phone
+        <strong>Phone Number:</strong> @ViewBag.Phone
         <br />
-        <strong>Nhà mạng:</strong> @ViewBag.Operator
+        <strong>Operator:</strong> @ViewBag.Operator
     </h4>
 </div>
 
@@ -60,15 +60,15 @@
 
     <button id="btnData" class="btn btn-outline-success plan-type-btn"
             data-type="Data" data-op="@ViewBag.Operator">
-        @ViewBag.Operator Data
+        @ViewBag.Operator Combo
     </button>
 </div>
 
 <div id="loadingSpinner" style="display: none; text-align: center;">
-    <p><i>Đang tải các gói cước...</i></p>
+    <p><i>Loading plans...</i></p>
 </div>
 <div id="plansContainer">
-    <p>Vui lòng chọn một loại gói cước ở trên.</p>
+    <p>Choose plan.</p>
 </div>
 
 
@@ -76,13 +76,12 @@
 <script>
     $(document).ready(function () {
 
-        // Bắt sự kiện click trên các nút chọn
+        
         $(".plan-type-btn").on("click", function () {
             var $this = $(this);
             var planType = $this.data("type");
             var operator = $this.data("op");
 
-            // Hiển thị trạng thái active cho nút
             $(".plan-type-btn").removeClass("active btn-primary btn-success").addClass("btn-outline-primary");
             $this.removeClass("btn-outline-primary").addClass($this.data("type") === "Data" ? "btn-success active" : "btn-primary active");
 
@@ -90,30 +89,40 @@
             var $container = $("#plansContainer");
             var $loader = $("#loadingSpinner");
 
-            // Hiển thị loader, xóa gói cước cũ
+
             $loader.show();
             $container.html("");
 
-            // Gọi AJAX đến Action GetPlans
             $.get("@Url.Action("GetPlans", "Recharge")", { op: operator, planType: planType })
                 .done(function (plans) {
                     $loader.hide();
                     if (plans && plans.length > 0) {
-                        // Lặp qua các gói cước và tạo HTML
+      
                         $.each(plans, function (i, plan) {
                             var planHtml = `
                                 <div class="plan-card">
                                     <div class="plan-details">
                                         <h5>${plan.PlanName}</h5>
                                         <p>${plan.Details}</p>
-                                        <strong>Giá: ${plan.Amount.toLocaleString('vi-VN')} VNĐ</strong>
+                                        ${
+                                            (plan.DataMB != null && plan.DataMB > 0) 
+                                            ? `<p>Data: ${plan.DataMB} GB</p>` 
+                                            : "" 
+                                        }
+
+                                        ${
+                                            (plan.TalkTimeMinutes != null && plan.TalkTimeMinutes > 0) 
+                                            ? `<p>FTT: ${plan.TalkTimeMinutes} min</p>` 
+                                            : "" 
+                                        }
+                                        <strong>Price: ${plan.Amount.toLocaleString('vi-VN')} VND</strong>
                                     </div>
                                     <div class="plan-action">
                                         <form action="@Url.Action("SubmitTopUp", "Recharge")" method="post">
                                             <input type="hidden" name="planId" value="${plan.PlanID}" />
                                             <input type="hidden" name="phone" value="@ViewBag.Phone" />
                                             <input type="hidden" name="op" value="@ViewBag.Operator" />
-                                            <button type="submit" class="btn btn-danger">Chọn gói</button>
+                                            <button type="submit" class="btn btn-danger">Select Plan</button>
                                         </form>
                                     </div>
                                 </div>
@@ -121,13 +130,13 @@
                             $container.append(planHtml);
                         });
                     } else {
-                        // Không tìm thấy gói nào
-                        $container.html("<div class='alert alert-warning'>Không tìm thấy gói cước nào.</div>");
+                 
+                        $container.html("<div class='alert alert-warning'> No plans for this.</div>");
                     }
                 })
                 .fail(function () {
                     $loader.hide();
-                    $container.html("<div class='alert alert-danger'>Đã xảy ra lỗi khi tải gói cước.</div>");
+                    $container.html("<div class='alert alert-danger'>Error when load plans.</div>");
                 });
         });
 

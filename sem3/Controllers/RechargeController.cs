@@ -1,4 +1,6 @@
-﻿using sem3.Models.ModelViews;
+﻿using sem3.Models.Entities;
+using sem3.Models.ModelViews;
+using sem3.Services.Payment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,8 @@ namespace sem3.Controllers
 {
     public class RechargeController : Controller
     {
+        private OnlineRechargeDBEntities db = new OnlineRechargeDBEntities();
+
         public ActionResult Index()
         {
             return View();
@@ -16,9 +20,7 @@ namespace sem3.Controllers
         [HttpPost]
         public ActionResult Proceed(string phone)
         {
-            // Logic cũ của bạn:
-            // Hàm DetectOperator sẽ được gọi trước bằng AJAX,
-            // nhưng chúng ta vẫn kiểm tra lại ở đây cho chắc chắn.
+
             if (string.IsNullOrEmpty(phone))
             {
                 ViewBag.Error = "Please enter a valid phone number.";
@@ -53,11 +55,12 @@ namespace sem3.Controllers
             return View(); // Trả về TopUp.cshtml
         }
 
+
         [HttpPost]
         public ActionResult SubmitTopUp(int planId, string phone, string op)
         {
-            // Dùng hàm GetMockPlans để tìm plan
-            var plan = GetMockPlans(op) // Lấy tất cả plan
+            // Dùng hàm GetPlansFromDb để tìm plan
+            var plan = GetPlansFromDb(op) // Lấy tất cả plan
                         .FirstOrDefault(p => p.PlanID == planId);
 
             if (plan == null)
@@ -76,29 +79,7 @@ namespace sem3.Controllers
             return View("Payment");
         }
 
-        [HttpPost]
-        public ActionResult ConfirmPayment(string phone, string operatorName, string planName, decimal amount, string cardNumber)
-        {
-            string transactionId = Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
-            DateTime time = DateTime.Now;
 
-            ViewBag.Phone = phone;
-            ViewBag.Operator = operatorName;
-            ViewBag.PlanName = planName;
-            ViewBag.Amount = amount;
-            ViewBag.TransactionId = transactionId;
-            ViewBag.Time = time;
-
-            return View("Receipt");
-        }
-
-        // -----------------------------------------------------------------
-        // CÁC HÀM MỚI VÀ HÀM CŨ ĐƯỢC CẬP NHẬT
-        // -----------------------------------------------------------------
-
-        /// <summary>
-        /// [MỚI] Action này được gọi bằng AJAX từ trang Index.
-        /// </summary>
         [HttpPost]
         public JsonResult DetectOperatorAjax(string phone)
         {
@@ -115,31 +96,54 @@ namespace sem3.Controllers
             }
             else
             {
-                return Json(new { success = false, message = "Không nhận diện được nhà mạng." });
+                return Json(new { success = false, message = "Cannot detect mobile operator." });
             }
         }
 
-        /// <summary>
-        /// [MỚI] Action này được gọi bằng AJAX từ trang TopUp.
-        /// </summary>
         [HttpGet]
         public JsonResult GetPlans(string op, string planType)
         {
-            // Lấy danh sách plan (giả lập từ DB)
-            var allPlans = GetMockPlans(op);
+            try
+            {
+                // 1. Chuẩn hóa dữ liệu đầu vào (Cắt khoảng trắng thừa, xử lý null)
+                string searchOp = (op ?? "").Trim();
+                string searchType = (planType ?? "").Trim();
 
-            // Lọc theo loại plan ("Prepaid" hoặc "Data")
-            // Quan trọng: Đảm bảo PlanType trong DB của bạn khớp với "Prepaid", "Data"
-            var filteredPlans = allPlans
-                .Where(p => p.PlanType.Equals(planType, StringComparison.OrdinalIgnoreCase) && p.IsActive)
-                .ToList();
+                // 2. Truy vấn Database
+                // Dùng .AsEnumerable() để xử lý chuỗi an toàn trên RAM (Tránh lỗi SQL khi dùng Trim)
+                var query = db.RechargePlans.AsEnumerable()
+                    .Where(p =>
+                        // So sánh Nhà mạng (Bỏ qua hoa thường, bỏ qua khoảng trắng)
+                        p.Operator != null && p.Operator.Trim().Equals(searchOp, StringComparison.OrdinalIgnoreCase) &&
 
-            return Json(filteredPlans, JsonRequestBehavior.AllowGet);
+                        // So sánh Loại gói (Prepaid/Data)
+                        p.PlanType != null && p.PlanType.Trim().Equals(searchType, StringComparison.OrdinalIgnoreCase) &&
+
+                        // Chỉ lấy gói đang kích hoạt (Active)
+                        (p.IsActive == true)
+                    );
+
+                // 3. Chọn lọc dữ liệu cần thiết để trả về (Tránh lỗi 500 Circular Reference)
+                var result = query.Select(p => new
+                {
+                    PlanID = p.PlanID,
+                    PlanName = p.PlanName,
+                    Amount = p.Amount,
+                    Details = p.Details,
+                    DataMB = p.DataMB,
+                    TalkTimeMinutes = p.TalkTimeMinutes
+                }).ToList();
+
+                // Trả về JSON cho Web hiển thị
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                // Ghi log lỗi nếu cần, trả về thông báo lỗi nhẹ nhàng
+                return Json(new { success = false, message = "Lỗi tải dữ liệu: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        /// <summary>
-        /// [Hàm nội bộ] Hàm logic của bạn để phát hiện nhà mạng.
-        /// </summary>
         private string DetectOperator(string mobile)
         {
             // Viettel
@@ -177,39 +181,135 @@ namespace sem3.Controllers
         }
 
 
-        /// <summary>
-        /// [MỚI] Hàm giả lập việc lấy dữ liệu từ Database
-        /// </summary>
-        private List<RechargePlans> GetMockPlans(string op)
+
+        private List<sem3.Models.Entities.RechargePlan> GetPlansFromDb(string op)
         {
-            // !! Thay thế phần này bằng logic gọi DB thật
-            // List<RechargePlans> plans = db.RechargePlans.Where(p => p.Operator == op).ToList();
+            // db.RechargePlans trả về Entity, nên hàm phải trả về Entity
+            return db.RechargePlans
+                     .Where(p => p.Operator == op && p.IsActive == true)
+                     .ToList();
+        }
 
-            // Dữ liệu giả lập
-            var mockPlans = new List<RechargePlans>
+
+
+
+
+        [HttpPost]
+        public ActionResult ConfirmPayment(string method, string phone, string operatorName, string planName, decimal amount, string cardNumber, int? planId)
+        {
+            // --- A. VALIDATE ---
+            if (method == "Visa")
             {
-                // Gói "Prepaid" (Nạp tiền)
-                new RechargePlans { PlanID = 1, PlanType = "Prepaid", PlanName = "Nạp 50,000", Amount = 50000, TalkTimeMinutes = 50, Details = "Có 50,000đ trong tài khoản chính", IsActive = true },
-                new RechargePlans { PlanID = 2, PlanType = "Prepaid", PlanName = "Nạp 100,000", Amount = 100000, TalkTimeMinutes = 100, Details = "Có 100,000đ trong tài khoản chính", IsActive = true },
-                new RechargePlans { PlanID = 3, PlanType = "Prepaid", PlanName = "Nạp 200,000", Amount = 200000, TalkTimeMinutes = 200, Details = "Có 200,000đ trong tài khoản chính", IsActive = true },
-                
-                // Gói "Data"
-                new RechargePlans { PlanID = 4, PlanType = "Data", PlanName = "Gói 2GB", Amount = 50000, DataMB = 2048, Details = "2GB / 30 ngày", IsActive = true },
-                new RechargePlans { PlanID = 5, PlanType = "Data", PlanName = "Gói 5GB", Amount = 100000, DataMB = 5120, Details = "5GB / 30 ngày", IsActive = true },
-                new RechargePlans { PlanID = 6, PlanType = "Data", PlanName = "Gói 12GB", Amount = 200000, DataMB = 12288, Details = "12GB / 30 ngày", IsActive = true },
+                // 1. Làm sạch số thẻ (Xóa khoảng trắng nếu có)
+                string cleanCardNumber = cardNumber != null ? cardNumber.Replace(" ", "") : "";
 
-                // Gói của nhà mạng khác (ví dụ)
-                new RechargePlans { PlanID = 7, PlanType = "Data", PlanName = "Gói Viettel 10GB", Amount = 120000, DataMB = 10240, Details = "10GB / 30 ngày", IsActive = true }
-            };
+                // Kiểm tra độ dài cơ bản
+                if (string.IsNullOrEmpty(cleanCardNumber) || cleanCardNumber.Length != 16)
+                {
+                    TempData["Error"] = "Số thẻ không hợp lệ! Vui lòng nhập đủ 16 số.";
+                    return RedirectToAction("PaymentFailed");
+                }
 
-            // Lọc theo nhà mạng (logic giả)
-            if (op == "Viettel")
-            {
-                return mockPlans.Where(p => p.PlanID == 6 || p.PlanID == 7).ToList();
+
+                if (cleanCardNumber == "4000000000000000")
+                {
+                    TempData["Error"] = "Số dư tài khoản không đủ.";
+                    return RedirectToAction("PaymentFailed");
+                }
+
+                // Thẻ Thành công: 4222 2222 2222 2222 -> Cho qua
+                // (Hoặc bất kỳ thẻ nào bắt đầu bằng 4 nhưng KHÔNG PHẢI thẻ lỗi ở trên)
+                if (!cleanCardNumber.StartsWith("4"))
+                {
+                    TempData["Error"] = "Thẻ Visa phải bắt đầu bằng số 4.";
+                    return RedirectToAction("PaymentFailed");
+                }
+
+                // Nếu là thẻ 4222... hoặc thẻ Visa hợp lệ khác -> Đi tiếp xuống phần Lưu DB
             }
 
-            // Trả về các gói khác cho Mobifone/Vinaphone
-            return mockPlans.Take(6).ToList();
+            // --- B. LƯU DATABASE (Giữ nguyên code cũ của bạn) ---
+            try
+            {
+                int? userId = null;
+                if (Session["UserID"] != null)
+                {
+                    userId = (int)Session["UserID"];
+                }
+
+                var transaction = new sem3.Models.Entities.Transaction
+                {
+                    MobileNumber = phone,
+                    UserID = userId,
+                    TransactionType = "Recharge",
+                    PlanID = planId ?? 0,
+                    Amount = amount,
+                    TransactionDate = DateTime.Now,
+                    Status = "Success"
+                };
+
+                db.Transactions.Add(transaction);
+                db.SaveChanges();
+
+                var paymentDetail = new sem3.Models.Entities.PaymentDetail
+                {
+                    TransactionID = transaction.TransactionID,
+                    PaymentMethod = method,
+                    ReferenceNumber = "TXN" + DateTime.Now.Ticks.ToString().Substring(10)
+                };
+
+                db.PaymentDetails.Add(paymentDetail);
+                db.SaveChanges();
+
+                return RedirectToAction("PaymentSuccess", new
+                {
+                    phone = phone,
+                    op = operatorName,
+                    plan = planName,
+                    amount = amount,
+                    tx = paymentDetail.ReferenceNumber
+                });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Lỗi hệ thống: " + ex.Message;
+                return RedirectToAction("PaymentFailed");
+            }
+        }
+        public ActionResult LoadPaymentForm(string method, string phone, string operatorName, string planName, decimal amount, int planId)
+        {
+            ViewBag.Method = method;
+            ViewBag.Phone = phone;
+            ViewBag.Operator = operatorName;
+            ViewBag.PlanName = planName;
+            ViewBag.Amount = amount;
+
+         
+            ViewBag.PlanId = planId;
+
+            return PartialView("~/Views/Recharge/PaymentForm.cshtml");
+        }
+
+        [HttpGet]
+        public ActionResult PaymentSuccess(string phone, string op, string plan, decimal amount, string tx)
+        {
+            // Nhận dữ liệu từ URL và đưa vào ViewBag để hiển thị
+            ViewBag.Phone = phone;
+            ViewBag.Operator = op;
+            ViewBag.PlanName = plan;
+            ViewBag.Amount = amount;
+            ViewBag.TransactionId = tx; 
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult PaymentFailed()
+        {
+
+            ViewBag.ErrorMessage = TempData["Error"] ?? "Payment Failed.";
+
+            return View();
         }
     }
 }

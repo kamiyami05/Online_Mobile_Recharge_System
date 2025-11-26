@@ -7,6 +7,8 @@ namespace sem3.Models.ModelViews
 {
     public class RechargePlans
     {
+        public string Operator { get; set; }
+
         public int PlanID { get; set; }
         
         public string PlanType { get; set; }
@@ -19,6 +21,5 @@ namespace sem3.Models.ModelViews
         public int DataMB { get; set; }
         public string Details { get; set; }
         public bool IsActive { get; set; }
-
     }
 }

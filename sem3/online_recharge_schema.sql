@@ -194,3 +194,18 @@ CREATE TABLE ContactPoints (
     Description NVARCHAR(255)
 );
 GO
+
+GO
+
+-- Add Column Name for RechargePlans table
+alter table rechargeplans
+last week
+.
+add PlanName nvarchar(100) NOT NULL Default N'Unnamed Plan';
+
+ALTER TABLE dbo.Feedback
+ADD Rating int 
+
+-- Add Operator column to RechargePlans table
+ALTER TABLE RechargePlans
+ADD Operator NVARCHAR(50) NOT NULL DEFAULT 'Unknown';
