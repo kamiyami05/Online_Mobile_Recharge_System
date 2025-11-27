@@ -1,6 +1,91 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Online Recharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Online Recharge</h1>
+
+<link href="~/Content/Client/recharge.css" rel="stylesheet" />
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h1>Online Recharge</h1>
+        <p class="page-description">Enter your phone number to check operator and browse available recharge plans</p>
+    </div>
+
+    <form id="frmPhone" method="post" action="@Url.Action("Proceed", "Recharge")">
+        <div class="form-group">
+            <input type="text" name="phone" id="phone" class="form-control"
+                   maxlength="10" placeholder="Enter 10-digit number" required
+                   pattern="^\d{10}$" title="Enter Viet Nam Mobile Number" />
+
+            <div id="operatorDisplay" style="margin-top: 10px;"></div>
+        </div>
+
+        <button type="submit" id="btnProceed" class="btn btn-primary" disabled>Proceed</button>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="text-danger" id="serverError">@ViewBag.Error</div>
+        }
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var $phone = $("#phone");
+        var $operatorDisplay = $("#operatorDisplay");
+        var $btnProceed = $("#btnProceed");
+        var xhr; // request AJAX
+
+        $phone.on("input", function () {
+            //validdate
+            this.value = this.value.replace(/\D/g, "");
+            var phoneNum = this.value;
+
+
+            $("#serverError").remove();
+
+            if (xhr && xhr.readyState !== 4) {
+                xhr.abort();
+            }
+
+            if (phoneNum.length === 10) {
+
+                $operatorDisplay.html("<i>Testing...</i>").css("color", "grey");
+                $btnProceed.prop("disabled", true);
+
+                xhr = $.post("@Url.Action("DetectOperatorAjax", "Recharge")", { phone: phoneNum })
+                    .done(function (response) {
+                        if (response.success) {
+
+                            $operatorDisplay.html("✅ Operator: <strong>" + response.operatorName + "</strong>")
+                                            .css("color", "green");
+                            $btnProceed.prop("disabled", false);
+                        } else {
+
+                            $operatorDisplay.html("❌ " + response.message)
+                                            .css("color", "red");
+                        }
+                    })
+                    .fail(function () {
+
+                        $operatorDisplay.html("❌ Disconnect to host.")
+                                        .css("color", "red");
+                    });
+            } else {
+
+                $operatorDisplay.html("");
+                $btnProceed.prop("disabled", true);
+            }
+        });
+
+        $("#frmPhone").on("submit", function (e) {
+            if ($btnProceed.is(":disabled")) {
+                e.preventDefault();
+                return false;
+            }
+
+            return true;
+        });
+    });
+</script>

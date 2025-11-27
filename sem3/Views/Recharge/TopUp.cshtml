@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Select Recharge Plan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Client/TopUp.css" rel="stylesheet" />
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h1>Select Recharge Plan</h1>
+        <p class="page-subtitle">Choose the perfect plan for your needs</p>
+    </div>
+
+    <div class="phone-info-card">
+        <div class="phone-info-item">
+            <strong>Phone Number</strong>
+            <span>@ViewBag.Phone</span>
+        </div>
+        <div class="phone-info-item">
+            <strong>Operator</strong>
+            <span>@ViewBag.Operator</span>
+        </div>
+    </div>
+
+    <div class="plan-type-selector">
+        <button id="btnPrepaid" class="btn btn-outline-primary plan-type-btn"
+                data-type="Prepaid" data-op="@ViewBag.Operator">
+            <span class="operator-name">@ViewBag.Operator</span>
+            <span class="plan-type">Prepaid</span>
+        </button>
+
+        <button id="btnData" class="btn btn-outline-success plan-type-btn"
+                data-type="Data" data-op="@ViewBag.Operator">
+            <span class="operator-name">@ViewBag.Operator</span>
+            <span class="plan-type">Combo</span>
+        </button>
+    </div>
+
+    <div class="plans-section">
+        <div class="section-header">
+            <h3>Available Plans</h3>
+        </div>
+
+        <div id="loadingSpinner" style="display: none;">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p><i>Loading available plans...</i></p>
+            </div>
+        </div>
+
+        <div id="plansContainer">
+            <div class="no-plans-message">
+                <div class="no-plans-icon">📱</div>
+                <h4>No Plan Selected</h4>
+                <p>Please choose a plan type above to view available options</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+        $(".plan-type-btn").on("click", function () {
+            var $this = $(this);
+            var planType = $this.data("type");
+            var operator = $this.data("op");
+
+            $(".plan-type-btn").removeClass("active btn-primary btn-success").addClass("btn-outline-primary");
+            $this.removeClass("btn-outline-primary").addClass($this.data("type") === "Data" ? "btn-success active" : "btn-primary active");
+
+
+            var $container = $("#plansContainer");
+            var $loader = $("#loadingSpinner");
+
+
+            $loader.show();
+            $container.html("");
+
+            $.get("@Url.Action("GetPlans", "Recharge")", { op: operator, planType: planType })
+                .done(function (plans) {
+                    $loader.hide();
+                    if (plans && plans.length > 0) {
+
+                        $.each(plans, function (i, plan) {
+                            var planHtml = `
+                                <div class="plan-card">
+                                    <div class="plan-details">
+                                        <h5>${plan.PlanName}</h5>
+                                        <div class="plan-features">
+                                            ${plan.Details ? `<div class="plan-feature">📄 ${plan.Details}</div>` : ""}
+                                            ${(plan.DataMB != null && plan.DataMB > 0) ? `<div class="plan-feature">📊 ${plan.DataMB} GB</div>` : ""}
+                                            ${(plan.TalkTimeMinutes != null && plan.TalkTimeMinutes > 0) ? `<div class="plan-feature">📞 ${plan.TalkTimeMinutes} min</div>` : ""}
+                                        </div>
+                                        <div class="plan-price">${plan.Amount.toLocaleString('vi-VN')} VND</div>
+                                    </div>
+                                    <div class="plan-action">
+                                        <form action="@Url.Action("SubmitTopUp", "Recharge")" method="post">
+                                            <input type="hidden" name="planId" value="${plan.PlanID}" />
+                                            <input type="hidden" name="phone" value="@ViewBag.Phone" />
+                                            <input type="hidden" name="op" value="@ViewBag.Operator" />
+                                            <button type="submit" class="btn btn-danger">Select Plan</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            `;
+                            $container.append(planHtml);
+                        });
+                    } else {
+
+                        $container.html("<div class='alert alert-warning'> No plans for this.</div>");
+                    }
+                })
+                .fail(function () {
+                    $loader.hide();
+                    $container.html("<div class='alert alert-danger'>Error when load plans.</div>");
+                });
+        });
+
+    });
+</script>

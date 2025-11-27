@@ -1,0 +1,74 @@
+﻿@using sem3.Models.Entities
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    var plan = ViewBag.Plan as RechargePlan;
+}
+
+<h2>Payment Options</h2>
+
+<div class="alert alert-success">
+    <p><strong>Phone:</strong> @ViewBag.Phone</p>
+    <p><strong>Operator:</strong> @ViewBag.Operator</p>
+
+    @if (plan != null)
+    {
+        <p>
+            <strong>Selected Plan:</strong>
+            @plan.PlanName - @string.Format("{0:n0}", plan.Amount) đ
+        </p>
+    }
+</div>
+
+<input type="hidden" id="hdnPlanId" value="@(plan != null ? plan.PlanID : 0)" />
+
+<input type="hidden" id="hdnPhone" value="@ViewBag.Phone" />
+<input type="hidden" id="hdnOperator" value="@ViewBag.Operator" />
+<input type="hidden" id="hdnPlanName" value="@(plan != null ? plan.PlanName : "")" />
+<input type="hidden" id="hdnAmount" value="@(plan != null ? plan.Amount : 0)" />
+
+<h3>Choose Payment Method</h3>
+
+<div id="payment-methods">
+    <button class="btn btn-primary payment-btn" data-method="Visa">💳 Visa</button>
+
+</div>
+
+<br />
+
+<div id="paymentArea"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".payment-btn").click(function () {
+            var method = $(this).data("method");
+
+            $("#paymentArea").html("<p>Payment loading..</p>");
+
+            $.ajax({
+                url: '/Recharge/LoadPaymentForm',
+                type: 'GET',
+                data: {
+                    method: method,
+
+                    planId: $("#hdnPlanId").val(),
+                    phone: $("#hdnPhone").val(),
+                    operatorName: $("#hdnOperator").val(),
+                    planName: $("#hdnPlanName").val(),
+                    amount: $("#hdnAmount").val()
+                },
+                success: function (response) {
+                    $("#paymentArea").html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    $("#paymentArea").html("<div class='alert alert-danger'>Error on loading form: " + error + "</div>");
+                }
+            });
+        });
+    });
+</script>

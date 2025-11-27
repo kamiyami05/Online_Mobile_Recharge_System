@@ -11,7 +11,7 @@ namespace sem3.Models.Entities
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class RechargePlan
     {
         public int PlanID { get; set; }
@@ -21,5 +21,7 @@ namespace sem3.Models.Entities
         public Nullable<int> DataMB { get; set; }
         public string Details { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public string PlanName { get; set; }
+        public string Operator { get; set; }
     }
 }
