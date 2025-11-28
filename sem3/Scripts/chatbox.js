@@ -27,11 +27,11 @@
                 </div>
                 <div id="chatbox-messages" class="chatbox-messages">
                     ${messages.map(msg => renderMessage(msg.from, msg.text, msg.timestamp)).join('')}
-                    ${isLoading ? renderTypingIndicator() : ''}
+                    ${isLoading ? renderThinking() : ''}
                     <div id="chatbox-end"></div>
                 </div>
                 <form id="chatbox-form" class="chatbox-form">
-                    <input type="text" id="chatbox-input" placeholder="Ask about recharge, bills, or support..." required />
+                    <input type="text" id="chatbox-input" placeholder="Ask about recharge or bills..." required/> 
                     <button type="submit" id="chatbox-send-btn" class="chatbox-send-btn" ${isLoading ? 'disabled' : ''}>
                         <i class="ri-send-plane-fill"></i>
                     </button>
@@ -40,52 +40,54 @@
         `;
 
         container.html(buttonHtml + chatWindowHtml);
-
-        // Scroll to bottom after render
-        setTimeout(scrollToBottom, 50);
+        scrollToBottom();
 
         $('#chatbox-toggle').off().on('click', handleToggle);
         $('#chatbox-form').off().on('submit', handleSend);
-
-        // Auto-focus input when chatbox opens
-        if (isOpen) {
-            setTimeout(() => {
-                $('#chatbox-input').focus();
-            }, 400);
-        }
     }
 
     function renderMessage(from, text, timestamp) {
         const isBot = from === 'bot';
-        const time = timestamp ? formatTime(timestamp) : formatTime(new Date());
+        const timeString = formatTime(timestamp);
+        const formattedText = formatMessageText(text);
 
         return `
             <div class="message-row ${isBot ? 'justify-start' : 'justify-end'}">
+                ${isBot ? '<div class="message-avatar bot-avatar">🤖</div>' : ''}
                 <div class="message-bubble ${isBot ? 'bot-bubble' : 'user-bubble'}">
-                    <div class="message-content">${formatMessageText(text)}</div>
-                    <div class="message-time">${time}</div>
+                    <div class="message-content">${formattedText}</div>
+                    <div class="message-time ${isBot ? 'bot-time' : 'user-time'}">${timeString}</div>
                 </div>
+                ${!isBot ? '<div class="message-avatar user-avatar">👤</div>' : ''}
             </div>
         `;
     }
 
     function formatMessageText(text) {
-        // Convert markdown-style formatting to HTML với line breaks
-        return text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\n/g, '<br>')
-            .replace(/(📱|💡|🏪|💰|🔧|👋|😊|⚡|✅|📍|💎|🛠️|⏰|💵|🤔|🚀|🇻🇳)/g, '<span style="font-size: 1.1em;">$1</span>');
+        // Xử lý định dạng số và danh sách
+        let formattedText = text
+            // Định dạng số với dấu chấm (1. 2. 3.)
+            .replace(/(\d+)\.\s/g, '<strong>$1.</strong> ')
+            // Định dạng dấu gạch đầu dòng
+            .replace(/•\s/g, '• ')
+            // Thay thế xuống dòng bằng thẻ <br>
+            .replace(/\n/g, '<br>');
+
+        return formattedText;
     }
 
-    function renderTypingIndicator() {
+    function renderThinking() {
         return `
             <div class="message-row justify-start">
-                <div class="typing-indicator">
-                    <span class="typing-text">Assistant is typing</span>
-                    <div class="typing-dots">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
+                <div class="message-avatar bot-avatar">🤖</div>
+                <div class="message-bubble bot-bubble">
+                    <div class="typing-indicator">
+                        <div class="typing-text">Assistant is thinking</div>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,11 +95,18 @@
     }
 
     function formatTime(date) {
-        return date.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        });
+        if (!date) return '';
+
+        const now = new Date();
+        const messageDate = new Date(date);
+
+        // Nếu tin nhắn được gửi hôm nay, hiển thị giờ:phút
+        if (messageDate.toDateString() === now.toDateString()) {
+            return messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Nếu tin nhắn được gửi trước hôm nay, hiển thị ngày/tháng
+        return messageDate.toLocaleDateString([], { day: '2-digit', month: '2-digit' });
     }
 
     function scrollToBottom() {
@@ -120,84 +129,41 @@
 
         isLoading = true;
 
-        // Add user message
-        messages.push({
-            from: 'user',
-            text: input,
-            timestamp: new Date()
-        });
-
+        messages.push({ from: 'user', text: input, timestamp: new Date() });
         inputElement.val('');
         renderChatbox();
 
-        // Clear any existing timeout
-        if (typingTimeout) clearTimeout(typingTimeout);
+        const apiMessages = messages.map(msg => ({
+            role: msg.from === 'bot' ? 'assistant' : 'user',
+            content: msg.text
+        }));
 
         try {
-            const apiMessages = messages
-                .filter(msg => msg.from === 'user' || msg.from === 'bot')
-                .map(msg => ({
-                    role: msg.from === 'bot' ? 'assistant' : 'user',
-                    content: msg.text
-                }));
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: apiMessages }),
+            });
 
-            // Simulate AI "thinking" time - random between 1.5-3 seconds
-            const thinkingTime = Math.random() * 1500 + 1500;
+            if (!response.ok) {
+                throw new Error(`API error: ${response.StatusCode}`);
+            }
 
-            typingTimeout = setTimeout(async () => {
-                try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: JSON.stringify({ messages: apiMessages }),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`API error: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-
-                    // Add bot message with timestamp
-                    messages.push({
-                        from: 'bot',
-                        text: data.reply.trim(),
-                        timestamp: new Date()
-                    });
-
-                } catch (error) {
-                    console.error('Error fetching chat response:', error);
-
-                    // Fallback responses
-                    let errorResponse = 'I apologize, but I\'m having trouble connecting right now. ';
-                    errorResponse += 'You can ask me about: mobile recharges, bill payments, or account support.';
-
-                    messages.push({
-                        from: 'bot',
-                        text: errorResponse,
-                        timestamp: new Date()
-                    });
-                } finally {
-                    isLoading = false;
-                    renderChatbox();
-                }
-            }, thinkingTime);
+            const data = await response.json();
+            const botMessage = { from: 'bot', text: data.reply.trim(), timestamp: new Date() };
+            messages.push(botMessage);
 
         } catch (error) {
-            console.error('Error in handleSend:', error);
+            console.error('Error fetching chat response:', error);
+            messages.push({
+                from: 'bot',
+                text: 'Sorry, I am having trouble connecting. Please try again later.',
+                timestamp: new Date()
+            });
+        } finally {
             isLoading = false;
             renderChatbox();
         }
     }
-
-    // Initialize chatbox
     renderChatbox();
-
-    // Add some welcome effects
-    setTimeout(() => {
-        $('#chatbox-toggle').addClass('ready');
-    }, 1000);
 });

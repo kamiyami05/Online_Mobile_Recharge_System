@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Payment History";
+}
+
+<div class="container mt-5" style="max-width: 500px;">
+    <h3 class="text-center">Payment History</h3>
+
+    <form method="get" action="/Postpaid/History" class="mt-4">
+        <div class="mb-3">
+            <label class="form-label">Mobile Number</label>
+            <input type="text" name="mobile" class="form-control" placeholder="Enter mobile number" required maxlength="10">
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">View History</button>
+    </form>
+
+    <a href="/Postpaid" class="btn btn-secondary w-100 mt-2">Back</a>
+</div>

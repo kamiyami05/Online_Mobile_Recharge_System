@@ -1,0 +1,58 @@
+﻿@model IEnumerable<sem3.Models.Entities.Transaction>
+@{
+    ViewBag.Title = "Payment History";
+}
+
+<div class="container mt-4">
+    <h3>Payment History</h3>
+    <hr />
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning mt-3">
+            No payment history found for this number.
+        </div>
+        <a href="/Postpaid/History" class="btn btn-secondary mt-2">Search Again</a>
+    }
+    else
+    {
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Mobile Number</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Receipt</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tx in Model)
+                {
+                    <tr>
+                        <td>@tx.TransactionID</td>
+                        <td>@tx.MobileNumber</td>
+                        <td>@String.Format("{0:0,0} VND", tx.Amount)</td>
+                        <td>@tx.TransactionDate?.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            @if (tx.Status == "SUCCESS")
+                            {
+                                <span class="badge bg-success">Success</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Failed</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="/Postpaid/Receipt/@tx.TransactionID" class="btn btn-sm btn-outline-primary">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a href="/Postpaid" class="btn btn-secondary mt-2">Back</a>
+    }
+</div>

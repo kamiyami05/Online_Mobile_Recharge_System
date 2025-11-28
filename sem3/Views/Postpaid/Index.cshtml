@@ -1,0 +1,66 @@
+﻿@model IEnumerable<sem3.Models.Entities.PostpaidBill>
+@{
+    ViewBag.Title = "Postpaid Bills";
+}
+
+<div class="container mt-4">
+    <h3>Postpaid Bill List</h3>
+    <hr />
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning mt-3">
+            No bills found for this mobile number.
+        </div>
+        <a href="/Postpaid" class="btn btn-secondary mt-2">Back</a>
+    }
+    else
+    {
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Mobile Number</th>
+                    <th>Billing Date</th>
+                    <th>Total Amount</th>
+                    <th>Payment Due</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MobileNumber</td>
+                        <td>@item.BillingCycle.ToString("dd/MM/yyyy")</td>
+                        <td>@String.Format("{0:0,0} VND", item.TotalAmount)</td>
+                        <td>@item.PaymentDueDate?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @if (item.IsPaid.GetValueOrDefault())
+                            {
+                                <span class="badge bg-success">Paid</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Unpaid</span>
+                            }
+                        </td>
+                        <td>
+                            @if (!item.IsPaid.GetValueOrDefault())
+                            {
+                                <a href="/Postpaid/Pay/@item.BillID" class="btn btn-primary btn-sm">Pay Now</a>
+                            }
+                            else
+                            {
+                                <a href="/Postpaid/Receipt/@item.PaymentTransactionID" class="btn btn-secondary btn-sm">View Receipt</a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <a href="/Postpaid" class="btn btn-outline-dark mt-2">Search Again</a>
+    }
+</div>

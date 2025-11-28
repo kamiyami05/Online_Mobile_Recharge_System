@@ -50,7 +50,7 @@
                             <a class="nav-link" href="@Url.Action("Index", "SiteMap")">
                                 <i class="fas fa-sitemap"></i> Site Map
                             </a>
-                            <a class="nav-link" href="@Url.Action("Index", "BillPayment")">
+                            <a class="nav-link" href="@Url.Action("Index", "Postpaid")">
                                 <i class="fas fa-file-invoice-dollar"></i> Post Bill Payment
                             </a>
                             <a class="nav-link" href="@Url.Action("Index", "Recharge")">
@@ -67,9 +67,11 @@
                     {
                         var user = Session["CurrentUser"] as sem3.Models.ModelViews.UserM;
 
-                        <div class="navbar-user-section">
-                            <a class="nav-link text-dark fw-bold" href="@Url.Action("Index", "Profile")" title="View Profile">
-                                <i class="fas fa-user"></i> Hello, @user.FullName
+                        <div class="d-flex flex-column align-items-start">
+                            <a class="nav-link text-dark fw-bold mb-1"
+                               href="@Url.Action("Index", "Profile")"
+                               title="View Profile">
+                                <i class="fas fa-user"></i>@user.FullName
                             </a>
                             <a href="@Url.Action("Logout", "Login")" class="btn btn-danger">
                                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -82,9 +84,6 @@
                             <div class="navbar-auth-buttons">
                                 <a href="@Url.Action("Login", "Login")" class="btn btn-primary1">
                                     <i class="fas fa-sign-in-alt"></i> Login
-                                </a>
-                                <a href="@Url.Action("Register", "Login")" class="btn btn-success">
-                                    <i class="fas fa-user-plus"></i> Register
                                 </a>
                             </div>
                         </div>

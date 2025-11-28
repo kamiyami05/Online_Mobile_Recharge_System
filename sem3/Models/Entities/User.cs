@@ -30,6 +30,7 @@ namespace sem3.Models.Entities
         public string Email { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> RegistrationDate { get; set; }
+        public Nullable<decimal> WalletBalance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Feedback> Feedbacks { get; set; }

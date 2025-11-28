@@ -159,14 +159,14 @@ namespace sem3.Controllers
                 mobile.StartsWith("084") || mobile.StartsWith("085") ||
                 mobile.StartsWith("088") ||
                 mobile.StartsWith("091") || mobile.StartsWith("094"))
-                return "Vinaphone";
+                return "VinaPhone";
 
             // Mobifone
             if (mobile.StartsWith("070") || mobile.StartsWith("076") || mobile.StartsWith("077") ||
                 mobile.StartsWith("078") || mobile.StartsWith("079") ||
                 mobile.StartsWith("089") ||
                 mobile.StartsWith("090") || mobile.StartsWith("093"))
-                return "Mobifone";
+                return "MobiFone";
 
             // Vietnamobile
             if (mobile.StartsWith("056") || mobile.StartsWith("058"))
