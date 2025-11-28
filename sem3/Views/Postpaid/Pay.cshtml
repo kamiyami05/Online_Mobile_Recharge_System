@@ -1,0 +1,28 @@
+﻿@model sem3.Models.Entities.PostpaidBill
+@{
+    ViewBag.Title = "Pay Bill";
+}
+
+<div class="container mt-5" style="max-width: 600px;">
+    <h3 class="text-center">Pay Postpaid Bill</h3>
+    <hr />
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <table class="table table-bordered">
+        <tr><th>Mobile Number</th><td>@Model.MobileNumber</td></tr>
+        <tr><th>Billing Date</th><td>@Model.BillingCycle.ToString("dd/MM/yyyy")</td></tr>
+        <tr><th>Total Amount</th><td>@String.Format("{0:0,0} VND", Model.TotalAmount)</td></tr>
+        <tr><th>Payment Due</th><td>@Model.PaymentDueDate?.ToString("dd/MM/yyyy")</td></tr>
+    </table>
+
+    <form method="post" action="/Postpaid/PayPost">
+        <input type="hidden" name="billId" value="@Model.BillID" />
+        <button type="submit" class="btn btn-success w-100 mt-3">Confirm Payment</button>
+    </form>
+
+    <a href="/Postpaid" class="btn btn-secondary w-100 mt-2">Cancel</a>
+</div>

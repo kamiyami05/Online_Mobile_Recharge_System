@@ -1,0 +1,16 @@
+﻿@model sem3.Models.Entities.TransactionScript
+@{
+    ViewBag.Title = "Payment Receipt";
+}
+
+<div class="container mt-5" style="max-width: 600px;">
+    <h3 class="text-center">Payment Receipt</h3>
+    <hr />
+
+    <pre class="border p-3" style="background-color:#f9f9f9; font-size: 15px;">
+@Model.ScriptContent
+    </pre>
+
+    <a href="/Postpaid/Print/@Model.TransactionID" class="btn btn-primary w-100 mt-3">Download PDF</a>
+    <a href="/Postpaid" class="btn btn-secondary w-100 mt-2">Back</a>
+</div>

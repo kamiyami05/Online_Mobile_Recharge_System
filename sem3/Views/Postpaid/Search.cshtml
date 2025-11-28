@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Postpaid Bill Payment";
+}
+
+<div class="container mt-5" style="max-width: 500px;">
+    <h3 class="text-center">Postpaid Bill Payment</h3>
+
+    <form method="get" action="/Postpaid/Index" class="mt-4">
+        <div class="mb-3">
+            <label class="form-label">Mobile Number</label>
+            <input type="text" name="mobile" class="form-control" placeholder="Enter mobile number" required maxlength="10">
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Search Bill</button>
+    </form>
+</div>
