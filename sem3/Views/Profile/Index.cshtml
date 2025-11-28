@@ -222,7 +222,7 @@
                     <div class="upload-validation">
                         <small><i class="fas fa-info-circle"></i> Only MP3 files, max 10MB. This will replace your current custom tune.</small>
                     </div>
-                </div>             
+                </div>
                 <!-- Action Buttons -->
                 <div class="action-buttons" id="actionButtons" style="display: none;">
                     <button id="saveTuneBtn" class="service-btn btn-save">
@@ -231,6 +231,105 @@
                     <button id="cancelTuneBtn" class="service-btn btn-cancel">
                         <i class="fas fa-times"></i> Cancel
                     </button>
+                </div>
+            </div>
+        </div>
+        <!-- Transaction History Section -->
+        <div class="service-item transaction-history-section">
+            <div class="service-info">
+                <h4>Transaction History</h4>
+                <p>View your recent recharge and payment transactions</p>
+
+                <!-- Statistics Summary -->
+                <div class="transaction-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">@ViewBag.TransactionHistory.Count</span>
+                        <span class="stat-label">Recent</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">@ViewBag.SuccessCount</span>
+                        <span class="stat-label">Success</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">@ViewBag.PendingCount</span>
+                        <span class="stat-label">Pending</span>
+                    </div>
+                    <div class="stat-item total">
+                        <span class="stat-number">@ViewBag.TotalTransactions</span>
+                        <span class="stat-label">Total</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-actions">
+                <!-- Transaction History Table -->
+                <div class="transaction-history-container">
+                    @if (ViewBag.TransactionHistory.Count > 0)
+                    {
+                        <div class="transaction-table-wrapper">
+                            <table class="transaction-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var transaction in ViewBag.TransactionHistory)
+                                    {
+                                        <tr class="transaction-row" data-transaction-id="@transaction.TransactionID">
+                                            <td class="transaction-date">
+                                                <div class="date">@transaction.TransactionDate.ToString("MMM dd")</div>
+                                                <div class="time">@transaction.TransactionDate.ToString("hh:mm tt")</div>
+                                            </td>
+                                            <td class="transaction-type">
+                                                <span class="type-icon">
+                                                    @if (transaction.TransactionType == "Recharge")
+                                                    {
+                                                        <i class="fas fa-bolt"></i>
+                                                    }
+                                                    else if (transaction.TransactionType == "Wallet Top-up")
+                                                    {
+                                                        <i class="fas fa-wallet"></i>
+                                                    }
+                                                    else if (transaction.TransactionType == "Postpaid Bill Payment")
+                                                    {
+                                                        <i class="fas fa-file-invoice"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-exchange-alt"></i>
+                                                    }
+                                                </span>
+                                                <span class="type-text">@transaction.TransactionType</span>
+                                            </td>
+                                            <td class="transaction-amount">
+                                                <strong>@transaction.Amount.ToString("N0") ₫</strong>
+                                            </td>
+                                            <td class="transaction-status">
+                                                <span class="status-badge @transaction.Status.ToLower()">
+                                                    @transaction.Status
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="no-transactions">
+                            <i class="fas fa-receipt"></i>
+                            <h5>No Transactions Yet</h5>
+                            <p>You haven't made any transactions</p>
+                            <a href="@Url.Action("Index", "Home")" class="btn-primary">
+                                <i class="fas fa-bolt"></i> Make Your First Recharge
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

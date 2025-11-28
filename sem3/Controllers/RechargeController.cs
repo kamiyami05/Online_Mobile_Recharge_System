@@ -127,7 +127,7 @@ namespace sem3.Controllers
                 var result = query.Select(p => new
                 {
                     PlanID = p.PlanID,
-                    PlanName = p.PlanName,
+                    PlanName = p.PlanType,
                     Amount = p.Amount,
                     Details = p.Details,
                     DataMB = p.DataMB,

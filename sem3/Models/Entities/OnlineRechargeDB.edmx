@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="OnlineRechargeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="OnlineRechargeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdminUsers">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -67,9 +67,8 @@
           <Property Name="TalkTimeMinutes" Type="int" />
           <Property Name="DataMB" Type="int" />
           <Property Name="Details" Type="nvarchar" MaxLength="255" />
-          <Property Name="IsActive" Type="bit" />
           <Property Name="Operator" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="PlanName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Services">
           <Key>
@@ -87,16 +86,6 @@
           <Property Name="PageName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
           <Property Name="ContentText" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -131,6 +120,7 @@
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
           <Property Name="RegistrationDate" Type="datetime" />
           <Property Name="WalletBalance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PostpaidMonthlyFee" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="UserServices">
           <Key>
@@ -153,7 +143,7 @@
           <Property Name="SelectedTune" Type="varchar" MaxLength="100" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <Association Name="FK__Feedback__UserID__66603565">
+        <Association Name="FK__Feedback__UserID__68487DD7">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
           <ReferentialConstraint>
@@ -165,7 +155,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentDe__Trans__4CA06362">
+        <Association Name="FK__PaymentDe__Trans__4E88ABD4">
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="1" />
           <End Role="PaymentDetails" Type="Self.PaymentDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -177,7 +167,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PostpaidB__Payme__52593CB8">
+        <Association Name="FK__PostpaidB__Payme__5441852A">
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="0..1" />
           <End Role="PostpaidBills" Type="Self.PostpaidBills" Multiplicity="*" />
           <ReferentialConstraint>
@@ -189,7 +179,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Trans__47DBAE45">
+        <Association Name="FK__Transacti__Trans__49C3F6B7">
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="1" />
           <End Role="TransactionScripts" Type="Self.TransactionScripts" Multiplicity="*" />
           <ReferentialConstraint>
@@ -201,7 +191,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__UserI__440B1D61">
+        <Association Name="FK__Transacti__UserI__45F365D3">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -213,7 +203,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserServi__Servi__5BE2A6F2">
+        <Association Name="FK__UserServi__Servi__5DCAEF64">
           <End Role="Services" Type="Self.Services" Multiplicity="1" />
           <End Role="UserServices" Type="Self.UserServices" Multiplicity="*" />
           <ReferentialConstraint>
@@ -225,7 +215,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserServi__Servi__628FA481">
+        <Association Name="FK__UserServi__Servi__6477ECF3">
           <End Role="Services" Type="Self.Services" Multiplicity="1" />
           <End Role="UserServiceSettings" Type="Self.UserServiceSettings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -237,7 +227,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserServi__UserI__5AEE82B9">
+        <Association Name="FK__UserServi__UserI__5CD6CB2B">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UserServices" Type="Self.UserServices" Multiplicity="*" />
           <ReferentialConstraint>
@@ -249,7 +239,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserServi__UserI__619B8048">
+        <Association Name="FK__UserServi__UserI__6383C8BA">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UserServiceSettings" Type="Self.UserServiceSettings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -258,18 +248,6 @@
             </Principal>
             <Dependent Role="UserServiceSettings">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Postpaid_Transaction">
-          <End Role="Transactions" Type="Self.Transactions" Multiplicity="0..1" />
-          <End Role="PostpaidBills" Type="Self.PostpaidBills" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Transactions">
-              <PropertyRef Name="TransactionID" />
-            </Principal>
-            <Dependent Role="PostpaidBills">
-              <PropertyRef Name="PaymentTransactionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -282,54 +260,50 @@
           <EntitySet Name="RechargePlans" EntityType="Self.RechargePlans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteContent" EntityType="Self.SiteContent" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionScripts" EntityType="Self.TransactionScripts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserServices" EntityType="Self.UserServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserServiceSettings" EntityType="Self.UserServiceSettings" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Feedback__UserID__66603565" Association="Self.FK__Feedback__UserID__66603565">
+          <AssociationSet Name="FK__Feedback__UserID__68487DD7" Association="Self.FK__Feedback__UserID__68487DD7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Feedback" EntitySet="Feedback" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentDe__Trans__4CA06362" Association="Self.FK__PaymentDe__Trans__4CA06362">
+          <AssociationSet Name="FK__PaymentDe__Trans__4E88ABD4" Association="Self.FK__PaymentDe__Trans__4E88ABD4">
             <End Role="Transactions" EntitySet="Transactions" />
             <End Role="PaymentDetails" EntitySet="PaymentDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PostpaidB__Payme__52593CB8" Association="Self.FK__PostpaidB__Payme__52593CB8">
+          <AssociationSet Name="FK__PostpaidB__Payme__5441852A" Association="Self.FK__PostpaidB__Payme__5441852A">
             <End Role="Transactions" EntitySet="Transactions" />
             <End Role="PostpaidBills" EntitySet="PostpaidBills" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Trans__47DBAE45" Association="Self.FK__Transacti__Trans__47DBAE45">
+          <AssociationSet Name="FK__Transacti__Trans__49C3F6B7" Association="Self.FK__Transacti__Trans__49C3F6B7">
             <End Role="Transactions" EntitySet="Transactions" />
             <End Role="TransactionScripts" EntitySet="TransactionScripts" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__UserI__440B1D61" Association="Self.FK__Transacti__UserI__440B1D61">
+          <AssociationSet Name="FK__Transacti__UserI__45F365D3" Association="Self.FK__Transacti__UserI__45F365D3">
             <End Role="Users" EntitySet="Users" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserServi__Servi__5BE2A6F2" Association="Self.FK__UserServi__Servi__5BE2A6F2">
+          <AssociationSet Name="FK__UserServi__Servi__5DCAEF64" Association="Self.FK__UserServi__Servi__5DCAEF64">
             <End Role="Services" EntitySet="Services" />
             <End Role="UserServices" EntitySet="UserServices" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserServi__Servi__628FA481" Association="Self.FK__UserServi__Servi__628FA481">
+          <AssociationSet Name="FK__UserServi__Servi__6477ECF3" Association="Self.FK__UserServi__Servi__6477ECF3">
             <End Role="Services" EntitySet="Services" />
             <End Role="UserServiceSettings" EntitySet="UserServiceSettings" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserServi__UserI__5AEE82B9" Association="Self.FK__UserServi__UserI__5AEE82B9">
+          <AssociationSet Name="FK__UserServi__UserI__5CD6CB2B" Association="Self.FK__UserServi__UserI__5CD6CB2B">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserServices" EntitySet="UserServices" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserServi__UserI__619B8048" Association="Self.FK__UserServi__UserI__619B8048">
+          <AssociationSet Name="FK__UserServi__UserI__6383C8BA" Association="Self.FK__UserServi__UserI__6383C8BA">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserServiceSettings" EntitySet="UserServiceSettings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Postpaid_Transaction" Association="Self.FK_Postpaid_Transaction">
-            <End Role="Transactions" EntitySet="Transactions" />
-            <End Role="PostpaidBills" EntitySet="PostpaidBills" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OnlineRechargeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -363,7 +337,7 @@
           <Property Name="FeedbackText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SubmitDate" Type="DateTime" Precision="3" />
           <Property Name="Rating" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Feedback__UserID__66603565" FromRole="Feedback" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Feedback__UserID__68487DD7" FromRole="Feedback" ToRole="Users" />
         </EntityType>
         <EntityType Name="PaymentDetail">
           <Key>
@@ -373,7 +347,7 @@
           <Property Name="TransactionID" Type="Int32" Nullable="false" />
           <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ReferenceNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Transaction" Relationship="Self.FK__PaymentDe__Trans__4CA06362" FromRole="PaymentDetails" ToRole="Transactions" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__PaymentDe__Trans__4E88ABD4" FromRole="PaymentDetails" ToRole="Transactions" />
         </EntityType>
         <EntityType Name="PostpaidBill">
           <Key>
@@ -386,7 +360,7 @@
           <Property Name="PaymentDueDate" Type="DateTime" Precision="0" />
           <Property Name="PaymentTransactionID" Type="Int32" />
           <Property Name="IsPaid" Type="Boolean" />
-          <NavigationProperty Name="Transaction" Relationship="Self.FK__PostpaidB__Payme__52593CB8" FromRole="PostpaidBills" ToRole="Transactions" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__PostpaidB__Payme__5441852A" FromRole="PostpaidBills" ToRole="Transactions" />
         </EntityType>
         <EntityType Name="RechargePlan">
           <Key>
@@ -398,9 +372,8 @@
           <Property Name="TalkTimeMinutes" Type="Int32" />
           <Property Name="DataMB" Type="Int32" />
           <Property Name="Details" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Operator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" />
-          <Property Name="Operator" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PlanName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
@@ -409,8 +382,8 @@
           <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ServiceDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserServices" Relationship="Self.FK__UserServi__Servi__5BE2A6F2" FromRole="Services" ToRole="UserServices" />
-          <NavigationProperty Name="UserServiceSettings" Relationship="Self.FK__UserServi__Servi__628FA481" FromRole="Services" ToRole="UserServiceSettings" />
+          <NavigationProperty Name="UserServices" Relationship="Self.FK__UserServi__Servi__5DCAEF64" FromRole="Services" ToRole="UserServices" />
+          <NavigationProperty Name="UserServiceSettings" Relationship="Self.FK__UserServi__Servi__6477ECF3" FromRole="Services" ToRole="UserServiceSettings" />
         </EntityType>
         <EntityType Name="SiteContent">
           <Key>
@@ -433,10 +406,10 @@
           <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="TransactionDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PaymentDetails" Relationship="Self.FK__PaymentDe__Trans__4CA06362" FromRole="Transactions" ToRole="PaymentDetails" />
-          <NavigationProperty Name="PostpaidBills" Relationship="Self.FK__PostpaidB__Payme__52593CB8" FromRole="Transactions" ToRole="PostpaidBills" />
-          <NavigationProperty Name="TransactionScripts" Relationship="Self.FK__Transacti__Trans__47DBAE45" FromRole="Transactions" ToRole="TransactionScripts" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Transacti__UserI__440B1D61" FromRole="Transactions" ToRole="Users" />
+          <NavigationProperty Name="PaymentDetails" Relationship="Self.FK__PaymentDe__Trans__4E88ABD4" FromRole="Transactions" ToRole="PaymentDetails" />
+          <NavigationProperty Name="PostpaidBills" Relationship="Self.FK__PostpaidB__Payme__5441852A" FromRole="Transactions" ToRole="PostpaidBills" />
+          <NavigationProperty Name="TransactionScripts" Relationship="Self.FK__Transacti__Trans__49C3F6B7" FromRole="Transactions" ToRole="TransactionScripts" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Transacti__UserI__45F365D3" FromRole="Transactions" ToRole="Users" />
         </EntityType>
         <EntityType Name="TransactionScript">
           <Key>
@@ -445,7 +418,7 @@
           <Property Name="ScriptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TransactionID" Type="Int32" Nullable="false" />
           <Property Name="ScriptContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Transaction" Relationship="Self.FK__Transacti__Trans__47DBAE45" FromRole="TransactionScripts" ToRole="Transactions" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK__Transacti__Trans__49C3F6B7" FromRole="TransactionScripts" ToRole="Transactions" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -458,11 +431,12 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Feedbacks" Relationship="Self.FK__Feedback__UserID__66603565" FromRole="Users" ToRole="Feedback" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__UserI__440B1D61" FromRole="Users" ToRole="Transactions" />
-          <NavigationProperty Name="UserServices" Relationship="Self.FK__UserServi__UserI__5AEE82B9" FromRole="Users" ToRole="UserServices" />
-          <NavigationProperty Name="UserServiceSettings" Relationship="Self.FK__UserServi__UserI__619B8048" FromRole="Users" ToRole="UserServiceSettings" />
           <Property Name="WalletBalance" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PostpaidMonthlyFee" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Feedbacks" Relationship="Self.FK__Feedback__UserID__68487DD7" FromRole="Users" ToRole="Feedback" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__UserI__45F365D3" FromRole="Users" ToRole="Transactions" />
+          <NavigationProperty Name="UserServices" Relationship="Self.FK__UserServi__UserI__5CD6CB2B" FromRole="Users" ToRole="UserServices" />
+          <NavigationProperty Name="UserServiceSettings" Relationship="Self.FK__UserServi__UserI__6383C8BA" FromRole="Users" ToRole="UserServiceSettings" />
         </EntityType>
         <EntityType Name="UserService">
           <Key>
@@ -473,8 +447,8 @@
           <Property Name="ServiceID" Type="Int32" Nullable="false" />
           <Property Name="ActivationDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Service" Relationship="Self.FK__UserServi__Servi__5BE2A6F2" FromRole="UserServices" ToRole="Services" />
-          <NavigationProperty Name="User" Relationship="Self.FK__UserServi__UserI__5AEE82B9" FromRole="UserServices" ToRole="Users" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__UserServi__Servi__5DCAEF64" FromRole="UserServices" ToRole="Services" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserServi__UserI__5CD6CB2B" FromRole="UserServices" ToRole="Users" />
         </EntityType>
         <EntityType Name="UserServiceSetting">
           <Key>
@@ -486,10 +460,10 @@
           <Property Name="IsEnabled" Type="Boolean" />
           <Property Name="SelectedTune" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Service" Relationship="Self.FK__UserServi__Servi__628FA481" FromRole="UserServiceSettings" ToRole="Services" />
-          <NavigationProperty Name="User" Relationship="Self.FK__UserServi__UserI__619B8048" FromRole="UserServiceSettings" ToRole="Users" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__UserServi__Servi__6477ECF3" FromRole="UserServiceSettings" ToRole="Services" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserServi__UserI__6383C8BA" FromRole="UserServiceSettings" ToRole="Users" />
         </EntityType>
-        <Association Name="FK__Feedback__UserID__66603565">
+        <Association Name="FK__Feedback__UserID__68487DD7">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
           <ReferentialConstraint>
@@ -501,7 +475,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentDe__Trans__4CA06362">
+        <Association Name="FK__PaymentDe__Trans__4E88ABD4">
           <End Role="Transactions" Type="Self.Transaction" Multiplicity="1" />
           <End Role="PaymentDetails" Type="Self.PaymentDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -513,7 +487,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PostpaidB__Payme__52593CB8">
+        <Association Name="FK__PostpaidB__Payme__5441852A">
           <End Role="Transactions" Type="Self.Transaction" Multiplicity="0..1" />
           <End Role="PostpaidBills" Type="Self.PostpaidBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -525,7 +499,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserServi__Servi__5BE2A6F2">
+        <Association Name="FK__UserServi__Servi__5DCAEF64">
           <End Role="Services" Type="Self.Service" Multiplicity="1" />
           <End Role="UserServices" Type="Self.UserService" Multiplicity="*" />
           <ReferentialConstraint>
@@ -537,7 +511,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserServi__Servi__628FA481">
+        <Association Name="FK__UserServi__Servi__6477ECF3">
           <End Role="Services" Type="Self.Service" Multiplicity="1" />
           <End Role="UserServiceSettings" Type="Self.UserServiceSetting" Multiplicity="*" />
           <ReferentialConstraint>
@@ -549,7 +523,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Trans__47DBAE45">
+        <Association Name="FK__Transacti__Trans__49C3F6B7">
           <End Role="Transactions" Type="Self.Transaction" Multiplicity="1" />
           <End Role="TransactionScripts" Type="Self.TransactionScript" Multiplicity="*" />
           <ReferentialConstraint>
@@ -561,7 +535,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__UserI__440B1D61">
+        <Association Name="FK__Transacti__UserI__45F365D3">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -573,7 +547,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserServi__UserI__5AEE82B9">
+        <Association Name="FK__UserServi__UserI__5CD6CB2B">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="UserServices" Type="Self.UserService" Multiplicity="*" />
           <ReferentialConstraint>
@@ -585,7 +559,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserServi__UserI__619B8048">
+        <Association Name="FK__UserServi__UserI__6383C8BA">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="UserServiceSettings" Type="Self.UserServiceSetting" Multiplicity="*" />
           <ReferentialConstraint>
@@ -611,54 +585,43 @@
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserServices" EntityType="Self.UserService" />
           <EntitySet Name="UserServiceSettings" EntityType="Self.UserServiceSetting" />
-          <AssociationSet Name="FK__Feedback__UserID__66603565" Association="Self.FK__Feedback__UserID__66603565">
+          <AssociationSet Name="FK__Feedback__UserID__68487DD7" Association="Self.FK__Feedback__UserID__68487DD7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Feedback" EntitySet="Feedbacks" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentDe__Trans__4CA06362" Association="Self.FK__PaymentDe__Trans__4CA06362">
+          <AssociationSet Name="FK__PaymentDe__Trans__4E88ABD4" Association="Self.FK__PaymentDe__Trans__4E88ABD4">
             <End Role="Transactions" EntitySet="Transactions" />
             <End Role="PaymentDetails" EntitySet="PaymentDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PostpaidB__Payme__52593CB8" Association="Self.FK__PostpaidB__Payme__52593CB8">
+          <AssociationSet Name="FK__PostpaidB__Payme__5441852A" Association="Self.FK__PostpaidB__Payme__5441852A">
             <End Role="Transactions" EntitySet="Transactions" />
             <End Role="PostpaidBills" EntitySet="PostpaidBills" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserServi__Servi__5BE2A6F2" Association="Self.FK__UserServi__Servi__5BE2A6F2">
+          <AssociationSet Name="FK__UserServi__Servi__5DCAEF64" Association="Self.FK__UserServi__Servi__5DCAEF64">
             <End Role="Services" EntitySet="Services" />
             <End Role="UserServices" EntitySet="UserServices" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserServi__Servi__628FA481" Association="Self.FK__UserServi__Servi__628FA481">
+          <AssociationSet Name="FK__UserServi__Servi__6477ECF3" Association="Self.FK__UserServi__Servi__6477ECF3">
             <End Role="Services" EntitySet="Services" />
             <End Role="UserServiceSettings" EntitySet="UserServiceSettings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Trans__47DBAE45" Association="Self.FK__Transacti__Trans__47DBAE45">
+          <AssociationSet Name="FK__Transacti__Trans__49C3F6B7" Association="Self.FK__Transacti__Trans__49C3F6B7">
             <End Role="Transactions" EntitySet="Transactions" />
             <End Role="TransactionScripts" EntitySet="TransactionScripts" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__UserI__440B1D61" Association="Self.FK__Transacti__UserI__440B1D61">
+          <AssociationSet Name="FK__Transacti__UserI__45F365D3" Association="Self.FK__Transacti__UserI__45F365D3">
             <End Role="Users" EntitySet="Users" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserServi__UserI__5AEE82B9" Association="Self.FK__UserServi__UserI__5AEE82B9">
+          <AssociationSet Name="FK__UserServi__UserI__5CD6CB2B" Association="Self.FK__UserServi__UserI__5CD6CB2B">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserServices" EntitySet="UserServices" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserServi__UserI__619B8048" Association="Self.FK__UserServi__UserI__619B8048">
+          <AssociationSet Name="FK__UserServi__UserI__6383C8BA" Association="Self.FK__UserServi__UserI__6383C8BA">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserServiceSettings" EntitySet="UserServiceSettings" />
           </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="OnlineRechargeDBModel.sysdiagram" />
         </EntityContainer>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -725,14 +688,13 @@
           <EntitySetMapping Name="RechargePlans">
             <EntityTypeMapping TypeName="OnlineRechargeDBModel.RechargePlan">
               <MappingFragment StoreEntitySet="RechargePlans">
-                <ScalarProperty Name="PlanName" ColumnName="PlanName" />
-                <ScalarProperty Name="Operator" ColumnName="Operator" />
                 <ScalarProperty Name="PlanID" ColumnName="PlanID" />
                 <ScalarProperty Name="PlanType" ColumnName="PlanType" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="TalkTimeMinutes" ColumnName="TalkTimeMinutes" />
                 <ScalarProperty Name="DataMB" ColumnName="DataMB" />
                 <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Operator" ColumnName="Operator" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -782,7 +744,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="OnlineRechargeDBModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="WalletBalance" ColumnName="WalletBalance" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
@@ -790,6 +751,8 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="WalletBalance" ColumnName="WalletBalance" />
+                <ScalarProperty Name="PostpaidMonthlyFee" ColumnName="PostpaidMonthlyFee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -813,17 +776,6 @@
                 <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
                 <ScalarProperty Name="SelectedTune" ColumnName="SelectedTune" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="OnlineRechargeDBModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

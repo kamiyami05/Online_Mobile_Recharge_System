@@ -20,8 +20,7 @@ namespace sem3.Models.Entities
         public Nullable<int> TalkTimeMinutes { get; set; }
         public Nullable<int> DataMB { get; set; }
         public string Details { get; set; }
-        public Nullable<bool> IsActive { get; set; }
         public string Operator { get; set; }
-        public string PlanName { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     }
 }

@@ -717,6 +717,42 @@
         $("#playPreviewBtn").html(`<i class="fas fa-${txt.includes('Pause') ? 'pause' : 'play'}"></i> ${txt}`);
     }
 
+    // Transaction History Functions
+    function initializeTransactionHistory() {
+        // Add click event to transaction rows for details
+        $('.transaction-row').click(function () {
+            const transactionId = $(this).data('transaction-id');
+            showTransactionDetails(transactionId);
+        });
+
+        // Add hover effects
+        $('.transaction-row').hover(
+            function () {
+                $(this).css('cursor', 'pointer');
+                $(this).addClass('row-hover');
+            },
+            function () {
+                $(this).removeClass('row-hover');
+            }
+        );
+    }
+
+    function showTransactionDetails(transactionId) {
+        // You can implement a modal or redirect to detailed view
+        Swal.fire({
+            title: 'Transaction Details',
+            text: `Showing details for transaction #${transactionId}. This would show full transaction information.`,
+            icon: 'info',
+            confirmButtonText: 'View Full Details',
+            showCancelButton: true,
+            cancelButtonText: 'Close'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Profile/TransactionHistory';
+            }
+        });
+    }
+
     // Khởi tạo trạng thái ban đầu
     function initializeServices(doNotDisturbEnabled, callerTune, callerTuneEnabled) {
         $("#doNotDisturbToggle").prop('checked', doNotDisturbEnabled);
@@ -729,6 +765,9 @@
         $("#actionButtons").hide();
         $("#fileUploadSection").hide();
         $("#tunePreview").hide();
+
+        // Initialize transaction history
+        initializeTransactionHistory();
 
         // Khởi tạo player ngay để tránh lỗi
         initializeAudioPlayer();

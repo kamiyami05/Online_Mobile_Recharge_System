@@ -2,6 +2,7 @@
 using sem3.Models.Entities;
 using sem3.Models.ModelViews;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -44,6 +45,15 @@ namespace sem3.Controllers
             ViewBag.DoNotDisturbStatus = GetServiceStatus(userFromDb.UserID, "Do Not Disturb");
             ViewBag.CallerTunesStatus = GetServiceStatus(userFromDb.UserID, "Caller Tunes");
             ViewBag.SelectedTune = GetSelectedTune(userFromDb.UserID);
+
+            // Thêm transaction history vào ViewBag
+            var transactionHistory = GetUserTransactionHistory(userFromDb.UserID);
+            ViewBag.TransactionHistory = transactionHistory;
+            ViewBag.TotalTransactions = _db.Transactions.Count(t => t.UserID == userFromDb.UserID);
+
+            // Tính toán số liệu thống kê
+            ViewBag.SuccessCount = transactionHistory.Count(t => t.Status == "Success");
+            ViewBag.PendingCount = transactionHistory.Count(t => t.Status == "Pending");
 
             return View(viewModel);
         }
@@ -409,6 +419,29 @@ namespace sem3.Controllers
                 return Json(new { success = false, message = "Upload failed: " + ex.Message });
             }
         }
+
+        // POST: Profile/GetTransactionHistory
+        private List<TransactionHistoryM> GetUserTransactionHistory(int userId)
+        {
+            var transactions = _db.Transactions
+                .Where(t => t.UserID == userId)
+                .OrderByDescending(t => t.TransactionDate)
+                .Take(20) // Giới hạn 20 giao dịch gần nhất
+                .ToList();
+
+            return transactions.Select(t => new TransactionHistoryM
+            {
+                TransactionID = t.TransactionID,
+                TransactionType = t.TransactionType,
+                Amount = t.Amount,
+                TransactionDate = (DateTime)t.TransactionDate,
+                Status = t.Status,
+                MobileNumber = t.MobileNumber,
+                PlanDetails = t.PlanID != null ? _db.RechargePlans.FirstOrDefault(p => p.PlanID == t.PlanID)?.Details : null,
+                Operator = t.PlanID != null ? _db.RechargePlans.FirstOrDefault(p => p.PlanID == t.PlanID)?.Operator : null
+            }).ToList();
+        }
+
 
         protected override void Dispose(bool disposing)
         {

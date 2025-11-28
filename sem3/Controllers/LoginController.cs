@@ -33,15 +33,6 @@ namespace sem3.Controllers
                 if (adminUser != null)
                 {
                     System.Diagnostics.Debug.WriteLine($"Admin user found: {adminUser.Username}");
-                    System.Diagnostics.Debug.WriteLine($"Admin PasswordHash: {adminUser.PasswordHash}");
-                    System.Diagnostics.Debug.WriteLine($"Admin PasswordHash length: {adminUser.PasswordHash?.Length}");
-                    System.Diagnostics.Debug.WriteLine($"Admin PasswordHash type: {adminUser.PasswordHash?.GetType()}");
-
-                    // Hiển thị dưới dạng hex và bytes để debug
-                    byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(adminUser.PasswordHash);
-                    string passwordHex = BitConverter.ToString(passwordBytes).Replace("-", "");
-                    System.Diagnostics.Debug.WriteLine($"Admin PasswordHash as hex: {passwordHex}");
-                    System.Diagnostics.Debug.WriteLine($"Admin PasswordHash as bytes: {string.Join(", ", passwordBytes)}");
 
                     bool isAdminPasswordValid = VerifyPasswordForAdmin(model.Password, adminUser.PasswordHash);
                     System.Diagnostics.Debug.WriteLine($"Admin password verification result: {isAdminPasswordValid}");
@@ -147,10 +138,10 @@ namespace sem3.Controllers
                 {
                     FullName = model.FullName,
                     MobileNumber = model.Phone,
-                    PasswordHash = HashPassword(model.Password),
+                    PasswordHash = HashPassword(model.Password), // Hash password cho user mới
                     RegistrationDate = DateTime.Now,
-                    Email = null,
-                    Address = null
+                    Email = model.Email, // Thêm email nếu có
+                    Address = model.Address // Thêm address nếu có
                 };
 
                 _db.Users.Add(newUser);
@@ -188,18 +179,69 @@ namespace sem3.Controllers
             return View(model);
         }
 
-        // Verify User's password
-        private bool VerifyPasswordForUser(string providedPassword, string hashedPassword)
+        // Verify User's password - Sửa lại để hoạt động chính xác
+        private bool VerifyPasswordForUser(string providedPassword, string storedPassword)
         {
-            var passwordHasher = new PasswordHasher();
-            return passwordHasher.VerifyHashedPassword(hashedPassword, providedPassword) == PasswordVerificationResult.Success;
+            System.Diagnostics.Debug.WriteLine($"=== VERIFY USER PASSWORD ===");
+            System.Diagnostics.Debug.WriteLine($"Stored password: '{storedPassword}'");
+            System.Diagnostics.Debug.WriteLine($"Stored password length: {storedPassword?.Length}");
+            System.Diagnostics.Debug.WriteLine($"Stored password is plain text: {IsPlainTextPassword(storedPassword)}");
+
+            // Nếu storedPassword là plain text (ngắn), so sánh trực tiếp
+            if (IsPlainTextPassword(storedPassword))
+            {
+                System.Diagnostics.Debug.WriteLine($"Comparing plain text: '{providedPassword}' == '{storedPassword}'");
+                bool result = providedPassword == storedPassword;
+                System.Diagnostics.Debug.WriteLine($"Plain text comparison result: {result}");
+                return result;
+            }
+
+            // Nếu đã là hash, verify bằng PasswordHasher
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"Using PasswordHasher for verification");
+                var passwordHasher = new PasswordHasher();
+                var result = passwordHasher.VerifyHashedPassword(storedPassword, providedPassword);
+                System.Diagnostics.Debug.WriteLine($"Password hasher result: {result}");
+
+                return result == PasswordVerificationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error verifying hashed password: {ex.Message}");
+                return false;
+            }
         }
 
-        // Verify Admin's password
-        private bool VerifyPasswordForAdmin(string providedPassword, string hashedPassword)
+        // Verify Admin's password - Sửa tương tự
+        private bool VerifyPasswordForAdmin(string providedPassword, string storedPassword)
         {
-            // So sánh trực tiếp vì password đang là plain text
-            return providedPassword == hashedPassword;
+            System.Diagnostics.Debug.WriteLine($"=== VERIFY ADMIN PASSWORD ===");
+            System.Diagnostics.Debug.WriteLine($"Stored admin password: '{storedPassword}'");
+            System.Diagnostics.Debug.WriteLine($"Stored admin password length: {storedPassword?.Length}");
+
+            // Admin luôn dùng plain text comparison
+            bool result = providedPassword == storedPassword;
+            System.Diagnostics.Debug.WriteLine($"Admin password comparison result: {result}");
+            return result;
+        }
+
+        private bool IsPlainTextPassword(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+                return true;
+
+            // Hash password thường dài > 30 ký tự và chứa ký tự đặc biệt
+            // Plain text thường ngắn (6-20 ký tự) và chỉ chứa ký tự thông thường
+            bool isPlainText = password.Length <= 20 &&
+                              !password.Contains("/") &&
+                              !password.Contains("+") &&
+                              !password.Contains("=") &&
+                              !password.Contains(" ");
+
+            System.Diagnostics.Debug.WriteLine($"IsPlainTextPassword check: Length={password.Length}, ContainsSlash={password.Contains("/")}, ContainsPlus={password.Contains("+")}, ContainsEqual={password.Contains("=")}, Result={isPlainText}");
+
+            return isPlainText;
         }
 
         private string HashPassword(string password)
