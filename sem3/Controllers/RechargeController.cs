@@ -3,6 +3,7 @@ using sem3.Models.ModelViews;
 using sem3.Services.Payment;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -189,8 +190,12 @@ namespace sem3.Controllers
         }
 
         [HttpPost]
-        public ActionResult ConfirmPayment(string method, string phone, string operatorName, string planName, decimal amount, string cardNumber, int? planId)
+        public ActionResult ConfirmPayment(string method, string phone, string operatorName,
+                                   string planName, decimal amount, string cardNumber,
+                                   int? planId, int? loggedInUserId = null)
         {
+            int? userId = loggedInUserId ?? (Session["CurrentUserId"] != null ? (int?)Session["CurrentUserId"] : null);
+       
             // --- A. VALIDATE ---
             if (method == "Visa")
             {
@@ -225,12 +230,6 @@ namespace sem3.Controllers
             // --- B. LƯU DATABASE (Giữ nguyên code cũ của bạn) ---
             try
             {
-                int? userId = null;
-                if (Session["UserID"] != null)
-                {
-                    userId = (int)Session["UserID"];
-                }
-
                 var transaction = new sem3.Models.Entities.Transaction
                 {
                     MobileNumber = phone,
@@ -270,16 +269,23 @@ namespace sem3.Controllers
                 return RedirectToAction("PaymentFailed");
             }
         }
-        public ActionResult LoadPaymentForm(string method, string phone, string operatorName, string planName, decimal amount, int planId)
+        public ActionResult LoadPaymentForm(string method, string phone, string operatorName, string planName, string amount, int planId)
         {
-            ViewBag.Method = method;
-            ViewBag.Phone = phone;
-            ViewBag.Operator = operatorName;
-            ViewBag.PlanName = planName;
-            ViewBag.Amount = amount;
+            decimal amountValue = 0m;
+            if (!string.IsNullOrEmpty(amount))
+            {
+                decimal.TryParse(amount, NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out amountValue);
+            }
 
-
+            ViewBag.Method = method ?? "";
+            ViewBag.Phone = phone ?? "";
+            ViewBag.Operator = operatorName ?? "";
+            ViewBag.PlanName = planName ?? "";
+            ViewBag.Amount = amountValue;
             ViewBag.PlanId = planId;
+
+            // SỬA Ở ĐÂY: Lấy từ Session["CurrentUserId"] thay vì Session["UserID"]
+            ViewBag.CurrentUserID = Session["CurrentUserId"] != null ? (int?)Session["CurrentUserId"] : null;
 
             return PartialView("~/Views/Recharge/PaymentForm.cshtml");
         }

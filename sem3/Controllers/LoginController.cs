@@ -31,11 +31,7 @@ namespace sem3.Controllers
 
                 if (adminUser != null)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Admin user found: {adminUser.Username}");
-
                     bool isAdminPasswordValid = VerifyPasswordForAdmin(model.Password, adminUser.PasswordHash);
-                    System.Diagnostics.Debug.WriteLine($"Admin password verification result: {isAdminPasswordValid}");
-
                     if (isAdminPasswordValid)
                     {
                         System.Diagnostics.Debug.WriteLine($"ADMIN LOGIN SUCCESSFUL");
@@ -76,11 +72,9 @@ namespace sem3.Controllers
                     }
 
                     bool isUserPasswordValid = VerifyPasswordForUser(model.Password, user.PasswordHash);
-                    System.Diagnostics.Debug.WriteLine($"User password verification result: {isUserPasswordValid}");
 
                     if (isUserPasswordValid)
                     {
-                        System.Diagnostics.Debug.WriteLine($"USER LOGIN SUCCESSFUL");
                         Session["CurrentUser"] = new User
                         {
                             UserID = user.UserID,
@@ -103,7 +97,6 @@ namespace sem3.Controllers
                     System.Diagnostics.Debug.WriteLine($"No regular user found with phone: {model.PhoneNumber}");
                 }
 
-                System.Diagnostics.Debug.WriteLine($"LOGIN FAILED - No valid user found");
                 ModelState.AddModelError("", "Incorrect phone number or password.");
             }
             return View(model);
@@ -191,23 +184,18 @@ namespace sem3.Controllers
 
             if (IsPlainTextPassword(storedPassword))
             {
-                System.Diagnostics.Debug.WriteLine($"Comparing plain text: '{providedPassword}' == '{storedPassword}'");
                 bool result = providedPassword == storedPassword;
-                System.Diagnostics.Debug.WriteLine($"Plain text comparison result: {result}");
                 return result;
             }
             try
             {
-                System.Diagnostics.Debug.WriteLine($"Using PasswordHasher for verification");
                 var passwordHasher = new PasswordHasher();
                 var result = passwordHasher.VerifyHashedPassword(storedPassword, providedPassword);
-                System.Diagnostics.Debug.WriteLine($"Password hasher result: {result}");
 
                 return result == PasswordVerificationResult.Success;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error verifying hashed password: {ex.Message}");
                 return false;
             }
         }
