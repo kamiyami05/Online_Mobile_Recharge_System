@@ -2,24 +2,30 @@
     Layout = null;
 }
 
-<div class="card">
-    <div class="card-header bg-primary text-white">
-        Payment confirmation: @ViewBag.Method
+<div class="payment-form-container">
+    <div class="payment-form-header">
+        <h4><i class="fas fa-lock"></i> Secure Payment - @ViewBag.Method</h4>
     </div>
-    <div class="card-body">
-        <p>You are making a payment for a package: <strong>@ViewBag.PlanName</strong></p>
-        <p>Total: <strong class="text-danger">@string.Format("{0:n0}", ViewBag.Amount) VNĐ</strong></p>
+    <div class="payment-form-body">
+        <div class="payment-info">
+            <p>You are making a payment for: <strong class="payment-plan">@ViewBag.PlanName</strong></p>
+            <p>Total Amount: <strong class="payment-amount">@string.Format("{0:n0}", ViewBag.Amount) VND</strong></p>
+        </div>
 
         @if (ViewBag.Method == "Visa")
         {
-            <div class="alert alert-warning text-sm">
-                <strong><i class="fa fa-info-circle"></i> Thẻ Test Demo:</strong><br />
-                ✅ Thành công: <code>4222 2222 2222 2222</code><br />
-                ❌ Không đủ tiền: <code>4000 0000 0000 0000</code>
+            <div class="demo-info">
+                <strong><i class="fas fa-info-circle"></i> Demo Card Information:</strong>
+                <div class="demo-card demo-success">
+                    ✅ Successful Payment: 4222 2222 2222 2222
+                </div>
+                <div class="demo-card demo-failed">
+                    ❌ Insufficient Funds: 4000 0000 0000 0000
+                </div>
             </div>
         }
 
-        <form action="@Url.Action("ConfirmPayment", "Recharge")" method="post">
+        <form action="@Url.Action("ConfirmPayment", "Recharge")" method="post" class="payment-form">
             <input type="hidden" name="method" value="@ViewBag.Method" />
             <input type="hidden" name="phone" value="@ViewBag.Phone" />
             <input type="hidden" name="operatorName" value="@ViewBag.Operator" />
@@ -30,39 +36,48 @@
             @if (ViewBag.Method == "Visa")
             {
                 <div class="form-group">
-                    <label>Số thẻ Visa</label>
+                    <label for="txtCardNumber">Card Number</label>
                     <input type="text" id="txtCardNumber" name="cardNumber" class="form-control"
-                           placeholder="4222 2222 2222 2222" maxlength="19" required />
+                           placeholder="xxxx xxxx xxxx" maxlength="19" required />
+                </div>
 
-                    <input type="text" class="form-control mt-2" placeholder="Name on Card" required />
-                    <div class="row mt-2">
-                        <div class="col">
-                            <input type="text" id="txtExpiry" class="form-control" placeholder="MM/YY" maxlength="5" required />
-                        </div>
-                        <div class="col">
-                            <input type="text" id="txtCVV" class="form-control" placeholder="CVV"
-                                   maxlength="3" required />
-                        </div>
+                <div class="form-group">
+                    <label for="txtCardName">Name on Card</label>
+                    <input type="text" id="txtCardName" name="cardName" class="form-control"
+                           placeholder="Your name" required />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="txtExpiry">Expiry Date</label>
+                        <input type="text" id="txtExpiry" name="expiryDate" class="form-control"
+                               placeholder="MM/YY" maxlength="5" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="txtCVV">CVV</label>
+                        <input type="text" id="txtCVV" name="cvv" class="form-control"
+                               placeholder="123" maxlength="3" required />
                     </div>
                 </div>
             }
 
-            <br />
-            <button type="submit" class="btn btn-success btn-block">Pay (@ViewBag.Method)</button>
+            <button type="submit" class="btn-pay">
+                <i class="fas fa-lock"></i> Pay @string.Format("{0:n0}", ViewBag.Amount) VND
+            </button>
         </form>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-        // 1. Format Số thẻ: Tự động thêm dấu cách sau mỗi 4 số
+        // Format card number with spaces
         $('#txtCardNumber').on('input', function () {
-            var value = $(this).val().replace(/\D/g, '').substring(0, 16); // Chỉ lấy số, tối đa 16 số
+            var value = $(this).val().replace(/\D/g, '').substring(0, 16);
             var formattedValue = value != '' ? value.match(/.{1,4}/g).join(' ') : '';
             $(this).val(formattedValue);
         });
 
-        // 2. Format Ngày hết hạn: Tự động thêm dấu / sau 2 số
+        // Format expiry date
         $('#txtExpiry').on('input', function () {
             var value = $(this).val().replace(/\D/g, '').substring(0, 4);
             if (value.length >= 3) {
@@ -72,7 +87,7 @@
             }
         });
 
-        // 3. CVV: Chỉ cho nhập số
+        // Only numbers for CVV
         $('#txtCVV').on('input', function () {
             $(this).val($(this).val().replace(/\D/g, ''));
         });

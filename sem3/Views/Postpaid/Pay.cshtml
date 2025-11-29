@@ -1,28 +1,35 @@
-﻿@model sem3.Models.Entities.PostpaidBill
+﻿﻿@model sem3.Models.Entities.PostpaidBill
 @{
     ViewBag.Title = "Pay Bill";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5" style="max-width: 600px;">
-    <h3 class="text-center">Pay Postpaid Bill</h3>
-    <hr />
+<link href="~/Content/Client/postpaid.css" rel="stylesheet" />
 
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
+<div class="content-wrapper">
+    <div class="page-header">
+        <h1>Pay Postpaid Bill</h1>
+        <p>Confirm and complete your bill payment</p>
+    </div>
 
-    <table class="table table-bordered">
-        <tr><th>Mobile Number</th><td>@Model.MobileNumber</td></tr>
-        <tr><th>Billing Date</th><td>@Model.BillingCycle.ToString("dd/MM/yyyy")</td></tr>
-        <tr><th>Total Amount</th><td>@String.Format("{0:0,0} VND", Model.TotalAmount)</td></tr>
-        <tr><th>Payment Due</th><td>@Model.PaymentDueDate?.ToString("dd/MM/yyyy")</td></tr>
-    </table>
+    <div class="form-container">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
 
-    <form method="post" action="/Postpaid/PayPost">
-        <input type="hidden" name="billId" value="@Model.BillID" />
-        <button type="submit" class="btn btn-success w-100 mt-3">Confirm Payment</button>
-    </form>
+        <table class="table table-bordered">
+            <tr><th>Mobile Number</th><td>@Model.MobileNumber</td></tr>
+            <tr><th>Billing Date</th><td>@Model.BillingCycle.ToString("dd/MM/yyyy hh:mm tt")</td></tr>
+            <tr><th>Total Amount</th><td>@String.Format("{0:0,0} VND", Model.TotalAmount)</td></tr>
+            <tr><th>Payment Due</th><td>@(Model.PaymentDueDate?.ToString("dd/MM/yyyy hh:mm tt") ?? "N/A")</td></tr>
+        </table>
 
-    <a href="/Postpaid" class="btn btn-secondary w-100 mt-2">Cancel</a>
+        <form method="post" action="/Postpaid/PayPost">
+            <input type="hidden" name="billId" value="@Model.BillID" />
+            <button type="submit" class="btn btn-success w-100 mt-3">Confirm Payment</button>
+        </form>
+
+        <a href="/Postpaid" class="btn btn-secondary w-100 mt-2">Cancel</a>
+    </div>
 </div>

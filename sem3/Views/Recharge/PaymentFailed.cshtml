@@ -1,38 +1,37 @@
 ﻿@{
-    ViewBag.Title = "Thanh toán thất bại";
+    ViewBag.Title = "Payment Failed";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5">
-    <div class="card text-center border-danger">
-        <div class="card-header bg-danger text-white">
-            <h2><i class="fa fa-times-circle"></i> Failed payment!</h2>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title text-danger">Rất tiếc, giao dịch không thể thực hiện</h5>
+<link href="~/Content/Client/payment.css" rel="stylesheet" />
 
-            <div class="alert alert-warning mt-3" role="alert">
-                <strong>Reason:</strong> @ViewBag.ErrorMessage
+<div class="failed-container">
+    <div class="failed-card">
+        <div class="failed-header">
+            <h1><i class="fas fa-times-circle"></i> Payment Failed</h1>
+            <p>We couldn't process your transaction</p>
+        </div>
+
+        <div class="failed-body">
+            <div class="error-message">
+                <strong><i class="fas fa-exclamation-triangle"></i> Reason:</strong>
+                <p>@ViewBag.ErrorMessage</p>
             </div>
 
-            <p class="card-text mt-3">
-                Vui lòng kiểm tra lại thông tin thẻ hoặc số dư tài khoản của bạn.
-            </p>
+            <p>Please check your card information or account balance and try again.</p>
 
-            <hr />
-
-            <div class="mt-4">
-                <a href="@Url.Action("TopUp", "Recharge")" class="btn btn-warning btn-lg">
-                    <i class="fa fa-refresh"></i> Try Again
+            <div class="retry-buttons">
+                <a href="@Url.Action("TopUp", "Recharge")" class="btn-retry btn-pay">
+                    <i class="fas fa-redo"></i> Try Again
                 </a>
-
-                <a href="@Url.Action("Index", "Recharge")" class="btn btn-secondary btn-lg ml-2">
-                    Home
+                <a href="@Url.Action("Index", "Recharge")" class="btn-home">
+                    <i class="fas fa-home"></i> Back to Home
                 </a>
             </div>
         </div>
-        <div class="card-footer text-muted">
-            Nếu bạn cần hỗ trợ, vui lòng liên hệ CSKH: 1900 xxxx
+
+        <div class="success-footer">
+            Need assistance? Please contact customer support: 1900-XXXX
         </div>
     </div>
 </div>

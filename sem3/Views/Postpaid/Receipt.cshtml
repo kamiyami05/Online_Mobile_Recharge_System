@@ -1,16 +1,185 @@
-﻿@model sem3.Models.Entities.TransactionScript
+﻿﻿@model sem3.Models.Entities.TransactionScript
 @{
     ViewBag.Title = "Payment Receipt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5" style="max-width: 600px;">
-    <h3 class="text-center">Payment Receipt</h3>
-    <hr />
+<link href="~/Content/Client/postpaid.css" rel="stylesheet" />
 
-    <pre class="border p-3" style="background-color:#f9f9f9; font-size: 15px;">
-@Model.ScriptContent
-    </pre>
+<div class="content-wrapper">
+    <div class="page-header">
+        <h1>Payment Receipt</h1>
+        <p>Your payment confirmation and details</p>
+    </div>
 
-    <a href="/Postpaid/Print/@Model.TransactionID" class="btn btn-primary w-100 mt-3">Download PDF</a>
-    <a href="/Postpaid" class="btn btn-secondary w-100 mt-2">Back</a>
+    <div class="form-container">
+        <div class="receipt-content">
+            <div class="receipt-header">
+                <h3>💳 Payment Receipt</h3>
+                <div class="receipt-date">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
+            </div>
+
+            <div class="receipt-body">
+                <div class="receipt-line">
+                    <span class="label">Transaction ID:</span>
+                    <span class="value">@Model.TransactionID</span>
+                </div>
+
+                <div class="receipt-line">
+                    <span class="label">Status:</span>
+                    <span class="value status-success">✅ Completed</span>
+                </div>
+
+                <div class="receipt-divider"></div>
+
+                <pre class="receipt-details">@Model.ScriptContent</pre>
+
+                <div class="receipt-divider"></div>
+
+                <div class="receipt-footer">
+                    <div class="receipt-line">
+                        <span class="label">Thank you for your payment!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="receipt-actions">
+            <a href="/Postpaid/Print/@Model.TransactionID" class="btn btn-primary w-100">Download PDF Receipt</a>
+            <a href="/Postpaid" class="btn btn-secondary w-100 mt-2">Back to Bills</a>
+        </div>
+    </div>
 </div>
+
+<style>
+    .receipt-content {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        padding: 2rem;
+        border: 2px solid #e0e0e0;
+        font-family: 'Courier New', monospace;
+    }
+
+    .receipt-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px dashed #dc143c;
+    }
+
+        .receipt-header h3 {
+            color: #dc143c;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+    .receipt-date {
+        color: #666;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .receipt-body {
+        color: #333;
+    }
+
+    .receipt-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        padding: 0.3rem 0;
+    }
+
+        .receipt-line .label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .receipt-line .value {
+            font-weight: 700;
+            color: #333;
+        }
+
+    .status-success {
+        color: #28a745 !important;
+    }
+
+    .receipt-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #dc143c, transparent);
+        margin: 1.5rem 0;
+        opacity: 0.6;
+    }
+
+    .receipt-details {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-height: 300px;
+        overflow-y: auto;
+        margin: 0;
+        font-family: 'Courier New', monospace;
+    }
+
+    .receipt-footer {
+        text-align: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px dashed #ccc;
+    }
+
+        .receipt-footer .label {
+            color: #dc143c;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+    .receipt-actions {
+        margin-top: 2rem;
+    }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .receipt-content {
+            padding: 1.5rem;
+        }
+
+        .receipt-line {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+            .receipt-line .value {
+                margin-top: 0.2rem;
+            }
+
+        .receipt-details {
+            padding: 1rem;
+            font-size: 0.85rem;
+            max-height: 250px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .receipt-content {
+            padding: 1rem;
+        }
+
+        .receipt-header h3 {
+            font-size: 1.3rem;
+        }
+
+        .receipt-details {
+            padding: 0.8rem;
+            font-size: 0.8rem;
+            max-height: 200px;
+        }
+    }
+</style>

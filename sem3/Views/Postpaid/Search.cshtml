@@ -1,16 +1,23 @@
 ﻿@{
     ViewBag.Title = "Postpaid Bill Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5" style="max-width: 500px;">
-    <h3 class="text-center">Postpaid Bill Payment</h3>
+<link href="~/Content/Client/postpaid.css" rel="stylesheet" />
 
-    <form method="get" action="/Postpaid/Index" class="mt-4">
-        <div class="mb-3">
-            <label class="form-label">Mobile Number</label>
-            <input type="text" name="mobile" class="form-control" placeholder="Enter mobile number" required maxlength="10">
-        </div>
+<div class="content-wrapper">
+    <div class="page-header">
+        <h1>Postpaid Bill Payment</h1>
+        <p>Search for your postpaid bills by mobile number</p>
+    </div>
 
-        <button type="submit" class="btn btn-primary w-100">Search Bill</button>
-    </form>
+    <div class="form-container">
+        <form method="get" action="/Postpaid/Index">
+            <div class="form-group">
+                <input type="text" name="mobile" class="form-control" placeholder="Enter mobile number" required maxlength="10">
+            </div>
+
+            <button type="submit" id="btnSubmit" class="btn btn-primary w-100">Search Bill</button>
+        </form>
+    </div>
 </div>

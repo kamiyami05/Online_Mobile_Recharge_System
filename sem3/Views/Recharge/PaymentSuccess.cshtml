@@ -1,76 +1,60 @@
 ﻿@{
-    ViewBag.Title = "Thanh toán thành công";
+    ViewBag.Title = "Payment Successful";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    /* Chỉ áp dụng khi bấm nút IN */
-    @@media print {
-        body * {
-            visibility: hidden;
-        }
-        /* Ẩn các nút bấm không cần thiết */
-        .no-print, .no-print * {
-            display: none !important;
-        }
-        /* Chỉ hiện phần có ID là "invoice-content" */
-        #invoice-content, #invoice-content * {
-            visibility: visible;
-        }
-        /* Định vị hóa đơn nằm gọn trong trang giấy */
-        #invoice-content {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            border: none;
-        }
-        /* Ẩn Header/Footer */
-        header, footer, .navbar, .sidebar {
-            display: none !important;
-        }
-    }
-</style>
 
+<link href="~/Content/Client/payment.css" rel="stylesheet" />
 
-<div class="container mt-5">
-
-    <div class="card text-center" id="invoice-content">
-        <div class="card-header bg-success text-white">
-            <h2>🎉 Thanh toán thành công!</h2>
+<div class="success-container">
+    <div class="success-card" id="invoice-content">
+        <div class="success-header">
+            <h1><i class="fas fa-check-circle"></i> Payment Successful!</h1>
+            <p>Thank you for using our service</p>
         </div>
-        <div class="card-body">
-            <h5 class="card-title">Cảm ơn bạn đã sử dụng dịch vụ</h5>
-            <p class="card-text">Giao dịch của bạn đã được thực hiện thành công.</p>
 
-            <div class="alert alert-light text-left border" style="display: inline-block; text-align: left; padding: 20px; min-width: 300px;">
-                <h4 class="text-center mb-4">HÓA ĐƠN ĐIỆN TỬ</h4>
-                <p><strong>Mã giao dịch:</strong> @ViewBag.TransactionId</p>
-                <p><strong>Ngày giờ:</strong> @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</p>
-                <hr />
-                <p><strong>Số điện thoại:</strong> @ViewBag.Phone</p>
-                <p><strong>Nhà mạng:</strong> @ViewBag.Operator</p>
-                <p><strong>Gói cước:</strong> @ViewBag.PlanName</p>
-                <hr />
-                <p><strong>TỔNG TIỀN:</strong> <span class="text-danger font-weight-bold" style="font-size: 1.2em">@string.Format("{0:n0}", ViewBag.Amount) đ</span></p>
+        <div class="success-body">
+            <div class="invoice">
+                <h4>ELECTRONIC RECEIPT</h4>
+                <div class="invoice-details">
+                    <div class="invoice-row">
+                        <span class="invoice-label">Transaction ID:</span>
+                        <span class="invoice-value">@ViewBag.TransactionId</span>
+                    </div>
+                    <div class="invoice-row">
+                        <span class="invoice-label">Date & Time:</span>
+                        <span class="invoice-value">@DateTime.Now.ToString("MMM dd, yyyy HH:mm")</span>
+                    </div>
+                    <div class="invoice-row">
+                        <span class="invoice-label">Phone Number:</span>
+                        <span class="invoice-value">@ViewBag.Phone</span>
+                    </div>
+                    <div class="invoice-row">
+                        <span class="invoice-label">Operator:</span>
+                        <span class="invoice-value">@ViewBag.Operator</span>
+                    </div>
+                    <div class="invoice-row">
+                        <span class="invoice-label">Plan:</span>
+                        <span class="invoice-value">@ViewBag.PlanName</span>
+                    </div>
+                    <div class="invoice-row">
+                        <span class="invoice-label">Total Amount:</span>
+                        <span class="invoice-value invoice-total">@string.Format("{0:n0}", ViewBag.Amount) VND</span>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <br /><br />
-            <div class="card-footer text-muted">
-                Online Recharge System - Xin cảm ơn quý khách!
-            </div>
+        <div class="success-footer">
+            Online Recharge System - Thank you for your business!
         </div>
     </div>
 
-    <div class="mt-4 no-print text-center">
-        <button onclick="window.print()" class="btn btn-primary btn-lg">
-            <i class="fa fa-print"></i> In hóa đơn
+    <div class="action-buttons no-print">
+        <button onclick="window.print()" class="btn-print">
+            <i class="fas fa-print"></i> Print Receipt
         </button>
-
-        <a href="@Url.Action("Index", "Recharge")" class="btn btn-secondary btn-lg ml-2">
-            Quay lại trang chủ
+        <a href="@Url.Action("Index", "Recharge")" class="btn-home">
+            <i class="fas fa-home"></i> Back to Home
         </a>
     </div>
-
 </div>
