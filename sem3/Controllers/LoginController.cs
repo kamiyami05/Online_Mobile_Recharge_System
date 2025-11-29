@@ -24,19 +24,12 @@ namespace sem3.Controllers
         {
             if (ModelState.IsValid)
             {
-                System.Diagnostics.Debug.WriteLine($"=== LOGIN ATTEMPT ===");
-                System.Diagnostics.Debug.WriteLine($"Phone: {model.PhoneNumber}, Password: {model.Password}");
-
                 // 1. Kiểm tra trong bảng AdminUsers trước
                 var adminUser = _db.AdminUsers.FirstOrDefault(a => a.MobileNumber == model.PhoneNumber);
 
                 if (adminUser != null)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Admin user found: {adminUser.Username}");
-
                     bool isAdminPasswordValid = VerifyPasswordForAdmin(model.Password, adminUser.PasswordHash);
-                    System.Diagnostics.Debug.WriteLine($"Admin password verification result: {isAdminPasswordValid}");
-
                     if (isAdminPasswordValid)
                     {
                         System.Diagnostics.Debug.WriteLine($"ADMIN LOGIN SUCCESSFUL");
@@ -69,13 +62,10 @@ namespace sem3.Controllers
                 var user = _db.Users.FirstOrDefault(u => u.MobileNumber == model.PhoneNumber);
                 if (user != null)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Regular user found: {user.FullName}");
                     bool isUserPasswordValid = VerifyPasswordForUser(model.Password, user.PasswordHash);
-                    System.Diagnostics.Debug.WriteLine($"User password verification result: {isUserPasswordValid}");
 
                     if (isUserPasswordValid)
                     {
-                        System.Diagnostics.Debug.WriteLine($"USER LOGIN SUCCESSFUL");
                         Session["CurrentUser"] = new User
                         {
                             UserID = user.UserID,
@@ -98,7 +88,6 @@ namespace sem3.Controllers
                     System.Diagnostics.Debug.WriteLine($"No regular user found with phone: {model.PhoneNumber}");
                 }
 
-                System.Diagnostics.Debug.WriteLine($"LOGIN FAILED - No valid user found");
                 ModelState.AddModelError("", "Incorrect phone number or password.");
             }
             return View(model);
@@ -182,33 +171,23 @@ namespace sem3.Controllers
         // Verify User's password - Sửa lại để hoạt động chính xác
         private bool VerifyPasswordForUser(string providedPassword, string storedPassword)
         {
-            System.Diagnostics.Debug.WriteLine($"=== VERIFY USER PASSWORD ===");
-            System.Diagnostics.Debug.WriteLine($"Stored password: '{storedPassword}'");
-            System.Diagnostics.Debug.WriteLine($"Stored password length: {storedPassword?.Length}");
-            System.Diagnostics.Debug.WriteLine($"Stored password is plain text: {IsPlainTextPassword(storedPassword)}");
-
             // Nếu storedPassword là plain text (ngắn), so sánh trực tiếp
             if (IsPlainTextPassword(storedPassword))
             {
-                System.Diagnostics.Debug.WriteLine($"Comparing plain text: '{providedPassword}' == '{storedPassword}'");
                 bool result = providedPassword == storedPassword;
-                System.Diagnostics.Debug.WriteLine($"Plain text comparison result: {result}");
                 return result;
             }
 
             // Nếu đã là hash, verify bằng PasswordHasher
             try
             {
-                System.Diagnostics.Debug.WriteLine($"Using PasswordHasher for verification");
                 var passwordHasher = new PasswordHasher();
                 var result = passwordHasher.VerifyHashedPassword(storedPassword, providedPassword);
-                System.Diagnostics.Debug.WriteLine($"Password hasher result: {result}");
 
                 return result == PasswordVerificationResult.Success;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error verifying hashed password: {ex.Message}");
                 return false;
             }
         }

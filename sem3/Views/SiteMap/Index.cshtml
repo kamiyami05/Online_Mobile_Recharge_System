@@ -2,6 +2,45 @@
     ViewBag.Title = "Site Map";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Site Map</h1>
-<iframe src="https://www.google.com/maps/embed?pb=..." width="600" height="450"></iframe>
 
+<div class="sitemap-wrapper">
+    <h1>Site Map</h1>
+
+    <iframe src="https://www.google.com/maps/embed?pb=...&hl=en"
+            width="800"
+            height="500"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
+
+<style>
+    h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(45deg, #fff, #f0f0f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Thoát khỏi flex bị Layout áp dụng */
+    .sitemap-wrapper {
+        display: block !important;
+        width: 100%;
+        text-align: center; /* Giữ tiêu đề & bản đồ canh giữa */
+        padding-top: 40px;
+        margin-bottom: 2rem;
+    }
+
+        .sitemap-wrapper iframe {
+            width: 90%;
+            max-width: 900px;
+            height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+</style>
