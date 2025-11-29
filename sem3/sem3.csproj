@@ -269,22 +269,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\FeedbackmgmtController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TransactionmgmtController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsermgmtController.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\ApiController.cs" />
-    <Compile Include="Controllers\BillPaymentController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\CustomerCareController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PlanmgmtController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RechargeController.cs" />
     <Compile Include="Controllers\SiteMapController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelViews\ChatRequestModel.cs" />
     <Compile Include="Models\Entities\AdminUser.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
@@ -318,9 +318,6 @@
     <Compile Include="Models\Entities\RechargePlan.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Role.cs">
-      <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities\Service.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
@@ -342,16 +339,21 @@
     <Compile Include="Models\Entities\UserServiceSetting.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelViews\ChatRequestModel.cs" />
     <Compile Include="Models\ModelViews\AdminAuthorizeAttribute .cs" />
     <Compile Include="Models\ModelViews\ChangeEmail.cs" />
     <Compile Include="Models\ModelViews\ChangePassword.cs" />
     <Compile Include="Models\ModelViews\FeedbackM.cs" />
     <Compile Include="Models\ModelViews\Login.cs" />
     <Compile Include="Models\ModelViews\Register.cs" />
+    <Compile Include="Models\ModelViews\TransactionHistoryM.cs" />
     <Compile Include="Models\ModelViews\UserM.cs" />
     <Compile Include="Models\Repositoties\FeedbackRepository.cs" />
+    <Compile Include="Models\Repositoties\PlanRepository.cs" />
     <Compile Include="Models\Repositoties\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Payment\IPaymentService.cs" />
+    <Compile Include="Services\Payment\VisaPayment.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\admin.css" />
@@ -2042,6 +2044,16 @@
     <Content Include="Content\Audio\Waiting.mp3" />
     <Content Include="Content\Client\about-us.css" />
     <Content Include="Content\Client\chatbox.css" />
+    <Content Include="Models\Entities\OnlineRechargeDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
+      <LastGenOutput>OnlineRechargeDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Entities\OnlineRechargeDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
+      <LastGenOutput>OnlineRechargeDB.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\chatbox.js" />
     <Content Include="Content\Client\contact-us.css" />
     <Content Include="Content\Client\customer-care.css" />
@@ -2055,16 +2067,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Models\Entities\OnlineRechargeDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
-      <LastGenOutput>OnlineRechargeDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Entities\OnlineRechargeDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
-      <LastGenOutput>OnlineRechargeDB.cs</LastGenOutput>
-    </Content>
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Content\Admin\scss\navs\_global.scss" />
     <Content Include="Content\Admin\scss\navs\_sidebar.scss" />
@@ -2238,14 +2240,6 @@
     <Content Include="Content\Admin\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Content\Admin\vendor\jquery\jquery.min.map" />
     <Content Include="Content\Admin\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
-    <EntityDeploy Include="Models\Entities\OnlineRechargeDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OnlineRechargeDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Entities\OnlineRechargeDB.edmx.diagram">
-      <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Feedbackmgmt\Index.cshtml" />
     <Content Include="Web.config" />
@@ -2281,6 +2275,18 @@
     <None Include=".env">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <EntityDeploy Include="Models\Entities\OnlineRechargeDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OnlineRechargeDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Entities\OnlineRechargeDB.edmx.diagram">
+      <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
+    </Content>
+    <Compile Include="Models\Repositoties\TransactionRepository.cs" />
+    <Content Include="Areas\Admin\Views\Transactionmgmt\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Planmgmt\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Planmgmt\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Planmgmt\Edit.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

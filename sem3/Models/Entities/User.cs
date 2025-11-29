@@ -32,6 +32,7 @@ namespace sem3.Models.Entities
         public Nullable<System.DateTime> RegistrationDate { get; set; }
         public Nullable<decimal> WalletBalance { get; set; }
         public Nullable<decimal> PostpaidMonthlyFee { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Feedback> Feedbacks { get; set; }

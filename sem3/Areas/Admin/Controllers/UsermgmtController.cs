@@ -4,7 +4,6 @@ using sem3.Models.Repositories;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using User = sem3.Models.Entities.User;
 
 namespace sem3.Areas.Admin.Controllers
 {
@@ -18,61 +17,6 @@ namespace sem3.Areas.Admin.Controllers
             var users = _repository.GetAll();
             return View(users);
         }
-
-        public ActionResult Edit(int id)
-        {
-            var user = _repository.GetById(id);
-            if (user == null)
-                return HttpNotFound();
-
-            return View(user);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(User model)
-        {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine($"=== EDIT USER ===");
-                System.Diagnostics.Debug.WriteLine($"UserID: {model.UserID}");
-                System.Diagnostics.Debug.WriteLine($"FullName: {model.FullName}");
-                System.Diagnostics.Debug.WriteLine($"Phone: {model.MobileNumber}");
-                System.Diagnostics.Debug.WriteLine($"Email: {model.Email}");
-
-                if (ModelState.IsValid)
-                {
-                    _repository.Update(model);
-                    return Json(new { success = true, message = "User updated successfully!" });
-                }
-                else
-                {
-                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-                    return Json(new { success = false, message = "Validation errors: " + string.Join(", ", errors) });
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"EDIT ERROR: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"STACK TRACE: {ex.StackTrace}");
-                return Json(new { success = false, message = $"Error while updating: {ex.Message}" });
-            }
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                _repository.Delete(id);
-                return Json(new { success = true, message = "User deleted successfully!" });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = $"Error while deleting: {ex.Message}" });
-            }
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

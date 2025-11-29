@@ -1,16 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\sem3",
-    "\\sem3\\Areas",
-    "\\sem3\\Areas\\Admin",
-    "\\sem3\\Areas\\Admin\\Views",
-    "\\sem3\\Areas\\Admin\\Views\\User",
-    "\\sem3\\Views",
-    "\\sem3\\Views\\Home",
-    "\\sem3\\Views\\Login",
-    "\\sem3\\Views\\Shared"
+    ""
   ],
-  "SelectedNode": "\\sem3\\Views\\Login\\Login.cshtml",
+  "SelectedNode": "\\sem3.sln",
   "PreviewInSolutionExplorer": false
 }

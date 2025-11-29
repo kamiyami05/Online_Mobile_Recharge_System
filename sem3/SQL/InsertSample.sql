@@ -8,22 +8,21 @@ GO
 -- =============================================================================
 -- 1. Insert 5 Users from 5 different countries
 -- =============================================================================
-INSERT INTO Users (MobileNumber, PasswordHash, FullName, Email, Address, WalletBalance, PostpaidMonthlyFee)
+INSERT INTO Users (MobileNumber, PasswordHash, FullName, Email, Address, WalletBalance, PostpaidMonthlyFee, Active)
 VALUES 
-    -- User from Vietnam (Hanoi)
-    ('0912345678', '123456', 'Paul Muller', 'paulmuller@gmail.com', 'Berlin, Germany', 100.00, NULL),
+    ('0912345678', '123456', 'Paul Muller', 'paulmuller@gmail.com', 'Berlin, Germany', 100.00, NULL, 1),
     
     -- User from USA (Washington D.C.)
-    ('0923456789', '123456', 'John Smith', 'johnsmith@gmail.com', 'Washington D.C., USA', 150.50, 25.00),
+    ('0923456789', '123456', 'John Smith', 'johnsmith@gmail.com', 'Washington D.C., USA', 150.50, 25.00, 1),
     
     -- User from Japan (Tokyo)
-    ('0934567890', '123456', 'Yamamoto Hiroshi', 'yamamotohiroshi@gmail.com', 'Tokyo, Japan', 75.25, NULL),
+    ('0934567890', '123456', 'Yamamoto Hiroshi', 'yamamotohiroshi@gmail.com', 'Tokyo, Japan', 75.25, NULL, 1),
     
     -- User from France (Paris)
-    ('0945678901', '123456', 'Marie Dubois', 'mariedubois@gmail.com', 'Paris, France', 200.75, 30.00),
+    ('0945678901', '123456', 'Marie Dubois', 'mariedubois@gmail.com', 'Paris, France', 200.75, 30.00, 1),
     
-    -- User from Brazil (Brasília)
-    ('0956789012', '123456' , 'Carlos Silva', 'carlossilva@gmail.com', 'Brasília, Brazil', 50.00, NULL);
+    -- User from Brazil (Brasï¿½lia)
+    ('0956789012', '123456' , 'Carlos Silva', 'carlossilva@gmail.com', 'Brasï¿½lia, Brazil', 50.00, NULL, 1);
 GO
 
 -- =============================================================================

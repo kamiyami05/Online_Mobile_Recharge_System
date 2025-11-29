@@ -2,6 +2,22 @@
     ViewBag.Title = "Site Map";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Site Map</h1>
-<iframe src="https://www.google.com/maps/embed?pb=..." width="600" height="450"></iframe>
 
+<div class="container py-4">
+    <h1 class="mb-3">Site Map</h1>
+
+    <p class="text-muted mb-4">
+        Below is the location of our store/office on Google Maps.
+        You can zoom, pan, or get directions directly from the map.
+    </p>
+
+    <div class="card shadow-sm p-3">
+        <div class="ratio ratio-16x9">
+            <iframe src="https://www.google.com/maps/embed?pb=..."
+                    style="border:0; width:100%; height:100%;"
+                    allowfullscreen=""
+                    loading="lazy">
+            </iframe>
+        </div>
+    </div>
+</div>

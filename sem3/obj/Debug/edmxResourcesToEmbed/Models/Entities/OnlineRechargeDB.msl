@@ -61,12 +61,14 @@
     <EntitySetMapping Name="RechargePlans">
       <EntityTypeMapping TypeName="OnlineRechargeDBModel.RechargePlan">
         <MappingFragment StoreEntitySet="RechargePlans">
+          <ScalarProperty Name="PlanName" ColumnName="PlanName" />
           <ScalarProperty Name="PlanID" ColumnName="PlanID" />
           <ScalarProperty Name="PlanType" ColumnName="PlanType" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="TalkTimeMinutes" ColumnName="TalkTimeMinutes" />
           <ScalarProperty Name="DataMB" ColumnName="DataMB" />
           <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="Operator" ColumnName="Operator" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -116,6 +118,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="OnlineRechargeDBModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
@@ -123,6 +126,8 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="WalletBalance" ColumnName="WalletBalance" />
+          <ScalarProperty Name="PostpaidMonthlyFee" ColumnName="PostpaidMonthlyFee" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

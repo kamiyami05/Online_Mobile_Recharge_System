@@ -1,0 +1,84 @@
+﻿@model sem3.Models.Entities.RechargePlan
+@{ Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; ViewBag.Title = "Edit Plan"; }
+
+<div class="d-flex justify-content-between align-items-center mb-3"><h1>Edit Plan #@Model.PlanID</h1></div>
+
+<div class="card shadow mb-4" style="max-width: 800px; margin: 0 auto;">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Update Information</h6>
+        @if (Model.IsActive == true)
+        {<span class="badge bg-success">Currently Active</span> }
+        else
+        { <span class="badge bg-danger">Currently Inactive</span>}
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.PlanID)
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-3 fw-bold" })
+
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label fw-bold">Plan Name <span class="text-danger">*</span></label>
+                    @Html.TextBoxFor(m => m.PlanName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PlanName, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Operator <span class="text-danger">*</span></label>
+                    @Html.DropDownListFor(m => m.Operator, new List<SelectListItem> {
+                        new SelectListItem{ Text="Viettel", Value="Viettel" },
+                        new SelectListItem{ Text="Vinaphone", Value="Vinaphone" },
+                        new SelectListItem{ Text="Mobiphone", Value="Mobiphone" },
+                        new SelectListItem{ Text="Vietnamobile", Value="Vietnamobile" }
+                    }, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Operator, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Plan Type <span class="text-danger">*</span></label>
+                    @Html.DropDownListFor(m => m.PlanType, new List<SelectListItem> {
+                        new SelectListItem{ Text="Data (Internet)", Value="Data" },
+                        new SelectListItem{ Text="Prepaid (Talk Time)", Value="Prepaid" }
+                    }, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PlanType, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label class="form-label fw-bold">Amount (VNĐ) <span class="text-danger">*</span></label>
+                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Data (MB)</label>
+                    @Html.TextBoxFor(m => m.DataMB, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.DataMB, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Talk Time (Minutes)</label>
+                    @Html.TextBoxFor(m => m.TalkTimeMinutes, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.TalkTimeMinutes, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label class="form-label fw-bold">Description / Details</label>
+                    @Html.TextAreaFor(m => m.Details, new { @class = "form-control", rows = "3" })
+                    @Html.ValidationMessageFor(m => m.Details, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-md-12 mb-3 form-check ms-3">
+                    @Html.CheckBox("IsActive", Model.IsActive ?? false, new { @class = "form-check-input", id = "IsActive" })
+                    <label class="form-check-label fw-bold" for="IsActive">Is Active?</label>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-warning btn-lg"><i class="fas fa-save"></i> Update Plan</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg ms-2">Cancel</a>
+            </div>
+        }
+    </div> 
+</div>

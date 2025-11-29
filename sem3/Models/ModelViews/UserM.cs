@@ -11,5 +11,6 @@ namespace sem3.Models.ModelViews
         public string PasswordHash { get; set; } = "";
         public string Address { get; set; } = "";
         public DateTime? RegistrationDate { get; set; } = DateTime.Now;
+        public bool? Active { get; set; } = true;
     }
 }

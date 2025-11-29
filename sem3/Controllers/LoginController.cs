@@ -27,7 +27,6 @@ namespace sem3.Controllers
                 System.Diagnostics.Debug.WriteLine($"=== LOGIN ATTEMPT ===");
                 System.Diagnostics.Debug.WriteLine($"Phone: {model.PhoneNumber}, Password: {model.Password}");
 
-                // 1. Kiểm tra trong bảng AdminUsers trước
                 var adminUser = _db.AdminUsers.FirstOrDefault(a => a.MobileNumber == model.PhoneNumber);
 
                 if (adminUser != null)
@@ -40,7 +39,6 @@ namespace sem3.Controllers
                     if (isAdminPasswordValid)
                     {
                         System.Diagnostics.Debug.WriteLine($"ADMIN LOGIN SUCCESSFUL");
-                        // Đăng nhập thành công với tài khoản admin
                         Session["CurrentUser"] = new User
                         {
                             UserID = adminUser.AdminID,
@@ -65,11 +63,18 @@ namespace sem3.Controllers
                     System.Diagnostics.Debug.WriteLine($"No admin user found with phone: {model.PhoneNumber}");
                 }
 
-                // 2. Nếu không phải admin, kiểm tra trong bảng Users
                 var user = _db.Users.FirstOrDefault(u => u.MobileNumber == model.PhoneNumber);
                 if (user != null)
                 {
                     System.Diagnostics.Debug.WriteLine($"Regular user found: {user.FullName}");
+
+                    if (user.Active == false)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"LOGIN BLOCKED: User {user.MobileNumber} is inactive.");
+                        ModelState.AddModelError("", "Your account has been locked.");
+                        return View(model);
+                    }
+
                     bool isUserPasswordValid = VerifyPasswordForUser(model.Password, user.PasswordHash);
                     System.Diagnostics.Debug.WriteLine($"User password verification result: {isUserPasswordValid}");
 
@@ -123,7 +128,6 @@ namespace sem3.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Kiểm tra số điện thoại đã tồn tại trong cả 2 bảng
                 bool phoneExistsInAdmin = _db.AdminUsers.Any(a => a.MobileNumber == model.Phone);
                 bool phoneExistsInUsers = _db.Users.Any(u => u.MobileNumber == model.Phone);
 
@@ -132,16 +136,15 @@ namespace sem3.Controllers
                     ModelState.AddModelError("", "Phone number already exists.");
                     return View(model);
                 }
-
-                // Tiếp tục tạo user mới
                 var newUser = new sem3.Models.Entities.User
                 {
                     FullName = model.FullName,
                     MobileNumber = model.Phone,
-                    PasswordHash = HashPassword(model.Password), // Hash password cho user mới
+                    PasswordHash = HashPassword(model.Password),
                     RegistrationDate = DateTime.Now,
-                    Email = model.Email, // Thêm email nếu có
-                    Address = model.Address // Thêm address nếu có
+                    Email = model.Email,
+                    Address = model.Address,
+                    Active = true
                 };
 
                 _db.Users.Add(newUser);
@@ -179,7 +182,6 @@ namespace sem3.Controllers
             return View(model);
         }
 
-        // Verify User's password - Sửa lại để hoạt động chính xác
         private bool VerifyPasswordForUser(string providedPassword, string storedPassword)
         {
             System.Diagnostics.Debug.WriteLine($"=== VERIFY USER PASSWORD ===");
@@ -187,7 +189,6 @@ namespace sem3.Controllers
             System.Diagnostics.Debug.WriteLine($"Stored password length: {storedPassword?.Length}");
             System.Diagnostics.Debug.WriteLine($"Stored password is plain text: {IsPlainTextPassword(storedPassword)}");
 
-            // Nếu storedPassword là plain text (ngắn), so sánh trực tiếp
             if (IsPlainTextPassword(storedPassword))
             {
                 System.Diagnostics.Debug.WriteLine($"Comparing plain text: '{providedPassword}' == '{storedPassword}'");
@@ -195,8 +196,6 @@ namespace sem3.Controllers
                 System.Diagnostics.Debug.WriteLine($"Plain text comparison result: {result}");
                 return result;
             }
-
-            // Nếu đã là hash, verify bằng PasswordHasher
             try
             {
                 System.Diagnostics.Debug.WriteLine($"Using PasswordHasher for verification");
@@ -213,14 +212,12 @@ namespace sem3.Controllers
             }
         }
 
-        // Verify Admin's password - Sửa tương tự
         private bool VerifyPasswordForAdmin(string providedPassword, string storedPassword)
         {
             System.Diagnostics.Debug.WriteLine($"=== VERIFY ADMIN PASSWORD ===");
             System.Diagnostics.Debug.WriteLine($"Stored admin password: '{storedPassword}'");
             System.Diagnostics.Debug.WriteLine($"Stored admin password length: {storedPassword?.Length}");
 
-            // Admin luôn dùng plain text comparison
             bool result = providedPassword == storedPassword;
             System.Diagnostics.Debug.WriteLine($"Admin password comparison result: {result}");
             return result;
@@ -230,9 +227,6 @@ namespace sem3.Controllers
         {
             if (string.IsNullOrEmpty(password))
                 return true;
-
-            // Hash password thường dài > 30 ký tự và chứa ký tự đặc biệt
-            // Plain text thường ngắn (6-20 ký tự) và chỉ chứa ký tự thông thường
             bool isPlainText = password.Length <= 20 &&
                               !password.Contains("/") &&
                               !password.Contains("+") &&

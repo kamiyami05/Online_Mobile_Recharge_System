@@ -31,26 +31,11 @@ namespace sem3.Areas.Admin.Controllers
                     name = feedback.Name ?? "N/A",
                     email = feedback.Email ?? "N/A",
                     date = feedback.SubmitDate.HasValue ? feedback.SubmitDate.Value.ToString("g") : "N/A",
-                    rating = feedback.Rating ?? 0, // Xử lý null
+                    rating = feedback.Rating ?? 0,
                     text = feedback.FeedbackText ?? "No feedback text"
                 }
             }, JsonRequestBehavior.AllowGet);
         }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                _repository.Delete(id);
-                return Json(new { success = true, message = "Feedback deleted successfully!" });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = $"Error while deleting: {ex.Message}" });
-            }
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

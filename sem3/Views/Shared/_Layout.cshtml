@@ -21,7 +21,6 @@
                 <i class="fas fa-bolt text-warning"></i> Recharge System
             </a>
 
-            <!-- Mobile menu button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <i class="fas fa-bars"></i>
             </button>
@@ -29,7 +28,6 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <div class="navbar-nav ms-auto d-flex align-items-center w-100">
 
-                    <!-- Phần menu links -->
                     <div class="navbar-links-container">
                         <div class="navbar-links-row">
                             <a class="nav-link" href="@Url.Action("Index", "Home")">
@@ -61,8 +59,6 @@
                             </a>
                         </div>
                     </div>
-
-                    <!-- Phần auth buttons / user info -->
                     @if (Session["CurrentUser"] != null)
                     {
                         var user = Session["CurrentUser"] as sem3.Models.ModelViews.UserM;

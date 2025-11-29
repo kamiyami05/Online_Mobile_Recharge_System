@@ -27,17 +27,6 @@ namespace sem3.Models.Repositories
         {
             return _context.Feedbacks.Find(id);
         }
-
-        public void Delete(int id)
-        {
-            var feedback = _context.Feedbacks.Find(id);
-            if (feedback != null)
-            {
-                _context.Feedbacks.Remove(feedback);
-                _context.SaveChanges();
-            }
-        }
-
         public void Dispose()
         {
             _context.Dispose();

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0be4ad95669c43f08e0ac7272ed48c30" Name="Diagram1">
+      <Diagram DiagramId="02630448a4ff439a82b87316fb919073" Name="Diagram1">
         <EntityTypeShape EntityType="OnlineRechargeDBModel.AdminUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.ContactPoint" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.Feedback" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />

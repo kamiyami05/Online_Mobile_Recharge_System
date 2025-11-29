@@ -1,4 +1,4 @@
-﻿﻿.about-container {
+﻿.about-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
@@ -10,27 +10,18 @@
 }
 
     .about-header h1 {
-        font-size: 3.5rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        background: linear-gradient(45deg, #fff, #f0f0f0);
+        font-size: 3rem;
+        background: whitesmoke;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-    }
-
-    .about-header p {
-        font-size: 1.3rem;
-        margin-bottom: 2rem;
-        opacity: 0.9;
-        line-height: 1.6;
-        color: white;
+        margin-bottom: 1rem;
     }
 
 .subtitle {
     color: black;
     font-size: 1.2rem;
 }
+
 
 .about-content {
     display: grid;
@@ -87,6 +78,7 @@
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 4rem;
 }
 
 .stat-item {
@@ -106,6 +98,178 @@
         font-weight: 500;
     }
 
+.about-container .section-block {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+
+.about-container .section-block {
+    margin: 3rem 0;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+    .about-container .section-block h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .about-container .section-block p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+.why-list {
+    list-style: none;
+    padding: 0;
+}
+
+    .why-list li {
+        margin: 0.7rem 0;
+        font-size: 1.1rem;
+        color: #555;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .why-list i {
+        color: #667eea;
+        font-size: 1.3rem;
+    }
+
+
+.team-section {
+    margin: 4rem 0;
+    text-align: center;
+}
+
+    .team-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.team-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+    .team-card:hover {
+        transform: translateY(-8px);
+    }
+
+    .team-card img {
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+    }
+
+    .team-card h4 {
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .team-card p {
+        color: #666;
+    }
+
+
+.timeline-section {
+    margin: 4rem 0;
+}
+
+    .timeline-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+.timeline {
+    position: relative;
+    margin-left: 20px;
+}
+
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #667eea, #764ba2);
+        border-radius: 2px;
+    }
+
+.timeline-item {
+    margin: 2rem 0;
+    padding-left: 2rem;
+    position: relative;
+}
+
+    .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -9px;
+        top: 5px;
+        width: 16px;
+        height: 16px;
+        background: #764ba2;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(118, 75, 162, 0.6);
+    }
+
+    .timeline-item .year {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    .timeline-item p {
+        color: #666;
+        margin-top: 0.3rem;
+        line-height: 1.6;
+    }
+
+
+.cta-section {
+    text-align: center;
+    margin: 4rem 0;
+    padding: 3rem;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+    .cta-section h2 {
+        font-size: 2.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        opacity: 0.95;
+    }
+
+    .cta-section .btn {
+        font-size: 1.2rem;
+        padding: 10px 25px;
+        border-radius: 10px;
+    }
+
+
 @media (max-width: 768px) {
     .about-header h1 {
         font-size: 2rem;
@@ -117,5 +281,9 @@
 
     .stats-section {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .timeline {
+        margin-left: 15px;
     }
 }

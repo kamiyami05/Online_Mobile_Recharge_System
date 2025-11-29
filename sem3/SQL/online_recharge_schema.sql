@@ -21,7 +21,8 @@ CREATE TABLE Users (
     Address NVARCHAR(255),
     RegistrationDate DATETIME DEFAULT GETDATE(),
     WalletBalance DECIMAL(18,2) DEFAULT 0,
-    PostpaidMonthlyFee DECIMAL(10,2) NULL
+    PostpaidMonthlyFee DECIMAL(10,2) NULL,
+    Active BIT DEFAULT 1 WITH VALUES
 );
 GO
 
@@ -38,6 +39,7 @@ GO
 -- 3. RechargePlans Table - Stores available recharge packages and plans
 CREATE TABLE RechargePlans (
     PlanID INT PRIMARY KEY IDENTITY(1,1),
+    PlanName NVARCHAR(100) NOT NULL,
     PlanType VARCHAR(50) NOT NULL, --'Data' or 'Prepaid'
     Amount DECIMAL(10,2) NOT NULL,
     TalkTimeMinutes INT,

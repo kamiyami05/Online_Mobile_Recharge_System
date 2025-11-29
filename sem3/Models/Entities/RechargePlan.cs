@@ -22,5 +22,6 @@ namespace sem3.Models.Entities
         public string Details { get; set; }
         public string Operator { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public string PlanName { get; set; }
     }
 }
