@@ -18,7 +18,15 @@ namespace sem3.Models.Repositories
         {
             return _context.Users.ToList();
         }
-
+        public void Update(User user)
+        {
+            var existingUser = _context.Users.Find(user.UserID);
+            if (existingUser != null)
+            {
+                existingUser.Active = user.Active;
+                _context.SaveChanges();
+            }
+        }
         public User GetById(int id)
         {
             return _context.Users.Find(id);
