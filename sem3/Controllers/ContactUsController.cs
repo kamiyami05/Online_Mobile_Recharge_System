@@ -1,23 +1,47 @@
-﻿using sem3.Models.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Web;
 using System.Web.Mvc;
 
 namespace sem3.Controllers
 {
     public class ContactUsController : Controller
     {
-        private readonly SettingsRepository _repo = new SettingsRepository();
-
         public ActionResult Index()
         {
-            ViewBag.Address = _repo.GetValue("Contact_Address");
-            ViewBag.PhoneMain = _repo.GetValue("Contact_PhoneMain");
-            ViewBag.PhoneSupport = _repo.GetValue("Contact_PhoneSupport");
-            ViewBag.Email1 = _repo.GetValue("Contact_Email1");
-            ViewBag.Email2 = _repo.GetValue("Contact_Email2");
-            ViewBag.HoursWeekdays = _repo.GetValue("Contact_HoursWeekdays");
-            ViewBag.HoursWeekend = _repo.GetValue("Contact_HoursWeekend");
-
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult SendMessage(string Name, string Email, string Message)
+        {
+            try
+            {
+                var mail = new MailMessage();
+                mail.From = new MailAddress("yourgmail@gmail.com"); // Gmail của bạn gửi đi
+                mail.To.Add("zooxoox3@gmail.com"); // Gmail nhận
+                mail.Subject = "New Contact Message";
+                mail.Body = $"Name: {Name}\nEmail: {Email}\nMessage:\n{Message}";
+
+                var smtp = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential("zooxoox3@gmail.com", "snlu azqk awyc rqgx"),
+                    EnableSsl = true
+                };
+
+                smtp.Send(mail);
+
+                TempData["Success"] = "Your message has been sent successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction("Index", "ContactUs");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@{
+﻿﻿@{
     ViewBag.Title = "Contact Us";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,6 +11,16 @@
         <p class="subtitle">Get in Touch with Our Mobile Recharge Center</p>
     </div>
 
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
     <div class="contact-content">
         <div class="contact-info">
             <div class="contact-card">
@@ -19,7 +29,7 @@
                 </div>
                 <div class="contact-details">
                     <h3>Visit Our Office</h3>
-                    <p>@Html.Raw(ViewBag.Address)</p>
+                    <p>123 Recharge Street<br>Digital District<br>Ho Chi Minh City, Vietnam</p>
                 </div>
             </div>
 
@@ -29,7 +39,7 @@
                 </div>
                 <div class="contact-details">
                     <h3>Call Us</h3>
-                    <p>Main: @ViewBag.PhoneMain<br>Support: @ViewBag.PhoneSupport</p>
+                    <p>Main: +84 28 3844 8888<br>Support: +84 28 3844 9999</p>
                 </div>
             </div>
 
@@ -39,7 +49,7 @@
                 </div>
                 <div class="contact-details">
                     <h3>Email Us</h3>
-                    <p>@ViewBag.Email1<br>@ViewBag.Email2</p>
+                    <p>support@rechargesystem.vn<br>info@rechargesystem.vn</p>
                 </div>
             </div>
 
@@ -49,22 +59,22 @@
                 </div>
                 <div class="contact-details">
                     <h3>Business Hours</h3>
-                    <p>Monday - Friday: @ViewBag.HoursWeekdays<br>Saturday - Sunday: @ViewBag.HoursWeekend</p>
+                    <p>Monday - Friday: 8:00 AM - 10:00 PM<br>Saturday - Sunday: 9:00 AM - 8:00 PM</p>
                 </div>
             </div>
         </div>
 
         <div class="contact-form">
             <h3>Send Us a Message</h3>
-            <form>
+            <form method="post" action="@Url.Action("SendMessage", "ContactUs")">
                 <div class="form-group">
-                    <input type="text" placeholder="Your Name" required>
+                    <input type="text" name="Name" placeholder="Your Name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" placeholder="Your Email" required>
+                    <input type="email" name="Email" placeholder="Your Email" required>
                 </div>
                 <div class="form-group">
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <textarea name="Message" placeholder="Your Message" rows="5" required></textarea>
                 </div>
                 <button type="submit" class="submit-btn">Send Message</button>
             </form>

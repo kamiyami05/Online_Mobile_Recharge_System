@@ -39,14 +39,6 @@ namespace sem3.Controllers
             if (bill == null || (bill.IsPaid.HasValue && bill.IsPaid.Value)) return HttpNotFound();
 
             var user = db.Users.FirstOrDefault(u => u.MobileNumber == bill.MobileNumber);
-            if (user.WalletBalance < bill.TotalAmount)
-            {
-                TempData["Error"] = "Ví không đủ tiền.";
-                return RedirectToAction("Pay", new { id = billId });
-            }
-
-            // Trừ ví
-            user.WalletBalance -= bill.TotalAmount;
 
             // Tạo Transaction
             var trans = new Transaction

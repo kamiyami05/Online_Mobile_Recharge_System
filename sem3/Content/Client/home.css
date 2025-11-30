@@ -131,6 +131,97 @@
     font-size: 1.1em;
 }
 
+.why-choose-us {
+    margin-top: 4rem;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+    .why-choose-us h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: white;
+        background: linear-gradient(45deg, #00b09b, #96c93d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+.choose-us-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.choose-us-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+    color: white;
+}
+
+    .choose-us-item:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .choose-us-item i {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        color: #96c93d; /* Màu xanh lá/vàng */
+    }
+
+    .choose-us-item h4 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .choose-us-item p {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin: 0;
+    }
+
+/* Call to Action Section */
+.cta-section {
+    margin-top: 4rem;
+    background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+    .cta-section h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+.btn-cta {
+    display: inline-block;
+    background-color: #764ba2; /* Màu tím tương phản */
+    color: white;
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+    .btn-cta:hover {
+        background-color: #613c8b;
+        transform: translateY(-2px);
+    }
+
+.cta-section p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
 @media (max-width: 768px) {
     .hero-section h1 {
         font-size: 2.5rem;
@@ -142,5 +233,13 @@
 
     .features {
         grid-template-columns: 1fr;
+    }
+
+    .why-choose-us h2 {
+        font-size: 2rem;
+    }
+
+    .cta-section h3 {
+        font-size: 1.5rem;
     }
 }

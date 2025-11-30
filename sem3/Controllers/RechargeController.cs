@@ -195,7 +195,7 @@ namespace sem3.Controllers
                                    int? planId, int? loggedInUserId = null)
         {
             int? userId = loggedInUserId ?? (Session["CurrentUserId"] != null ? (int?)Session["CurrentUserId"] : null);
-       
+
             // --- A. VALIDATE ---
             if (method == "Visa")
             {

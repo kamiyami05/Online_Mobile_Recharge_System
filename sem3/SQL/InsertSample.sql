@@ -1,4 +1,4 @@
--- =============================================================================
+﻿-- =============================================================================
 -- Insert Sample Data
 -- =============================================================================
 
@@ -8,47 +8,42 @@ GO
 -- =============================================================================
 -- 1. Insert 5 Users from 5 different countries
 -- =============================================================================
-INSERT INTO Users (MobileNumber, PasswordHash, FullName, Email, Address, WalletBalance, PostpaidMonthlyFee, Active)
-VALUES 
-    ('0912345678', '123456', 'Paul Muller', 'paulmuller@gmail.com', 'Berlin, Germany', 100.00, NULL, 1),
-    
-    -- User from USA (Washington D.C.)
-    ('0923456789', '123456', 'John Smith', 'johnsmith@gmail.com', 'Washington D.C., USA', 150.50, 25.00, 1),
-    
-    -- User from Japan (Tokyo)
-    ('0934567890', '123456', 'Yamamoto Hiroshi', 'yamamotohiroshi@gmail.com', 'Tokyo, Japan', 75.25, NULL, 1),
-    
-    -- User from France (Paris)
-    ('0945678901', '123456', 'Marie Dubois', 'mariedubois@gmail.com', 'Paris, France', 200.75, 30.00, 1),
-    
-    -- User from Brazil (Bras�lia)
-    ('0956789012', '123456' , 'Carlos Silva', 'carlossilva@gmail.com', 'Bras�lia, Brazil', 50.00, NULL, 1);
+INSERT INTO Users (MobileNumber, PasswordHash, FullName, Email, Address) VALUES
+-- American user
+('0833456789', '123456', 'Johnathan Miller', 'johnathan.miller@gmail.com', 'Washington D.C., United States'),
+-- Russian user
+('0963456789', '123456', 'Alexei Ivanov', 'alexei.ivanov@gmail.com', 'Moscow, Russia'),
+-- Japanese user
+('0934567890', '123456', 'Hiroshi Tanaka', 'hiroshi.tanaka@gmail.com', 'Tokyo, Japan'),
+-- French user
+('0945678901', '123456', 'Marie Dubois', 'marie.dubois@gmail.com', 'Paris, France'),
+-- Chinese user
+('0916789012', '123456', 'Li Wei', 'li.wei@gmail.com', 'Beijing, China');
 GO
 
 -- =============================================================================
 -- 2. Insert Admin User
 -- =============================================================================
-INSERT INTO AdminUsers (Username, PasswordHash, Email, MobileNumber)
-VALUES 
-    ('Admin', '123456', 'admin@gmail.com', '0987654321');
+INSERT INTO AdminUsers (Username, PasswordHash, Email, MobileNumber) VALUES
+('Admin', '123456', 'admin@onlinerecharge.com', '0987654321');
 GO
 
 -- =============================================================================
 -- 3. Insert Recharge Plans for 3 operators
 -- =============================================================================
-INSERT INTO RechargePlans (PlanType, Amount, TalkTimeMinutes, DataMB, Details, Operator, IsActive)
+INSERT INTO RechargePlans (PlanName, PlanType, Amount, TalkTimeMinutes, DataMB, Details, Operator, IsActive)
 VALUES 
     -- Vinaphone plans
-    ('Data', 70000.00, 0, 2048, '2GB Data for 30 days', 'Vinaphone', 1),
-    ('Prepaid', 50000.00, 60, 0, '60 minutes talk time', 'Vinaphone', 1),
+    ('Vina1' ,'Data', 70000.00, 0, 2048, '2GB Data for 30 days', 'Vinaphone', 1),
+    ('Vina2' ,'Prepaid', 50000.00, 60, 0, '60 minutes talk time', 'Vinaphone', 1),
     
     -- Mobiphone plans
-    ('Data', 90000.00, 0, 4096, '4GB Data for 30 days', 'Mobiphone', 1),
-    ('Prepaid', 100000.00, 120, 500, '120 minutes + 500MB data', 'Mobiphone', 1),
+    ('Mobi1' ,'Data', 90000.00, 0, 4096, '4GB Data for 30 days', 'Mobiphone', 1),
+    ('Mobi2' ,'Prepaid', 100000.00, 120, 500, '120 minutes + 500MB data', 'Mobiphone', 1),
     
     -- Viettel plans
-    ('Data', 120000.00, 0, 8192, '8GB Data for 30 days', 'Viettel', 1),
-    ('Prepaid', 80000.00, 90, 1000, '90 minutes + 1GB data', 'Viettel', 1);
+    ('Viet1' ,'Data', 120000.00, 0, 8192, '8GB Data for 30 days', 'Viettel', 1),
+    ('Viet2' ,'Prepaid', 80000.00, 90, 1000, '90 minutes + 1GB data', 'Viettel', 1);
 GO
 
 -- =============================================================================
@@ -142,19 +137,60 @@ VALUES
     (15, 'Bank Transfer', 'BANK_REF_015');
 GO
 
+DECLARE @ConstraintName NVARCHAR(200)
+
+SELECT @ConstraintName = name 
+FROM sys.key_constraints 
+WHERE parent_object_id = OBJECT_ID('PostpaidBills') 
+AND type = 'UQ'
+
+IF @ConstraintName IS NOT NULL
+BEGIN
+    EXEC('ALTER TABLE PostpaidBills DROP CONSTRAINT ' + @ConstraintName)
+    PRINT 'Đã xóa constraint: ' + @ConstraintName
+END
+ELSE
+BEGIN
+    PRINT 'Không tìm thấy constraint UNIQUE trên PostpaidBills'
+END
+GO
+
 -- =============================================================================
 -- 7. Insert PostpaidBills data for postpaid users
 -- =============================================================================
-INSERT INTO PostpaidBills (MobileNumber, BillingCycle, TotalAmount, PaymentDueDate, PaymentTransactionID, IsPaid)
-VALUES 
-    -- Postpaid bills for User 2 (0923456789)
-    ('0923456789', DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE())-1, 1), 25000.00, DATEADD(DAY, 15, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE())-1, 1)), 5, 1),
-    ('0923456789', DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1), 28000.00, DATEADD(DAY, 15, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)), -1, 0), -- Use -1 for unpaid bills
-    
-    -- Postpaid bills for User 4 (0945678901)
-    ('0945678901', DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE())-1, 1), 30000.00, DATEADD(DAY, 15, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE())-1, 1)), 11, 1),
-    ('0945678901', DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1), 32000.00, DATEADD(DAY, 15, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)), -2, 0); -- Use -2 for unpaid bills
+INSERT INTO PostpaidBills (MobileNumber, BillingCycle, TotalAmount, PaymentDueDate, IsPaid) VALUES
+-- User 1: Johnathan Miller (0833456789)
+-- Bill 1: Paid bill for October cycle
+('0833456789', '2025-10-01', 285750.00, '2025-10-31', 1),
+-- Bill 2: Unpaid bill for November cycle
+('0833456789', '2025-11-01', 312450.50, '2025-11-30', 0),
+
+-- User 2: Alexei Ivanov (0963456789)
+-- Bill 1: Paid bill for September cycle
+('0963456789', '2025-09-01', 267890.75, '2025-09-30', 1),
+-- Bill 2: Unpaid bill for November cycle
+('0963456789', '2025-11-01', 298760.00, '2025-11-30', 0),
+
+-- User 3: Hiroshi Tanaka (0934567890)
+-- Bill 1: Paid bill for October cycle
+('0934567890', '2025-10-01', 234560.25, '2025-10-31', 1),
+-- Bill 2: Unpaid bill for November cycle
+('0934567890', '2025-11-01', 276890.00, '2025-11-30', 0),
+
+-- User 4: Marie Dubois (0945678901)
+-- Bill 1: Paid bill for September cycle
+('0945678901', '2025-09-01', 319875.50, '2025-09-30', 1),
+-- Bill 2: Unpaid bill for November cycle
+('0945678901', '2025-11-01', 342150.75, '2025-11-30', 0),
+
+-- User 5: Li Wei (0916789012)
+-- Bill 1: Paid bill for October cycle
+('0916789012', '2025-10-01', 289450.00, '2025-10-31', 1),
+-- Bill 2: Unpaid bill for November cycle
+('0916789012', '2025-11-01', 315670.25, '2025-11-30', 0);
 GO
+
+PRINT 'Data insertion completed successfully for all specified tables.';
 
 -- =============================================================================
 -- 8. Insert Services
@@ -165,37 +201,29 @@ VALUES
     ('Caller Tunes', 'Customize your call waiting music');
 GO
 
--- =============================================================================
--- 10. Create Trigger to automatically insert UserServiceSettings when new User is added
--- =============================================================================
-CREATE OR ALTER TRIGGER trg_InsertUserServiceSettings
-ON Users
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    
-    DECLARE @UserID INT;
-    DECLARE @ServiceID_DND INT;
-    DECLARE @ServiceID_Tunes INT;
-    
-    -- Get Service IDs
-    SELECT @ServiceID_DND = ServiceID FROM Services WHERE ServiceName = 'Do Not Disturb';
-    SELECT @ServiceID_Tunes = ServiceID FROM Services WHERE ServiceName = 'Caller Tunes';
-    
-    -- Insert UserServiceSettings for each new user
-    INSERT INTO UserServiceSettings (UserID, ServiceID, IsEnabled, SelectedTune, UpdatedDate)
-    SELECT 
-        i.UserID,
-        s.ServiceID,
-        0 AS IsEnabled, -- Default to disabled
-        NULL AS SelectedTune, -- No tune selected by default
-        GETDATE() AS UpdatedDate
-    FROM inserted i
-    CROSS JOIN Services s;
-END;
+-- Insert sample feedback records
+INSERT INTO Feedback (UserID, Name, Email, FeedbackText, Rating) VALUES
+(1, 'Johnathan Miller', 'johnathan.miller@gmail.com', 'The recharge process was very smooth and fast. Highly recommended service.', 5),
+(2, 'Alexei Ivanov', 'alexei.ivanov@gmail.com', 'Good service with reasonable plans. Customer support was helpful.', 4),
+(3, 'Hiroshi Tanaka', 'hiroshi.tanaka@gmail.com', 'Very convenient platform for mobile recharges. Will use again.', 5);
 GO
 
+-- Insert sample FAQ entries
+INSERT INTO FAQs (Question, Answer, OrderIndex) VALUES
+('How long does it take for a recharge to be processed?', 'Recharges are typically processed instantly. In rare cases where instant recharge is not possible, it will be credited within 2 hours.', 1),
+('What payment methods are accepted?', 'We accept payments through Bank Cards, Mobile Wallets, Internet Banking, and Bank Transfers from all major banks.', 2),
+('Can I recharge a number that is not registered in my name?', 'Yes, you can recharge any valid mobile number regardless of whether it is registered in your name.', 3),
+('What happens if there is a payment failure?', 'If a payment fails, the amount will be automatically refunded to the original payment source within 5-7 business days.', 4);
+GO
+
+-- Insert system settings for contact information and other configuration values
+INSERT INTO SystemSettings (SettingKey, SettingValue, Description) VALUES
+('CustomerSupportPhone', '18001090', 'Primary customer support contact number'),
+('CustomerSupportEmail', 'support@onlinerecharge.com', 'Customer support email address'),
+('CompanyName', 'Online Recharge Service', 'Company name displayed on the platform'),
+('SupportHours', '24/7', 'Customer support availability'),
+('RefundPolicy', 'Full refund within 2 hours for failed transactions', 'Refund policy description');
+GO
 
 -- =============================================================================
 -- Verify the data insertion
@@ -249,13 +277,3 @@ GO
 SELECT * FROM UserServiceSettings;
 GO
 
-INSERT INTO SystemSettings (SettingKey, SettingValue, Description)
-VALUES 
-('Contact_Address', N'123 Recharge Street<br>Digital District<br>Ho Chi Minh City, Vietnam', 'Office Address'),
-('Contact_PhoneMain', N'+84 28 3844 8888', 'Main Phone Number'),
-('Contact_PhoneSupport', N'+84 28 3844 9999', 'Support Phone Number'),
-('Contact_Email1', N'support@rechargesystem.vn', 'Support Email 1'),
-('Contact_Email2', N'info@rechargesystem.vn', 'Support Email 2'),
-('Contact_HoursWeekdays', N'8:00 AM - 10:00 PM', 'Working Hours (Mon-Fri)'),
-('Contact_HoursWeekend', N'9:00 AM - 8:00 PM', 'Working Hours (Sat-Sun)');
-GO

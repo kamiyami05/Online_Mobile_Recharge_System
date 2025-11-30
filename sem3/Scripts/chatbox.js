@@ -121,6 +121,13 @@
         renderChatbox();
     }
 
+    function openChatbox() {
+        if (!isOpen) {
+            isOpen = true;
+            renderChatbox();
+        }
+    }
+
     async function handleSend(e) {
         e.preventDefault();
         const inputElement = $('#chatbox-input');
@@ -166,8 +173,8 @@
         }
     }
     renderChatbox();
-    $('body').on('click', '#btnOpenChat', function (e) {
-        e.preventDefault();
-        openChat();
-    });
+
+    if (window.location.hash === '#chat') {
+        openChatbox();
+    }
 });

@@ -20,9 +20,8 @@ CREATE TABLE Users (
     Email VARCHAR(100),
     Address NVARCHAR(255),
     RegistrationDate DATETIME DEFAULT GETDATE(),
-    WalletBalance DECIMAL(18,2) DEFAULT 0,
     PostpaidMonthlyFee DECIMAL(10,2) NULL,
-    Active BIT DEFAULT 1 WITH VALUES
+    Active BIT DEFAULT 1
 );
 GO
 

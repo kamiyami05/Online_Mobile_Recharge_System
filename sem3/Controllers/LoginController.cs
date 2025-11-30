@@ -24,9 +24,6 @@ namespace sem3.Controllers
         {
             if (ModelState.IsValid)
             {
-                System.Diagnostics.Debug.WriteLine($"=== LOGIN ATTEMPT ===");
-                System.Diagnostics.Debug.WriteLine($"Phone: {model.PhoneNumber}, Password: {model.Password}");
-
                 var adminUser = _db.AdminUsers.FirstOrDefault(a => a.MobileNumber == model.PhoneNumber);
 
                 if (adminUser != null)
@@ -34,7 +31,6 @@ namespace sem3.Controllers
                     bool isAdminPasswordValid = VerifyPasswordForAdmin(model.Password, adminUser.PasswordHash);
                     if (isAdminPasswordValid)
                     {
-                        System.Diagnostics.Debug.WriteLine($"ADMIN LOGIN SUCCESSFUL");
                         Session["CurrentUser"] = new User
                         {
                             UserID = adminUser.AdminID,
@@ -62,11 +58,8 @@ namespace sem3.Controllers
                 var user = _db.Users.FirstOrDefault(u => u.MobileNumber == model.PhoneNumber);
                 if (user != null)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Regular user found: {user.FullName}");
-
                     if (user.Active == false)
                     {
-                        System.Diagnostics.Debug.WriteLine($"LOGIN BLOCKED: User {user.MobileNumber} is inactive.");
                         ModelState.AddModelError("", "Your account has been locked.");
                         return View(model);
                     }

@@ -30,7 +30,6 @@ namespace sem3.Models.Entities
         public string Email { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> RegistrationDate { get; set; }
-        public Nullable<decimal> WalletBalance { get; set; }
         public Nullable<decimal> PostpaidMonthlyFee { get; set; }
         public Nullable<bool> Active { get; set; }
     

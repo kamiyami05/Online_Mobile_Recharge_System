@@ -4,19 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4167b102aa30440f8243a3ab4731f1a9" Name="Diagram1">
+      <Diagram DiagramId="d6caf644ea184494acd8bef15ea94061" Name="Diagram1">
         <EntityTypeShape EntityType="OnlineRechargeDBModel.AdminUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineRechargeDBModel.FAQ" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.Feedback" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.PaymentDetail" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.PostpaidBill" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.RechargePlan" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.Service" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineRechargeDBModel.SiteContent" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineRechargeDBModel.sysdiagram" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineRechargeDBModel.SystemSetting" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineRechargeDBModel.SystemSetting" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.Transaction" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.TransactionScript" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineRechargeDBModel.User" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineRechargeDBModel.User" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.UserService" Width="1.5" PointX="8" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineRechargeDBModel.UserServiceSetting" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
         <AssociationConnector Association="OnlineRechargeDBModel.FK__Feedback__UserID__68487DD7" ManuallyRouted="false" />
@@ -28,7 +27,6 @@
         <AssociationConnector Association="OnlineRechargeDBModel.FK__Transacti__UserI__45F365D3" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineRechargeDBModel.FK__UserServi__UserI__5CD6CB2B" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineRechargeDBModel.FK__UserServi__UserI__6383C8BA" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="OnlineRechargeDBModel.FAQ" Width="1.5" PointX="10.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -15,6 +15,7 @@ namespace sem3.Models.Entities
     public partial class RechargePlan
     {
         public int PlanID { get; set; }
+        public string PlanName { get; set; }
         public string PlanType { get; set; }
         public decimal Amount { get; set; }
         public Nullable<int> TalkTimeMinutes { get; set; }
@@ -22,6 +23,5 @@ namespace sem3.Models.Entities
         public string Details { get; set; }
         public string Operator { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public string PlanName { get; set; }
     }
 }

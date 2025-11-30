@@ -442,7 +442,6 @@ namespace sem3.Controllers
             }).ToList();
         }
 
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

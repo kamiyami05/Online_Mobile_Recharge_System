@@ -7,7 +7,10 @@
 
 <div class="hero-section">
     <h1>Fast & Secure Mobile Recharge</h1>
-    <p>Instant mobile top-ups, bill payments, and data packages at your fingertips. Recharge anytime, anywhere!</p>
+    <p>
+        Instant mobile top-ups, bill payments, and data packages at your fingertips.
+        Recharge anytime, anywhere!
+    </p>
 
     @if (Session["CurrentUser"] == null)
     {
@@ -16,6 +19,7 @@
                 <div class="feature-icon">
                     <i class="fas fa-bolt"></i>
                 </div>
+
                 <h3>Instant Recharge</h3>
                 <p>Get your mobile recharged instantly with our lightning-fast processing system</p>
             </div>
@@ -23,6 +27,7 @@
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-shield-alt"></i>
+
                 </div>
                 <h3>Secure Payments</h3>
                 <p>Your transactions are protected with bank-level security encryption</p>
@@ -30,18 +35,65 @@
 
             <div class="feature-card">
                 <div class="feature-icon">
+
                     <i class="fas fa-mobile-alt"></i>
                 </div>
                 <h3>All Networks</h3>
                 <p>Support for all major mobile networks and service providers</p>
             </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h3>Transparent Pricing</h3>
+                <p>No hidden fees or extra charges. What you see is exactly what you pay.</p>
+            </div>
         </div>
+
+        <section class="why-choose-us">
+            <h2><i class="ri-medal-fill"></i><b> Why Choose Us?</b></h2>
+            <div class="choose-us-grid">
+                <div class="choose-us-item">
+                    <i class="ri-money-dollar-circle-line"></i>
+                    <h4>Best Deals & Offers</h4>
+                    <p>Exclusive discounts and cashback offers on every recharge and bill payment.</p>
+                </div>
+                <div class="choose-us-item">
+                    <i class="ri-24-hours-line"></i>
+                    <h4>24/7 Customer Support</h4>
+                    <p>Our dedicated customer care team is always ready to assist you, day and night.</p>
+                </div>
+                <div class="choose-us-item">
+                    <i class="ri-bank-card-line"></i>
+                    <h4>Multiple Payment Options</h4>
+                    <p>We accept all major payment methods including cards, net banking, and wallets.</p>
+                </div>
+                <div class="choose-us-item">
+                    <i class="fas fa-gift"></i>
+                    <h4>Refer & Earn</h4>
+                    <p>Invite your friends to our platform and earn exciting rewards and bonuses.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h3>Ready to experience the future of digital payments?</h3>
+            <a href="@Url.Action("Login", "Login")" class="btn-cta">
+                <i class="fas fa-sign-in-alt"></i> Get Started Now
+            </a>
+            <p>Join thousands of satisfied users today!</p>
+        </section>
     }
+
     else
     {
         var user = Session["CurrentUser"] as sem3.Models.ModelViews.UserM;
         <div class="user-welcome">
-            <h2>Welcome Back, @user.FullName! <i class="fas fa-hand-wave"></i></h2>
+            <h2>
+                Welcome Back, @user.FullName!
+                <i class="fas fa-hand-wave"></i>
+            </h2>
             <div class="user-info">
                 <p>Ready to recharge your mobile?</p>
             </div>
