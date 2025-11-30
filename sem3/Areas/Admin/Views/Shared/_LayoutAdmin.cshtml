@@ -15,29 +15,154 @@
             overflow: hidden !important;
             margin: 0 !important;
         }
+
         #wrapper {
             height: 100vh !important;
             overflow: hidden !important;
             display: flex !important;
         }
+
         ul.sidebar {
             height: 100vh !important;
             overflow-y: auto !important;
             flex-shrink: 0 !important;
         }
+
             ul.sidebar::-webkit-scrollbar {
                 width: 0px;
                 background: transparent;
             }
+
         #content-wrapper {
             height: 100vh !important;
             overflow-y: auto !important;
             width: 100% !important;
             position: relative !important;
         }
+
+        /* Highlight menu active PERMANENT */
+        .nav-item.active .nav-link {
+            background: rgba(255, 255, 255, 0.25) !important;
+            border-left: 4px solid #fff !important;
+            font-weight: 700 !important;
+            color: #fff !important;
+        }
+
+            .nav-item.active .nav-link i {
+                color: #fff !important;
+                font-weight: 900 !important;
+            }
+
+        /* Logout modal styles */
+        .logout-modal .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logout-modal .modal-header {
+            background: linear-gradient(135deg, #e74a3b, #c53030);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            border: none;
+        }
+
+        .logout-modal .modal-body {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .logout-icon {
+            font-size: 4rem;
+            color: #e74a3b;
+            margin-bottom: 1rem;
+        }
+
+        .logout-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #e74a3b, #c53030);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-logout:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(231, 74, 59, 0.4);
+            }
+
+        .btn-cancel {
+            background: #6c757d;
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-cancel:hover {
+                background: #5a6268;
+                transform: translateY(-2px);
+            }
+
+        /* Logout link styles */
+        .logout-link {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent !important;
+        }
+
+            .logout-link:hover {
+                background: rgba(231, 74, 59, 0.1) !important;
+                border-left: 4px solid #e74a3b !important;
+            }
+
+            .logout-link i {
+                transition: all 0.3s ease;
+            }
+
+            .logout-link:hover i {
+                transform: scale(1.1);
+            }
     </style>
 </head>
 <body id="page-top">
+    <!-- Logout Modal -->
+    <div class="modal fade logout-modal" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">
+                        <i class="fas fa-sign-out-alt me-2"></i>Confirm Logout
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="logout-icon">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <h4>Are you sure you want to logout?</h4>
+                    <p class="text-muted">You will need to login again to access the admin panel.</p>
+                    <div class="logout-buttons">
+                        <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                        <a href="@Url.Action("Logout", "Login", new { area = "" })" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
@@ -49,47 +174,53 @@
             <hr class="sidebar-divider my-0">
             <hr class="sidebar-divider">
             <hr class="sidebar-divider">
-            <li class="nav-item">
+
+            <!-- Menu Items với active state VĨNH VIỄN -->
+            <li class="nav-item @(ViewContext.RouteData.Values["controller"].ToString().ToLower().Contains("user") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("index", "Usermgmt", new { area = "Admin" })">
-                    <i class="fas fa-user-cog"></i>
+                    <i class="fas fa-users-cog"></i>
                     <span>User Management</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item @(ViewContext.RouteData.Values["controller"].ToString().ToLower().Contains("feedback") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("index", "Feedbackmgmt", new { area = "Admin" })">
-                    <i class="fas fa-user-cog"></i>
+                    <i class="fas fa-comments"></i>
                     <span>Feedback Management</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item @(ViewContext.RouteData.Values["controller"].ToString().ToLower().Contains("transaction") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("index", "Transactionmgmt", new { area = "Admin" })">
-                    <i class="fas fa-user-cog"></i>
+                    <i class="fas fa-exchange-alt"></i>
                     <span>Transaction Management</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item @(ViewContext.RouteData.Values["controller"].ToString().ToLower().Contains("plan") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("index", "Planmgmt", new { area = "Admin" })">
-                    <i class="fas fa-user-cog"></i>
+                    <i class="fas fa-mobile-alt"></i>
                     <span>Plan Management</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item @(ViewContext.RouteData.Values["controller"].ToString().ToLower().Contains("setting") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("index", "Settingsmgmt", new { area = "Admin" })">
-                    <i class="fas fa-user-cog"></i>
-                    <span>Contact  Information</span>
+                    <i class="fas fa-address-book"></i>
+                    <span>Contact Information</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item @(ViewContext.RouteData.Values["controller"].ToString().ToLower().Contains("faq") ? "active" : "")">
                 <a class="nav-link" href="@Url.Action("index", "FAQmgmt", new { area = "Admin" })">
-                    <i class="fas fa-user-cog"></i>
-                    <span>FAQ  Management</span>
-                </a>
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Logout", "Login", new { area = "" })" style="color:red">
-                    <i class="fas fa-sign-out-alt" style="color:red"></i>
-                    <span>Logout</span>
+                    <i class="fas fa-question-circle"></i>
+                    <span>FAQ Management</span>
                 </a>
             </li>
+
+            <!-- Logout với modal trigger -->
+            <li class="nav-item">
+                <a class="nav-link logout-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt" style="color: #e74a3b"></i>
+                    <span style="color: #e74a3b">Logout</span>
+                </a>
+            </li>
+
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -124,6 +255,59 @@
     <script src="@Url.Content("~/content/admin")/vendor/chart.js/Chart.min.js"></script>
     <script src="@Url.Content("~/content/admin")/js/demo/chart-area-demo.js"></script>
     <script src="@Url.Content("~/content/admin")/js/demo/chart-pie-demo.js"></script>
+
+    <script>
+        // JavaScript để xử lý active menu VĨNH VIỄN
+        $(document).ready(function () {
+            // Lấy controller hiện tại từ URL
+            var currentController = '@ViewContext.RouteData.Values["controller"]'.toLowerCase();
+            var currentAction = '@ViewContext.RouteData.Values["action"]'.toLowerCase();
+
+            console.log('Current Controller:', currentController);
+            console.log('Current Action:', currentAction);
+
+            // Xác định menu nào nên active
+            function setActiveMenu() {
+                $('.nav-item').removeClass('active');
+
+                // Kiểm tra từng menu item
+                $('.nav-item').each(function() {
+                    var $link = $(this).find('.nav-link');
+                    var href = $link.attr('href').toLowerCase();
+
+                    // Kiểm tra nếu URL hiện tại khớp với href của menu
+                    if (href.includes(currentController) ||
+                        (currentController === 'usermgmt' && href.includes('user')) ||
+                        (currentController === 'feedbackmgmt' && href.includes('feedback')) ||
+                        (currentController === 'transactionmgmt' && href.includes('transaction')) ||
+                        (currentController === 'planmgmt' && href.includes('plan')) ||
+                        (currentController === 'settingsmgmt' && href.includes('setting')) ||
+                        (currentController === 'faqmgmt' && href.includes('faq'))) {
+                        $(this).addClass('active');
+                        console.log('Active menu:', $link.find('span').text());
+                    }
+                });
+            }
+
+            // Gọi hàm khi trang load
+            setActiveMenu();
+
+            // Cũng gọi khi click menu (để chắc chắn)
+            $('.nav-link:not(.logout-link)').click(function () {
+                $('.nav-item').removeClass('active');
+                $(this).closest('.nav-item').addClass('active');
+            });
+
+            // Logout modal enhancement
+            $('#logoutModal').on('show.bs.modal', function () {
+                $('.logout-link').addClass('active');
+            });
+
+            $('#logoutModal').on('hide.bs.modal', function () {
+                $('.logout-link').removeClass('active');
+            });
+        });
+    </script>
 
     @RenderSection("myscript", required: false)
 </body>
