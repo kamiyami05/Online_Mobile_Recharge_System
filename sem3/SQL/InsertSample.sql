@@ -248,3 +248,14 @@ GO
 -- Check UserServiceSettings (should have entries for all users after trigger execution)
 SELECT * FROM UserServiceSettings;
 GO
+
+INSERT INTO SystemSettings (SettingKey, SettingValue, Description)
+VALUES 
+('Contact_Address', N'123 Recharge Street<br>Digital District<br>Ho Chi Minh City, Vietnam', 'Office Address'),
+('Contact_PhoneMain', N'+84 28 3844 8888', 'Main Phone Number'),
+('Contact_PhoneSupport', N'+84 28 3844 9999', 'Support Phone Number'),
+('Contact_Email1', N'support@rechargesystem.vn', 'Support Email 1'),
+('Contact_Email2', N'info@rechargesystem.vn', 'Support Email 2'),
+('Contact_HoursWeekdays', N'8:00 AM - 10:00 PM', 'Working Hours (Mon-Fri)'),
+('Contact_HoursWeekend', N'9:00 AM - 8:00 PM', 'Working Hours (Sat-Sun)');
+GO

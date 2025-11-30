@@ -10,15 +10,6 @@
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="MobileNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityType Name="ContactPoint">
-    <Key>
-      <PropertyRef Name="ContactID" />
-    </Key>
-    <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ContactType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Details" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="Feedback">
     <Key>
       <PropertyRef Name="FeedbackID" />
@@ -67,7 +58,7 @@
     <Property Name="Details" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Operator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="IsActive" Type="Boolean" />
-    <Property Name="PlanName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PlanName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
   <EntityType Name="Service">
     <Key>
@@ -87,6 +78,24 @@
     <Property Name="PageName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="ContentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SystemSetting">
+    <Key>
+      <PropertyRef Name="SettingKey" />
+    </Key>
+    <Property Name="SettingKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SettingValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Transaction">
     <Key>
@@ -127,11 +136,11 @@
     <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
     <Property Name="WalletBalance" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="PostpaidMonthlyFee" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="Active" Type="Boolean" />
     <NavigationProperty Name="Feedbacks" Relationship="Self.FK__Feedback__UserID__68487DD7" FromRole="Users" ToRole="Feedback" />
     <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__UserI__45F365D3" FromRole="Users" ToRole="Transactions" />
     <NavigationProperty Name="UserServices" Relationship="Self.FK__UserServi__UserI__5CD6CB2B" FromRole="Users" ToRole="UserServices" />
     <NavigationProperty Name="UserServiceSettings" Relationship="Self.FK__UserServi__UserI__6383C8BA" FromRole="Users" ToRole="UserServiceSettings" />
-    <Property Name="Active" Type="Boolean" />
   </EntityType>
   <EntityType Name="UserService">
     <Key>
@@ -268,13 +277,14 @@
   </Association>
   <EntityContainer Name="OnlineRechargeDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="AdminUsers" EntityType="Self.AdminUser" />
-    <EntitySet Name="ContactPoints" EntityType="Self.ContactPoint" />
     <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
     <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetail" />
     <EntitySet Name="PostpaidBills" EntityType="Self.PostpaidBill" />
     <EntitySet Name="RechargePlans" EntityType="Self.RechargePlan" />
     <EntitySet Name="Services" EntityType="Self.Service" />
     <EntitySet Name="SiteContents" EntityType="Self.SiteContent" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="SystemSettings" EntityType="Self.SystemSetting" />
     <EntitySet Name="Transactions" EntityType="Self.Transaction" />
     <EntitySet Name="TransactionScripts" EntityType="Self.TransactionScript" />
     <EntitySet Name="Users" EntityType="Self.User" />

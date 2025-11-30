@@ -26,13 +26,14 @@ namespace sem3.Models.Entities
         }
     
         public virtual DbSet<AdminUser> AdminUsers { get; set; }
-        public virtual DbSet<ContactPoint> ContactPoints { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
         public virtual DbSet<PostpaidBill> PostpaidBills { get; set; }
         public virtual DbSet<RechargePlan> RechargePlans { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<SiteContent> SiteContents { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<SystemSetting> SystemSettings { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<TransactionScript> TransactionScripts { get; set; }
         public virtual DbSet<User> Users { get; set; }

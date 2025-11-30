@@ -269,6 +269,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\FeedbackmgmtController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SettingsmgmtController.cs" />
     <Compile Include="Areas\Admin\Controllers\TransactionmgmtController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsermgmtController.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
@@ -286,9 +287,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\AdminUser.cs">
-      <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\ContactPoint.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Feedback.cs">
@@ -324,6 +322,12 @@
     <Compile Include="Models\Entities\SiteContent.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\sysdiagram.cs">
+      <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\SystemSetting.cs">
+      <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Transaction.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
@@ -350,6 +354,7 @@
     <Compile Include="Models\ModelViews\UserM.cs" />
     <Compile Include="Models\Repositoties\FeedbackRepository.cs" />
     <Compile Include="Models\Repositoties\PlanRepository.cs" />
+    <Compile Include="Models\Repositoties\SettingsRepository.cs" />
     <Compile Include="Models\Repositoties\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Payment\IPaymentService.cs" />
@@ -2275,6 +2280,12 @@
     <None Include=".env">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Repositoties\TransactionRepository.cs" />
+    <Content Include="Areas\Admin\Views\Transactionmgmt\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Planmgmt\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Planmgmt\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Planmgmt\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Settingsmgmt\Index.cshtml" />
     <EntityDeploy Include="Models\Entities\OnlineRechargeDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OnlineRechargeDB.Designer.cs</LastGenOutput>
@@ -2282,11 +2293,6 @@
     <Content Include="Models\Entities\OnlineRechargeDB.edmx.diagram">
       <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
     </Content>
-    <Compile Include="Models\Repositoties\TransactionRepository.cs" />
-    <Content Include="Areas\Admin\Views\Transactionmgmt\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Planmgmt\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Planmgmt\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Planmgmt\Edit.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

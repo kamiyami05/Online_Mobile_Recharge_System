@@ -10,15 +10,6 @@
     <Property Name="Email" Type="varchar" MaxLength="100" />
     <Property Name="MobileNumber" Type="varchar" MaxLength="10" />
   </EntityType>
-  <EntityType Name="ContactPoints">
-    <Key>
-      <PropertyRef Name="ContactID" />
-    </Key>
-    <Property Name="ContactID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ContactType" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Details" Type="nvarchar" MaxLength="255" Nullable="false" />
-    <Property Name="Description" Type="nvarchar" MaxLength="255" />
-  </EntityType>
   <EntityType Name="Feedback">
     <Key>
       <PropertyRef Name="FeedbackID" />
@@ -82,6 +73,24 @@
     <Property Name="PageName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="100" />
     <Property Name="ContentText" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="SystemSettings">
+    <Key>
+      <PropertyRef Name="SettingKey" />
+    </Key>
+    <Property Name="SettingKey" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SettingValue" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="Transactions">
     <Key>
@@ -250,13 +259,14 @@
   </Association>
   <EntityContainer Name="OnlineRechargeDBModelStoreContainer">
     <EntitySet Name="AdminUsers" EntityType="Self.AdminUsers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ContactPoints" EntityType="Self.ContactPoints" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PostpaidBills" EntityType="Self.PostpaidBills" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RechargePlans" EntityType="Self.RechargePlans" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SiteContent" EntityType="Self.SiteContent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemSettings" EntityType="Self.SystemSettings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TransactionScripts" EntityType="Self.TransactionScripts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />

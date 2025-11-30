@@ -12,11 +12,12 @@ namespace sem3.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class ContactPoint
+    public partial class sysdiagram
     {
-        public int ContactID { get; set; }
-        public string ContactType { get; set; }
-        public string Details { get; set; }
-        public string Description { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

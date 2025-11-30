@@ -1,0 +1,118 @@
+﻿@model List<sem3.Models.Entities.SystemSetting>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    string GetVal(string key) => Model.FirstOrDefault(x => x.SettingKey == key)?.SettingValue ?? "";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Website Configuration</h1>
+</div>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<form action="@Url.Action("UpdateAll", "Settingsmgmt")" method="post">
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow h-100 py-2 border-left-primary">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <i class="fas fa-map-marker-alt"></i> Office Address
+                            </div>
+                            <textarea name="settings[0].SettingValue" class="form-control" rows="3">@GetVal("Contact_Address")</textarea>
+                            <input type="hidden" name="settings[0].SettingKey" value="Contact_Address" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow h-100 py-2 border-left-success">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
+                        <i class="fas fa-phone"></i> Phone Numbers
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Main:</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="settings[1].SettingValue" class="form-control" value="@GetVal("Contact_PhoneMain")">
+                            <input type="hidden" name="settings[1].SettingKey" value="Contact_PhoneMain" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Support:</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="settings[2].SettingValue" class="form-control" value="@GetVal("Contact_PhoneSupport")">
+                            <input type="hidden" name="settings[2].SettingKey" value="Contact_PhoneSupport" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow h-100 py-2 border-left-info">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-3">
+                        <i class="fas fa-envelope"></i> Email Addresses
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Support:</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="settings[3].SettingValue" class="form-control" value="@GetVal("Contact_Email1")">
+                            <input type="hidden" name="settings[3].SettingKey" value="Contact_Email1" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Info:</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="settings[4].SettingValue" class="form-control" value="@GetVal("Contact_Email2")">
+                            <input type="hidden" name="settings[4].SettingKey" value="Contact_Email2" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow h-100 py-2 border-left-warning">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-3">
+                        <i class="fas fa-clock"></i> Business Hours
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Mon-Fri:</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="settings[5].SettingValue" class="form-control" value="@GetVal("Contact_HoursWeekdays")">
+                            <input type="hidden" name="settings[5].SettingKey" value="Contact_HoursWeekdays" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Sat-Sun:</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="settings[6].SettingValue" class="form-control" value="@GetVal("Contact_HoursWeekend")">
+                            <input type="hidden" name="settings[6].SettingKey" value="Contact_HoursWeekend" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary btn-lg px-5">
+            <i class="fas fa-save"></i> Save All Changes
+        </button>
+    </div>
+
+</form>

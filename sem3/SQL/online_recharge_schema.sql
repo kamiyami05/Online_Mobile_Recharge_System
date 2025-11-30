@@ -154,10 +154,9 @@ CREATE TABLE SiteContent (
 GO
 
 -- 13. ContactPoints Table - Stores contact information for different contact types
-CREATE TABLE ContactPoints (
-    ContactID INT PRIMARY KEY IDENTITY(1,1),
-    ContactType VARCHAR(50) NOT NULL UNIQUE,
-    Details NVARCHAR(255) NOT NULL,
+CREATE TABLE SystemSettings (
+    SettingKey VARCHAR(50) PRIMARY KEY,
+    SettingValue NVARCHAR(MAX),
     Description NVARCHAR(255)
 );
 GO
