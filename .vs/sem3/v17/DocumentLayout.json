@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\areas\\admin\\views\\usermgmt\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\areas\\admin\\views\\usermgmt\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\areas\\admin\\controllers\\usermgmtcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\areas\\admin\\controllers\\usermgmtcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -23,12 +27,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\Usermgmt\\Index.cshtml",
+              "RelativeDocumentMoniker": "sem3\\Areas\\Admin\\Views\\Usermgmt\\Index.cshtml",
+              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\Usermgmt\\Index.cshtml",
+              "RelativeToolTip": "sem3\\Areas\\Admin\\Views\\Usermgmt\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T10:35:35.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "UsermgmtController.cs",
               "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Controllers\\UsermgmtController.cs",
               "RelativeDocumentMoniker": "sem3\\Areas\\Admin\\Controllers\\UsermgmtController.cs",
               "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Controllers\\UsermgmtController.cs",
               "RelativeToolTip": "sem3\\Areas\\Admin\\Controllers\\UsermgmtController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA1wBoAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-30T09:52:37.704Z",
               "EditorCaption": ""

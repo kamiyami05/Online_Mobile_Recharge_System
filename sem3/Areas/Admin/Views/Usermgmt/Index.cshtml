@@ -87,19 +87,17 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            // --- 1. LOGIC BỘ LỌC STATUS ---
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     var statusFilter = $('#statusFilter').val();
-
-                    // Lấy dòng hiện tại (DOM node)
                     var rowNode = settings.aoData[dataIndex].nTr;
+                    var statusValue = $(rowNode).find('td[data-status]').data('status');
 
-                    // Tìm giá trị data-status trong cột (cột active/deactive)
-                    // Lưu ý: convert sang string để so sánh an toàn
-                    var statusValue = $(rowNode).find('td[data-status]').data('status').toString();
+                    if (statusValue === true) statusValue = "true";
+                    if (statusValue === false) statusValue = "false";
 
-                    // Nếu không chọn filter (rỗng) hoặc giá trị khớp nhau thì hiển thị
+                    statusValue = statusValue.toString().trim();
+
                     if (statusFilter === "" || statusValue === statusFilter) {
                         return true;
                     }
@@ -107,7 +105,6 @@
                 }
             );
 
-            // --- 2. KHỞI TẠO DATATABLE ---
             var table = $('#userTable').DataTable({
                 "paging": true,
                 "pagingType": "full_numbers",
@@ -117,26 +114,24 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-                "order": [[0, "desc"]], // Sắp xếp ID giảm dần
+                "order": [[0, "desc"]],
                 "columnDefs": [
                     {
-                        "targets": [0], // Ẩn cột ID đi cho gọn (nếu muốn hiện thì xóa dòng này)
+                        "targets": [0],
                         "visible": false,
                         "searchable": false
                     }
                 ]
             });
 
-            // --- 3. SỰ KIỆN KHI CHỌN DROPDOWN ---
             $('#statusFilter').change(function () {
-                table.draw(); // Vẽ lại bảng để áp dụng bộ lọc
+                table.draw();
             });
 
-            // --- 4. XỬ LÝ NÚT ACTIVE/DEACTIVE ---
             $(document).on('click', '.toggle-btn', function () {
                 var btn = $(this);
                 var id = btn.data('id');
-                var newStatus = btn.data('status'); // true hoặc false
+                var newStatus = btn.data('status');
                 var actionName = newStatus ? "Activate" : "Deactivate";
 
                 if (confirm('Are you sure you want to ' + actionName + ' this user?')) {
@@ -146,7 +141,7 @@
                         data: { id: id, status: newStatus },
                         success: function (response) {
                             if (response.success) {
-                                location.reload(); // Tải lại trang để cập nhật giao diện
+                                location.reload();
                             } else {
                                 alert('Update failed: ' + response.message);
                             }
