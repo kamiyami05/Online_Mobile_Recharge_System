@@ -326,5 +326,16 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="UserServiceSettings" EntitySet="UserServiceSettings" />
     </AssociationSet>
+    <EntitySet Name="FAQs" EntityType="OnlineRechargeDBModel.FAQ" />
   </EntityContainer>
+  <EntityType Name="FAQ">
+    <Key>
+      <PropertyRef Name="FAQID" />
+    </Key>
+    <Property Name="FAQID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Answer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OrderIndex" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
 </Schema>

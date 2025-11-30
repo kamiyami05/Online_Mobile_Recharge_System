@@ -28,6 +28,7 @@
         <AssociationConnector Association="OnlineRechargeDBModel.FK__Transacti__UserI__45F365D3" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineRechargeDBModel.FK__UserServi__UserI__5CD6CB2B" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineRechargeDBModel.FK__UserServi__UserI__6383C8BA" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OnlineRechargeDBModel.FAQ" Width="1.5" PointX="10.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -10,6 +10,16 @@
     <Property Name="Email" Type="varchar" MaxLength="100" />
     <Property Name="MobileNumber" Type="varchar" MaxLength="10" />
   </EntityType>
+  <EntityType Name="FAQs">
+    <Key>
+      <PropertyRef Name="FAQID" />
+    </Key>
+    <Property Name="FAQID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Question" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OrderIndex" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
   <EntityType Name="Feedback">
     <Key>
       <PropertyRef Name="FeedbackID" />
@@ -259,6 +269,7 @@
   </Association>
   <EntityContainer Name="OnlineRechargeDBModelStoreContainer">
     <EntitySet Name="AdminUsers" EntityType="Self.AdminUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FAQs" EntityType="Self.FAQs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PostpaidBills" EntityType="Self.PostpaidBills" Schema="dbo" store:Type="Tables" />

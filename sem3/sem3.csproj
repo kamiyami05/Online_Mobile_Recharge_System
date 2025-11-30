@@ -268,6 +268,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\FAQmgmtController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeedbackmgmtController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsmgmtController.cs" />
     <Compile Include="Areas\Admin\Controllers\TransactionmgmtController.cs" />
@@ -287,6 +288,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\AdminUser.cs">
+      <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\FAQ.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Feedback.cs">
@@ -352,6 +356,7 @@
     <Compile Include="Models\ModelViews\Register.cs" />
     <Compile Include="Models\ModelViews\TransactionHistoryM.cs" />
     <Compile Include="Models\ModelViews\UserM.cs" />
+    <Compile Include="Models\Repositoties\FAQRepository.cs" />
     <Compile Include="Models\Repositoties\FeedbackRepository.cs" />
     <Compile Include="Models\Repositoties\PlanRepository.cs" />
     <Compile Include="Models\Repositoties\SettingsRepository.cs" />
@@ -2293,7 +2298,11 @@
     <Content Include="Models\Entities\OnlineRechargeDB.edmx.diagram">
       <DependentUpon>OnlineRechargeDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\FAQmgmt\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\FAQmgmt\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\FAQmgmt\Edit.cshtml" />
     <None Include="packages.config" />
+    <Content Include="Views\CustomerCare\_FAQList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

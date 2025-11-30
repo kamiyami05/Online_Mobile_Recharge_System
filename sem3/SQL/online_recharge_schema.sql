@@ -144,16 +144,17 @@ CREATE TABLE Feedback (
 );
 GO
 
--- 12. SiteContent Table - Stores static content for pages like About Us and Site Map
-CREATE TABLE SiteContent (
-    ContentID INT PRIMARY KEY IDENTITY(1,1),
-    PageName VARCHAR(50) NOT NULL UNIQUE,
-    Title NVARCHAR(100),
-    ContentText NVARCHAR(MAX)
+-- 12. FAQs Table - Stores static content for pages like About Us and Site Map
+CREATE TABLE FAQs (
+    FAQID INT PRIMARY KEY IDENTITY(1,1),
+    Question NVARCHAR(255) NOT NULL,
+    Answer NVARCHAR(MAX) NOT NULL,
+    OrderIndex INT DEFAULT 0, -- To sort priority
+    IsActive BIT DEFAULT 1
 );
 GO
 
--- 13. ContactPoints Table - Stores contact information for different contact types
+-- 13. SystemSettings Table - Stores contact information for different contact types
 CREATE TABLE SystemSettings (
     SettingKey VARCHAR(50) PRIMARY KEY,
     SettingValue NVARCHAR(MAX),

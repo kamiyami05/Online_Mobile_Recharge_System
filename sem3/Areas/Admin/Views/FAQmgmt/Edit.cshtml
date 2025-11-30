@@ -1,0 +1,31 @@
+﻿@model sem3.Models.Entities.FAQ
+@{ Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; ViewBag.Title = "Edit FAQ"; }
+
+<div class="card shadow mb-4" style="max-width: 800px; margin: 0 auto;">
+    <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">Edit Question</h6></div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.FAQID)
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Question</label>
+                @Html.TextBoxFor(m => m.Question, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Answer</label>
+                @Html.TextAreaFor(m => m.Answer, new { @class = "form-control", rows = "5", required = "required" })
+            </div>
+            <div class="mb-3 form-check">
+                @Html.CheckBox("IsActive", Model.IsActive ?? false, new { @class = "form-check-input", id = "IsActive" })
+                <label class="form-check-label fw-bold" for="IsActive">Is Active?</label>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-warning"><i class="fas fa-save"></i> Update</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+            </div>
+        }
+    </div>
+</div>

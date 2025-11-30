@@ -166,4 +166,8 @@
         }
     }
     renderChatbox();
+    $('body').on('click', '#btnOpenChat', function (e) {
+        e.preventDefault();
+        openChat();
+    });
 });

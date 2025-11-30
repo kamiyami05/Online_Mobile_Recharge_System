@@ -39,5 +39,6 @@ namespace sem3.Models.Entities
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserService> UserServices { get; set; }
         public virtual DbSet<UserServiceSetting> UserServiceSettings { get; set; }
+        public virtual DbSet<FAQ> FAQs { get; set; }
     }
 }

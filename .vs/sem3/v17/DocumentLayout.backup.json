@@ -3,12 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\areas\\admin\\views\\settingsmgmt\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\areas\\admin\\views\\settingsmgmt\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\controllers\\customercarecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\controllers\\customercarecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\areas\\admin\\controllers\\settingsmgmtcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\areas\\admin\\controllers\\settingsmgmtcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\views\\customercare\\_faqlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\views\\customercare\\_faqlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\views\\customercare\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\views\\customercare\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\areas\\admin\\views\\faqmgmt\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\areas\\admin\\views\\faqmgmt\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\areas\\admin\\views\\faqmgmt\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\areas\\admin\\views\\faqmgmt\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\areas\\admin\\views\\faqmgmt\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\areas\\admin\\views\\faqmgmt\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|c:\\users\\duc47\\onedrive\\m\u00E1y t\u00EDnh\\a\\online_mobile_recharge_system\\sem3\\models\\repositoties\\faqrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0D5428E-C12D-46C0-8DAB-E3F1D7A65537}|sem3\\sem3.csproj|solutionrelative:sem3\\models\\repositoties\\faqrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,27 +47,92 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "SettingsmgmtController.cs",
-              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Controllers\\SettingsmgmtController.cs",
-              "RelativeDocumentMoniker": "sem3\\Areas\\Admin\\Controllers\\SettingsmgmtController.cs",
-              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Controllers\\SettingsmgmtController.cs",
-              "RelativeToolTip": "sem3\\Areas\\Admin\\Controllers\\SettingsmgmtController.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAAwCkAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T06:42:21.65Z",
+              "Title": "_FAQList.cshtml",
+              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Views\\CustomerCare\\_FAQList.cshtml",
+              "RelativeDocumentMoniker": "sem3\\Views\\CustomerCare\\_FAQList.cshtml",
+              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Views\\CustomerCare\\_FAQList.cshtml",
+              "RelativeToolTip": "sem3\\Views\\CustomerCare\\_FAQList.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T07:53:45.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Views\\CustomerCare\\Index.cshtml",
+              "RelativeDocumentMoniker": "sem3\\Views\\CustomerCare\\Index.cshtml",
+              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Views\\CustomerCare\\Index.cshtml",
+              "RelativeToolTip": "sem3\\Views\\CustomerCare\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T07:44:27.351Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\Settingsmgmt\\Index.cshtml",
-              "RelativeDocumentMoniker": "sem3\\Areas\\Admin\\Views\\Settingsmgmt\\Index.cshtml",
-              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\Settingsmgmt\\Index.cshtml",
-              "RelativeToolTip": "sem3\\Areas\\Admin\\Views\\Settingsmgmt\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAhAAAAAAAAAA==",
+              "Title": "CustomerCareController.cs",
+              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Controllers\\CustomerCareController.cs",
+              "RelativeDocumentMoniker": "sem3\\Controllers\\CustomerCareController.cs",
+              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Controllers\\CustomerCareController.cs",
+              "RelativeToolTip": "sem3\\Controllers\\CustomerCareController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T07:43:45.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FAQRepository.cs",
+              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Models\\Repositoties\\FAQRepository.cs",
+              "RelativeDocumentMoniker": "sem3\\Models\\Repositoties\\FAQRepository.cs",
+              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Models\\Repositoties\\FAQRepository.cs",
+              "RelativeToolTip": "sem3\\Models\\Repositoties\\FAQRepository.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowBMAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T07:42:12.969Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\FAQmgmt\\Edit.cshtml",
+              "RelativeDocumentMoniker": "sem3\\Areas\\Admin\\Views\\FAQmgmt\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\FAQmgmt\\Edit.cshtml",
+              "RelativeToolTip": "sem3\\Areas\\Admin\\Views\\FAQmgmt\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-30T06:38:41.817Z",
+              "WhenOpened": "2025-11-30T07:37:09.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\FAQmgmt\\Create.cshtml",
+              "RelativeDocumentMoniker": "sem3\\Areas\\Admin\\Views\\FAQmgmt\\Create.cshtml",
+              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\FAQmgmt\\Create.cshtml",
+              "RelativeToolTip": "sem3\\Areas\\Admin\\Views\\FAQmgmt\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T07:36:53.86Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\FAQmgmt\\Index.cshtml",
+              "RelativeDocumentMoniker": "sem3\\Areas\\Admin\\Views\\FAQmgmt\\Index.cshtml",
+              "ToolTip": "C:\\Users\\duc47\\OneDrive\\M\u00E1y t\u00EDnh\\a\\Online_Mobile_Recharge_System\\sem3\\Areas\\Admin\\Views\\FAQmgmt\\Index.cshtml",
+              "RelativeToolTip": "sem3\\Areas\\Admin\\Views\\FAQmgmt\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-30T07:36:10.016Z",
               "EditorCaption": ""
             }
           ]
