@@ -67,11 +67,11 @@ namespace sem3.Controllers
             });
 
             // 🧾 Tạo nội dung biên lai lưu DB
-            string script = $"THANH TOÁN HÓA ĐƠN TRẢ SAU\n" +
-                            $"Số thuê bao: {bill.MobileNumber}\n" +
-                            $"Ngày thanh toán: {DateTime.Now}\n" +
-                            $"Số tiền: {bill.TotalAmount} VND\n" +
-                            $"Mã giao dịch: {trans.TransactionID}\n";
+            string script = $"POSTPAID BILL PAYMENT\n" +
+                            $"Phone number: {bill.MobileNumber}\n" +
+                            $"Payment date: {DateTime.Now}\n" +
+                            $"Amount due: {bill.TotalAmount} VND\n" +
+                            $"Transaction ID: {trans.TransactionID}\n";
 
             db.TransactionScripts.Add(new TransactionScript
             {
