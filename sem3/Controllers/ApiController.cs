@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using sem3.Models.ModelViews;
+using sem3.Models.Repositories;
+using System.Linq;
 
 namespace sem3.Controllers
 {
     public class ApiController : Controller
     {
         private static readonly HttpClient client = new HttpClient();
+        private readonly PlanRepository _planRepo = new PlanRepository();
 
         [HttpPost]
         public async Task<ActionResult> Chat(ChatRequestModel request)
@@ -23,49 +26,54 @@ namespace sem3.Controllers
 
                 if (string.IsNullOrEmpty(apiKey))
                 {
-                    return Json(new { reply = "Error: AI_SERVICE_API_KEY not found. Please check your .env file." }, JsonRequestBehavior.AllowGet);
+                    return Json(new { reply = "Error: AI_SERVICE_API_KEY not found." }, JsonRequestBehavior.AllowGet);
                 }
 
+                var plans = _planRepo.GetAll()
+                    .Where(p => p.IsActive == true)
+                    .Select(p => $"- {p.Operator} {p.Amount:N0}đ ({p.PlanType}): {p.Details}")
+                    .ToList();
+
+                string plansContext = string.Join("\n", plans);
                 string apiUrl = "https://gpt1.shupremium.com/v1/chat/completions";
 
                 client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", apiKey);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+                var systemPromptContent = $@"
+                    You are the 'Recharge & Bill Payment Assistant'.
+
+                    [IMPORTANT] REAL-TIME DATA FROM DATABASE:
+                    Here is the list of currently available recharge plans in our system. 
+                    Use ONLY this information to answer user questions about prices and plans. 
+                    DO NOT hallucinate or make up plans that are not in this list.
+
+                    AVAILABLE PLANS:
+                    {plansContext}
+
+                    FORMATTING RULES:
+                    - Use clear line breaks.
+                    - Use bullet points (•) for listing plans.
+                    - Format currency as 50,000đ.
+                    
+                    Your primary purpose is to support mobile top-ups, bill payments, and answer queries based on the data provided above.
+                ";
 
                 var systemPrompt = new ApiMessage
                 {
                     Role = "system",
-                    Content = @"You are the 'Recharge & Bill Payment Assistant' for an online mobile recharge and bill payment platform. 
-
-                            IMPORTANT FORMATTING RULES:
-                            - Use clear line breaks between steps (press Enter twice between paragraphs)
-                            - Use numbered lists (1. 2. 3.) for step-by-step instructions
-                            - Use bullet points (•) for listing features or options
-                            - Keep paragraphs short and readable
-                            - Use bold text for important terms (wrap in **bold**)
-
-                            Your primary purpose is to provide helpful, concise, and professional support regarding:
-                            • Mobile top-ups and recharges
-                            • Checking balances and transaction history  
-                            • Paying utility bills (electricity, water, internet)
-                            • Transaction status inquiries
-                            • Accepted payment methods
-
-                            Keep your answers strictly focused on the domain of mobile recharge and billing. Do not engage in conversations about general knowledge, coding, or unrelated topics."
+                    Content = systemPromptContent
                 };
 
                 var combinedMessages = new List<ApiMessage> { systemPrompt };
                 combinedMessages.AddRange(request.Messages);
 
-
                 var apiPayload = new
                 {
                     model = "gpt-4o-mini",
                     messages = combinedMessages,
-                    temperature = 0.7,
-                    max_tokens = 400
+                    temperature = 0.5,
+                    max_tokens = 500
                 };
-
                 string jsonPayload = JsonConvert.SerializeObject(apiPayload);
                 var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
@@ -74,18 +82,23 @@ namespace sem3.Controllers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return Json(new { reply = $"API Error ({response.StatusCode}): {responseBody}" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { reply = $"API Error: {response.StatusCode}" }, JsonRequestBehavior.AllowGet);
                 }
 
                 dynamic result = JsonConvert.DeserializeObject(responseBody);
+                string aiReply = result?.choices[0]?.message?.content?.ToString()?.Trim() ?? "Empty response.";
 
-                string aiReply = result?.choices[0]?.message?.content?.ToString()?.Trim() ?? "Sorry, I received an empty or malformed response from the AI.";
                 return Json(new { reply = aiReply }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { reply = $"An unexpected error occurred: {ex.Message}" }, JsonRequestBehavior.AllowGet);
+                return Json(new { reply = $"Error: {ex.Message}" }, JsonRequestBehavior.AllowGet);
             }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _planRepo.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
