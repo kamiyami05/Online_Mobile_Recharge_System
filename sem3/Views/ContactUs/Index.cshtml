@@ -1,4 +1,4 @@
-﻿﻿@{
+﻿@{
     ViewBag.Title = "Contact Us";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,14 +11,26 @@
         <p class="subtitle">Get in Touch with Our Mobile Recharge Center</p>
     </div>
 
-
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success">@TempData["Success"]</div>
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            <div>
+                <strong>Demo Successful!</strong><br>
+                @TempData["Success"]<br>
+                <small><em>All emails are sent to: zooxoox3@gmail.com for demonstration</em></small>
+            </div>
+        </div>
     }
     @if (TempData["Error"] != null)
     {
-        <div class="alert alert-danger">@TempData["Error"]</div>
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+                <strong>Demo Error:</strong><br>
+                @TempData["Error"]
+            </div>
+        </div>
     }
 
     <div class="contact-content">
@@ -66,18 +78,50 @@
 
         <div class="contact-form">
             <h3>Send Us a Message</h3>
-            <form method="post" action="@Url.Action("SendMessage", "ContactUs")">
+            <form method="post" action="@Url.Action("SendMessage", "ContactUs")" id="contactForm" novalidate>
+                @Html.AntiForgeryToken()
+
                 <div class="form-group">
-                    <input type="text" name="Name" placeholder="Your Name" required>
+                    <input type="text" name="Name" id="Name" placeholder="Your Name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" name="Email" placeholder="Your Email" required>
+                    <input type="email" name="Email" id="Email" placeholder="Your Email" required>
                 </div>
                 <div class="form-group">
-                    <textarea name="Message" placeholder="Your Message" rows="5" required></textarea>
+                    <textarea name="Message" id="Message" placeholder="Your Message" rows="5" required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Send Message</button>
+
+                <div class="form-group captcha-group">
+                    <div class="captcha-container">
+                        <div class="captcha-image">
+                            <img id="captchaImage" src="@Url.Action("GetCaptcha", "ContactUs")" alt="CAPTCHA" />
+                            <button type="button" id="refreshCaptcha" class="refresh-btn"
+                                    data-toggle="tooltip" title="Get new CAPTCHA">
+                                <i class="fas fa-redo"></i> Refresh
+                            </button>
+                        </div>
+                        <div class="captcha-input">
+                            <input type="text"
+                                   name="CaptchaCode"
+                                   id="captchaInput"
+                                   placeholder="Enter CAPTCHA code"
+                                   required
+                                   maxlength="5"
+                                   autocomplete="off" />
+                            <span id="captchaError" class="text-danger" style="display: none;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
             </form>
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/YOUR-FONT-AWESOME-KIT.js" crossorigin="anonymous"></script>
+<script src="~/Scripts/contact-form.js"></script>

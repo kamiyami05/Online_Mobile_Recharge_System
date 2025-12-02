@@ -212,24 +212,7 @@ function validateVietnamesePhone(input) {
     return true;
 }
 
-// Validate email format
-function validateEmail(input) {
-    const value = input.value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!value) {
-        showError(input, 'Email is required');
-        return false;
-    }
-
-    if (!emailRegex.test(value)) {
-        showError(input, 'Please enter a valid email address');
-        return false;
-    }
-
-    clearError(input);
-    return true;
-}
 
 // Validate password strength
 function validatePassword(input) {

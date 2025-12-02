@@ -85,8 +85,64 @@
             @Html.ValidationMessageFor(m => m.FeedbackText, "", new { @class = "text-danger" })
         </div>
         <button type="submit" class="submit-btn">Submit Feedback</button>
-    }
+    
+        <div class="form-group captcha-group">
+            <label>Security Verification</label>
+            <div class="captcha-container">
+                <div class="captcha-image">
+                    <img id="captchaImage" src="@Url.Action("GetCaptcha", "Captcha")" alt="CAPTCHA" />
+                    <button type="button" id="refreshCaptcha" class="refresh-btn">
+                        <i class="fas fa-redo"></i> Refresh
+                    </button>
+                </div>
+                <div class="captcha-input">
+                    <input type="text"
+                           name="CaptchaCode"
+                           id="captchaInput"
+                           placeholder="Enter CAPTCHA code"
+                           required
+                           maxlength="5"
+                           style="text-transform: uppercase;" />
+                    <span id="captchaError" class="text-danger" style="display: none;">Invalid CAPTCHA code</span>
+                </div>
+            </div>
+        </div>
+        }
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/Scripts/feedback.js"></script>
+<script>
+    $(document).ready(function () {
+        // Refresh CAPTCHA
+        $('#refreshCaptcha').click(function () {
+            refreshCaptcha();
+        });
+
+        // Validate form
+        $('#feedbackForm').submit(function (e) {
+            var captchaInput = $('#captchaInput').val().trim();
+
+            if (captchaInput.length === 0) {
+                e.preventDefault();
+                showCaptchaError('Please enter CAPTCHA code');
+                return false;
+            }
+        });
+
+        setInterval(refreshCaptcha, 120000);
+    });
+
+    function refreshCaptcha() {
+        var timestamp = new Date().getTime();
+        $('#captchaImage').attr('src', '@Url.Action("GetCaptcha", "Captcha")?t=' + timestamp);
+        $('#captchaInput').val('');
+        $('#captchaError').hide();
+    }
+
+    function showCaptchaError(message) {
+        $('#captchaError').text(message || 'Invalid CAPTCHA code').show();
+        $('#captchaInput').focus();
+        refreshCaptcha();
+    }
+</script>

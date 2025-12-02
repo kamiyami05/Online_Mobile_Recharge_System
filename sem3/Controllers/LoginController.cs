@@ -2,11 +2,9 @@
 using sem3.Models.Entities;
 using sem3.Models.ModelViews;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using User = sem3.Models.ModelViews.UserM;
 
 namespace sem3.Controllers
 {
@@ -45,14 +43,6 @@ namespace sem3.Controllers
 
                         return RedirectToAction("Index", "Usermgmt", new { area = "Admin" });
                     }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine($"ADMIN PASSWORD INVALID");
-                    }
-                }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine($"No admin user found with phone: {model.PhoneNumber}");
                 }
 
                 var user = _db.Users.FirstOrDefault(u => u.MobileNumber == model.PhoneNumber);
@@ -68,7 +58,7 @@ namespace sem3.Controllers
 
                     if (isUserPasswordValid)
                     {
-                        Session["CurrentUser"] = new User
+                        Session["CurrentUser"] = new UserM
                         {
                             UserID = user.UserID,
                             FullName = user.FullName,
@@ -76,7 +66,7 @@ namespace sem3.Controllers
                             Email = user.Email,
                             PasswordHash = user.PasswordHash,
                             Address = user.Address,
-                            RegistrationDate = user.RegistrationDate,
+                            RegistrationDate = user.RegistrationDate
                         };
 
                         Session["CurrentUserId"] = user.UserID;
@@ -84,10 +74,6 @@ namespace sem3.Controllers
 
                         return RedirectToAction("Index", "Home");
                     }
-                }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine($"No regular user found with phone: {model.PhoneNumber}");
                 }
 
                 ModelState.AddModelError("", "Incorrect phone number or password.");
@@ -110,84 +96,132 @@ namespace sem3.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(Register model)
+        [ValidateAntiForgeryToken]
+        public JsonResult Register(Register model)
         {
-            if (ModelState.IsValid)
+            // Remove OTP validation from ModelState
+            ModelState.Remove("OTP");
+
+            if (!ModelState.IsValid)
             {
-                bool phoneExistsInAdmin = _db.AdminUsers.Any(a => a.MobileNumber == model.Phone);
-                bool phoneExistsInUsers = _db.Users.Any(u => u.MobileNumber == model.Phone);
-
-                if (phoneExistsInAdmin || phoneExistsInUsers)
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                return Json(new
                 {
-                    ModelState.AddModelError("", "Phone number already exists.");
-                    return View(model);
-                }
-                var newUser = new sem3.Models.Entities.User
-                {
-                    FullName = model.FullName,
-                    MobileNumber = model.Phone,
-                    PasswordHash = HashPassword(model.Password),
-                    RegistrationDate = DateTime.Now,
-                    Email = model.Email,
-                    Address = model.Address,
-                    Active = true
-                };
-
-                _db.Users.Add(newUser);
-                try
-                {
-                    _db.SaveChanges();
-                    return RedirectToAction("Login");
-                }
-                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
-                {
-                    var errorMessages = new List<string>();
-                    foreach (var validationErrors in ex.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            errorMessages.Add($"Property: {validationError.PropertyName} Error: {validationError.ErrorMessage}");
-                        }
-                    }
-                    ModelState.AddModelError("", "Validation errors: " + string.Join("; ", errorMessages));
-                }
-                catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
-                {
-                    Exception inner = ex;
-                    while (inner.InnerException != null)
-                    {
-                        inner = inner.InnerException;
-                    }
-                    ModelState.AddModelError("", $"Database error: {inner.Message}");
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", $"Unexpected error: {ex.Message}");
-                }
+                    success = false,
+                    message = "Invalid data: " + string.Join(", ", errors.Select(e => e.ErrorMessage))
+                });
             }
-            return View(model);
+
+            // OTP validation (mặc định là 1234)
+            if (model.OTP != "1234")
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Invalid OTP. Please enter 1234."
+                });
+            }
+
+            // Check if phone number already exists
+            bool phoneExistsInAdmin = _db.AdminUsers.Any(a => a.MobileNumber == model.Phone);
+            bool phoneExistsInUsers = _db.Users.Any(u => u.MobileNumber == model.Phone);
+
+            if (phoneExistsInAdmin || phoneExistsInUsers)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Phone number already exists."
+                });
+            }
+
+            // Create new user with all required fields
+            var newUser = new sem3.Models.Entities.User
+            {
+                FullName = model.Phone,
+                MobileNumber = model.Phone,
+                PasswordHash = HashPassword(model.Password),
+                RegistrationDate = DateTime.Now,
+                Email = null,
+                Address = null,
+                Active = true
+            };
+
+            _db.Users.Add(newUser);
+
+            try
+            {
+                _db.SaveChanges();
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Registration successful!"
+                });
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                var errorMessages = new List<string>();
+                foreach (var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        errorMessages.Add($"Property: {validationError.PropertyName} Error: {validationError.ErrorMessage}");
+                    }
+                }
+                return Json(new
+                {
+                    success = false,
+                    message = "Validation errors: " + string.Join("; ", errorMessages)
+                });
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                Exception inner = ex;
+                while (inner.InnerException != null)
+                {
+                    inner = inner.InnerException;
+                }
+                return Json(new
+                {
+                    success = false,
+                    message = $"Database error: {inner.Message}"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Unexpected error: {ex.Message}"
+                });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SendOTP(string phoneNumber)
+        {
+            return Json(new
+            {
+                success = true,
+                message = "OTP sent successfully. Use 1234 as OTP."
+            }, JsonRequestBehavior.AllowGet);
         }
 
         private bool VerifyPasswordForUser(string providedPassword, string storedPassword)
         {
-            System.Diagnostics.Debug.WriteLine($"=== VERIFY USER PASSWORD ===");
-            System.Diagnostics.Debug.WriteLine($"Stored password: '{storedPassword}'");
-            System.Diagnostics.Debug.WriteLine($"Stored password length: {storedPassword?.Length}");
-            System.Diagnostics.Debug.WriteLine($"Stored password is plain text: {IsPlainTextPassword(storedPassword)}");
-
             if (IsPlainTextPassword(storedPassword))
             {
-                bool result = providedPassword == storedPassword;
-                return result;
+                return providedPassword == storedPassword;
             }
+
             try
             {
                 var passwordHasher = new PasswordHasher();
                 var result = passwordHasher.VerifyHashedPassword(storedPassword, providedPassword);
-
                 return result == PasswordVerificationResult.Success;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -195,26 +229,19 @@ namespace sem3.Controllers
 
         private bool VerifyPasswordForAdmin(string providedPassword, string storedPassword)
         {
-            System.Diagnostics.Debug.WriteLine($"=== VERIFY ADMIN PASSWORD ===");
-            System.Diagnostics.Debug.WriteLine($"Stored admin password: '{storedPassword}'");
-            System.Diagnostics.Debug.WriteLine($"Stored admin password length: {storedPassword?.Length}");
-
-            bool result = providedPassword == storedPassword;
-            System.Diagnostics.Debug.WriteLine($"Admin password comparison result: {result}");
-            return result;
+            return providedPassword == storedPassword;
         }
 
         private bool IsPlainTextPassword(string password)
         {
             if (string.IsNullOrEmpty(password))
                 return true;
-            bool isPlainText = password.Length <= 20 &&
-                              !password.Contains("/") &&
-                              !password.Contains("+") &&
-                              !password.Contains("=") &&
-                              !password.Contains(" ");
 
-            System.Diagnostics.Debug.WriteLine($"IsPlainTextPassword check: Length={password.Length}, ContainsSlash={password.Contains("/")}, ContainsPlus={password.Contains("+")}, ContainsEqual={password.Contains("=")}, Result={isPlainText}");
+            bool isPlainText = password.Length <= 20 &&
+                               !password.Contains("/") &&
+                               !password.Contains("+") &&
+                               !password.Contains("=") &&
+                               !password.Contains(" ");
 
             return isPlainText;
         }

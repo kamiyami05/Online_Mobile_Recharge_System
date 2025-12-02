@@ -24,5 +24,9 @@ namespace sem3.Models.ModelViews
         [Required(ErrorMessage = "Please write your feedback.")]
         [StringLength(2000, ErrorMessage = "Feedback cannot exceed 2000 characters.")]
         public string FeedbackText { get; set; }
+
+        [Required(ErrorMessage = "CAPTCHA code is required")]
+        [StringLength(5, MinimumLength = 5, ErrorMessage = "CAPTCHA code must be 5 characters")]
+        public string CaptchaCode { get; set; }
     }
 }

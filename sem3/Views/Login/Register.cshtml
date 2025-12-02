@@ -6,64 +6,46 @@
 }
 
 <link href="~/Content/Client/login.css" rel="stylesheet" />
+<link href="~/Content/Client/register.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
 <div class="auth-container">
-    <h2>Create Your Account</h2>
+    <h2>Register</h2>
 
-    @using (Html.BeginForm("Register", "Login", FormMethod.Post))
-    {
+    <form id="registerForm" method="post">
         @Html.AntiForgeryToken()
 
-        @Html.ValidationSummary(false, "", new { @class = "text-red-500" })
-
-        <div class="form-columns">
-            <div class="form-column">
-                <div class="column-header">
-                    <i class="fas fa-user-circle"></i>
-                    <h3>Personal Info</h3>
-                </div>
-
-                <div class="form-group">
-                    <label for="FullName">Full Name</label>
-                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Enter your full name", required = "required" })
-                    @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-red-500" })
-                </div>
-
-                <div class="form-group">
-                    <label for="MobileNumber">Phone</label>
-                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "Enter your phone number", required = "required" })
-                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-red-500" })
-                </div>
-
+        <div class="simple-form">
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" id="phoneNumber" name="Phone" class="form-control"
+                       placeholder="Enter your phone number" required>
             </div>
 
-            <div class="form-column">
-                <div class="column-header">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Security Info</h3>
-                </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" name="Password" class="form-control"
+                       placeholder="Enter your password" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="Password">Password</label>
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter your password", required = "required" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-red-500" })
-                </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword" name="ConfirmPassword" class="form-control"
+                       placeholder="Confirm your password" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="ConfirmPassword">Confirm Password</label>
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm your password", required = "required" })
-                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-red-500" })
-                </div>
+            <button type="button" class="btn1 btn-primary" id="registerBtn">
+                <!-- Đổi type thành button -->
+                <i class="fas fa-user-plus"></i> Register
+            </button>
 
+            <div class="link">
+                <p>Already have account? <a href="@Url.Action("Login", "Login")">Login now</a></p>
             </div>
         </div>
-
-        <button type="submit" class="btn1 btn-primary">
-            <i class="fas fa-user-plus"></i> Create Account
-        </button>
-
-        <div class="link">
-            <p>Already have an account? <a href="@Url.Action("Login", "Login")">Login here</a></p>
-        </div>
-    }
+    </form>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/Scripts/register.js"></script>

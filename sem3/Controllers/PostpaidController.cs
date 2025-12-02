@@ -47,7 +47,7 @@ namespace sem3.Controllers
                 MobileNumber = user.MobileNumber,
                 Amount = bill.TotalAmount,
                 TransactionType = "POSTPAID_PAYMENT",
-                Status = "SUCCESS",
+                Status = "Success",
                 TransactionDate = DateTime.Now
             };
             db.Transactions.Add(trans);
