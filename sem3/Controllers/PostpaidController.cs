@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using sem3.Models;
+﻿using sem3.Models;
 using sem3.Models.Entities;
-
+using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace sem3.Controllers
 {
@@ -13,34 +11,61 @@ namespace sem3.Controllers
     {
         private OnlineRechargeDBEntities db = new OnlineRechargeDBEntities();
 
-        // 📌 1) Danh sách hóa đơn theo số điện thoại
-        public ActionResult Index(string mobile)
-        {
-            if (mobile == null)
-                return View("Search");
 
-            var bills = db.PostpaidBills.Where(p => p.MobileNumber == mobile).ToList();
+        public ActionResult Index()
+        {
+            if (Session["CurrentUser"] == null)
+                return RedirectToAction("Login", "Login");
+
+            string mobile = Session["MobileNumber"].ToString();
+
+            var bills = db.PostpaidBills
+                          .Where(p => p.MobileNumber == mobile)
+                          .OrderByDescending(p => p.BillingCycle)
+                          .ToList();
+
             return View(bills);
         }
 
-        // 📌 2) Trang thanh toán
+
         public ActionResult Pay(int id)
         {
-            var bill = db.PostpaidBills.FirstOrDefault(x => x.BillID == id);
-            if (bill == null) return HttpNotFound();
+            if (Session["CurrentUser"] == null)
+                return RedirectToAction("Login", "Login");
+
+            string mobile = Session["MobileNumber"].ToString();
+
+            var bill = db.PostpaidBills.FirstOrDefault(x => x.BillID == id && x.MobileNumber == mobile);
+
+            if (bill == null)
+                return HttpNotFound("Bill not found or you do not have permission.");
+
             return View(bill);
         }
 
-        // 📌 3) Xử lý thanh toán bằng ví
         [HttpPost]
         public ActionResult PayPost(int billId)
         {
-            var bill = db.PostpaidBills.FirstOrDefault(x => x.BillID == billId);
-            if (bill == null || (bill.IsPaid.HasValue && bill.IsPaid.Value)) return HttpNotFound();
+            if (Session["CurrentUser"] == null)
+                return RedirectToAction("Login", "Login");
 
-            var user = db.Users.FirstOrDefault(u => u.MobileNumber == bill.MobileNumber);
 
-            // Tạo Transaction
+            string mobile = Session["MobileNumber"].ToString();
+
+            var bill = db.PostpaidBills.FirstOrDefault(x => x.BillID == billId && x.MobileNumber == mobile);
+
+            if (bill == null)
+                return HttpNotFound("Bill not found or you do not have permission.");
+
+
+            if ((bool)bill.IsPaid)
+                return Content("This bill was already paid.");
+
+
+            var user = db.Users.FirstOrDefault(u => u.MobileNumber == mobile);
+            if (user == null)
+                return HttpNotFound("User not found.");
+
             var trans = new Transaction
             {
                 UserID = user.UserID,
@@ -50,28 +75,20 @@ namespace sem3.Controllers
                 Status = "Success",
                 TransactionDate = DateTime.Now
             };
+
             db.Transactions.Add(trans);
             db.SaveChanges();
 
-            // Gán vào hóa đơn
             bill.IsPaid = true;
             bill.PaymentTransactionID = trans.TransactionID;
             db.SaveChanges();
 
-            // Ghi Payment Details
-            db.PaymentDetails.Add(new PaymentDetail
-            {
-                TransactionID = trans.TransactionID,
-                PaymentMethod = "WALLET",
-                ReferenceNumber = Guid.NewGuid().ToString()
-            });
-
-            // 🧾 Tạo nội dung biên lai lưu DB
             string script = $"POSTPAID BILL PAYMENT\n" +
-                            $"Phone number: {bill.MobileNumber}\n" +
-                            $"Payment date: {DateTime.Now}\n" +
-                            $"Amount due: {bill.TotalAmount} VND\n" +
-                            $"Transaction ID: {trans.TransactionID}\n";
+                            $"Mobile: {bill.MobileNumber}\n" +
+                            $"Billing cycle: {bill.BillingCycle:dd/MM/yyyy}\n" +
+                            $"Paid at: {DateTime.Now:dd/MM/yyyy HH:mm}\n" +
+                            $"Amount: {bill.TotalAmount} VND\n" +
+                            $"Transaction: {trans.TransactionID}\n";
 
             db.TransactionScripts.Add(new TransactionScript
             {
@@ -81,19 +98,22 @@ namespace sem3.Controllers
 
             db.SaveChanges();
 
-            // Gửi email
-            EmailHelper.SendBillPaidEmail(user.Email, bill.MobileNumber, bill.TotalAmount);
+
+            if (!string.IsNullOrEmpty(user.Email))
+            {
+                EmailHelper.SendBillPaidEmail(user.Email, bill.MobileNumber, bill.TotalAmount);
+            }
+
 
             return RedirectToAction("Receipt", new { id = trans.TransactionID });
         }
 
-        // 📌 4) Trang xem biên lai
         public ActionResult Receipt(int id)
         {
             var script = db.TransactionScripts.FirstOrDefault(x => x.TransactionID == id);
 
             if (script == null)
-                return HttpNotFound("Receipt not found.");
+                return HttpNotFound();
 
             return View(script);
         }
@@ -103,11 +123,12 @@ namespace sem3.Controllers
             return new Rotativa.ActionAsPdf("Receipt", new { id = id });
         }
 
-        // 📌 Payment History (Postpaid payments only)
-        public ActionResult History(string mobile)
+        public ActionResult History()
         {
-            if (string.IsNullOrEmpty(mobile))
-                return View("SearchHistory");
+            if (Session["MobileNumber"] == null)
+                return RedirectToAction("Login", "Account");
+
+            string mobile = Session["MobileNumber"].ToString();
 
             var history = db.Transactions
                             .Where(t => t.MobileNumber == mobile && t.TransactionType == "POSTPAID_PAYMENT")
@@ -116,6 +137,5 @@ namespace sem3.Controllers
 
             return View(history);
         }
-
     }
 }

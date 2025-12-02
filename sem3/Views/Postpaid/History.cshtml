@@ -1,29 +1,33 @@
-﻿﻿@model IEnumerable<sem3.Models.Entities.Transaction>
-@{
+﻿@model IEnumerable<sem3.Models.Entities.Transaction>
+    @{
     ViewBag.Title = "Payment History";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<link href="~/Content/Client/postpaid.css" rel="stylesheet" />
-
-<div class="container mt-4">
-    <div class="page-header">
-        <h1>Payment History</h1>
-        <p>View your payment transactions and receipts</p>
-    </div>
-
-    @if (!Model.Any())
-    {
-        <div class="alert alert-warning mt-3">
-            No payment history found for this number.
-        </div>
-        <a href="/Postpaid/History" class="btn btn-secondary mt-2">Search Again</a>
     }
-    else
-    {
-        <div class="table-container">
-            <table class="table">
-                <thead>
+
+    <link href="~/Content/Client/postpaid.css" rel="stylesheet" />
+
+    <div class="content-wrapper">
+
+        <div class="page-header text-center mb-4">
+            <h1 class="fw-bold">📘 Payment History</h1>
+            <p class="text-muted">Review all your postpaid bill payments</p>
+        </div>
+
+        @if (!Model.Any())
+        {
+        <div class="alert alert-warning mt-3 text-center">
+            No payment history found.
+        </div>
+        <div class="text-center">
+            <a href="/Postpaid" class="btn btn-outline-secondary mt-3 px-4">Back</a>
+        </div>
+        }
+        else
+        {
+        <!-- DESKTOP TABLE VIEW -->
+        <div class="d-none d-md-block">
+            <table class="table table-hover shadow-sm border">
+                <thead class="table-dark">
                     <tr>
                         <th>Transaction ID</th>
                         <th>Mobile Number</th>
@@ -36,30 +40,85 @@
                 <tbody>
                     @foreach (var tx in Model)
                     {
-                        <tr>
-                            <td>@tx.TransactionID</td>
-                            <td>@tx.MobileNumber</td>
-                            <td>@String.Format("{0:0,0} VND", tx.Amount)</td>
-                            <td>@(tx.TransactionDate?.ToString("dd/MM/yyyy HH:mm") ?? "N/A")</td>
-                            <td>
-                                @if (tx.Status == "SUCCESS")
-                                {
-                                    <span class="badge bg-success">Success</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-danger">Failed</span>
-                                }
-                            </td>
-                            <td>
-                                <a href="/Postpaid/Receipt/@tx.TransactionID" class="btn btn-sm btn-outline-primary">View</a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td class="fw-bold">@tx.TransactionID</td>
+                        <td>@tx.MobileNumber</td>
+                        <td class="text-primary fw-bold">@String.Format("{0:0,0} VND", tx.Amount)</td>
+                        <td>@tx.TransactionDate.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            @if (tx.Status == "SUCCESS")
+                            {
+                            <span class="badge bg-success rounded-pill px-3 py-2">✓ Success</span>
+                            }
+                            else
+                            {
+                            <span class="badge bg-danger rounded-pill px-3 py-2">✗ Failed</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="/Postpaid/Receipt/@tx.TransactionID"
+                               class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                View
+                            </a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
         </div>
 
-        <a href="/Postpaid" class="btn btn-secondary mt-2">Back</a>
-    }
-</div>
+        <!-- MOBILE CARD VIEW -->
+        <div class="d-md-none">
+            @foreach (var tx in Model)
+            {
+            <div class="transaction-card shadow-sm p-3 mb-3 rounded border">
+
+                <div class="d-flex justify-content-between mb-2">
+                    <div>
+                        <h5 class="fw-bold mb-1">Transaction #@tx.TransactionID</h5>
+                        <small class="text-muted">@tx.TransactionDate.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                    </div>
+
+                    <div>
+                        @if (tx.Status == "SUCCESS")
+                        {
+                        <span class="badge bg-success rounded-pill px-3 py-2">✓</span>
+                        }
+                        else
+                        {
+                        <span class="badge bg-danger rounded-pill px-3 py-2">✗</span>
+                        }
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="mb-2">
+                    <span class="text-muted">Mobile:</span><br />
+                    <strong>@tx.MobileNumber</strong>
+                </div>
+
+                <div class="mb-2">
+                    <span class="text-muted">Amount:</span><br />
+                    <strong class="text-primary">@String.Format("{0:0,0} VND", tx.Amount)</strong>
+                </div>
+
+                <a href="/Postpaid/Receipt/@tx.TransactionID"
+                   class="btn btn-primary w-100 rounded-pill mt-2">
+                    View Receipt
+                </a>
+            </div>
+            }
+        </div>
+
+        <div class="text-end mt-3">
+            <a href="/Postpaid" class="btn btn-outline-secondary">Back</a>
+        </div>
+        }
+    </div>
+
+    <style>
+        .transaction-card {
+            background: #fdfdfd;
+        }
+    </style>

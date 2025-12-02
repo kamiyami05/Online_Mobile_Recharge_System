@@ -7,65 +7,117 @@
 <link href="~/Content/Client/postpaid.css" rel="stylesheet" />
 
 <div class="content-wrapper">
-    <div class="page-header">
-        <h1>Postpaid Bills</h1>
-        <p>View and manage your postpaid bills</p>
+    <div class="page-header text-center mb-4">
+        <h1 class="fw-bold">Postpaid Bills</h1>
+        <p class="text-muted">View billing cycle, due dates & payment status</p>
     </div>
-    <form>
+
+    <div class="card shadow-sm border-0 p-4">
         @if (!Model.Any())
         {
             <div class="alert alert-warning mt-3">
-                No bills found for this mobile number.
+                No bills found for your account.
             </div>
-            <a href="/Postpaid" class="btn btn-secondary">Back</a>
+            <a href="/Postpaid" class="btn btn-outline-dark mt-2">Back</a>
         }
         else
         {
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Mobile Number</th>
-                            <th>Billing Date</th>
-                            <th>Total Amount</th>
-                            <th>Payment Due</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.MobileNumber</td>
-                                <td>@item.BillingCycle.ToString("dd/MM/yyyy hh:mm tt")</td>
-                                <td>@String.Format("{0:0,0} VND", item.TotalAmount)</td>
-                                <td>@(item.PaymentDueDate?.ToString("dd/MM/yyyy hh:mm tt") ?? "N/A")</td>
-                                <td>
-                                    @if (item.IsPaid.GetValueOrDefault())
-                                    {
-                                        <span class="badge bg-success">Paid</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-danger">Unpaid</span>
-                                    }
-                                </td>
-                                <td>
-                                    @if (!item.IsPaid.GetValueOrDefault())
-                                    {
-                                        <a href="/Postpaid/Pay/@item.BillID" class="btn btn-primary btn-sm">Pay Now</a>
-                                    }
-                                    else
-                                    {
-                                        <a href="/Postpaid/Receipt/@item.PaymentTransactionID" class="btn btn-secondary btn-sm">View Receipt</a>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mobile Number</th>
+                        <th>Billing Cycle</th>
+                        <th>Total Amount</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var daysLeft = item.PaymentDueDate.HasValue
+                            ? (item.PaymentDueDate.Value - DateTime.Now).Days
+                            : (int?)null;
 
-            <a href="/Postpaid" class="btn btn-secondary">Search Again</a>
+                        <tr class="@(daysLeft <= 3 && !item.IsPaid.GetValueOrDefault() ? " table-danger" : "" )">
+                            <td><strong>@item.MobileNumber</strong></td>
+                            <td>@item.BillingCycle.ToString("dd/MM/yyyy")</td>
+                            <td class="fw-bold text-primary">@String.Format("{0:0,0} VND", item.TotalAmount)</td>
+                            <td>
+                                @if (item.PaymentDueDate != null)
+                                {
+                                    <span>@item.PaymentDueDate.Value.ToString("dd/MM/yyyy")</span>
+                                    if (!item.IsPaid.GetValueOrDefault())
+                                    {
+                                        <br />
+                                        <small class="text-muted">
+                                            (@(daysLeft > 0 ? $"{daysLeft} days left" : "Due"))
+                                        </small>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.IsPaid.GetValueOrDefault())
+                                {
+                                    <span class="badge bg-success status-pill">✓ Paid</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger status-pill">✗ Unpaid</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!item.IsPaid.GetValueOrDefault() && Session["UserID"] != null)
+                                {
+                                    <a href="/Postpaid/Pay/@item.BillID" class="btn btn-primary btn-sm rounded-pill px-3">
+                                        Pay Now
+                                    </a>
+                                }
+                                else if (item.IsPaid.GetValueOrDefault())
+                                {
+                                    <a href="/Postpaid/Receipt/@item.PaymentTransactionID" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                                        View Receipt
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Login to pay</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="text-end">
+                <a href="/Postpaid" class="btn btn-outline-dark mt-2">Search Again</a>
+            </div>
         }
-    </form>
+    </div>
 </div>
+
+<style>
+    .status-pill {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        border-radius: 30px;
+    }
+
+    .table-danger {
+        background-color: #ffe4e4 !important;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .content-wrapper {
+        max-width: 1050px;
+        margin: auto;
+    }
+</style>

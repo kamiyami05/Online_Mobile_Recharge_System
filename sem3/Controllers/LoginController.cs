@@ -40,6 +40,7 @@ namespace sem3.Controllers
 
                         Session["CurrentUserId"] = adminUser.AdminID;
                         Session["IsAdmin"] = true;
+                        Session["MobileNumber"] = adminUser.MobileNumber;
 
                         return RedirectToAction("Index", "Usermgmt", new { area = "Admin" });
                     }
@@ -71,6 +72,7 @@ namespace sem3.Controllers
 
                         Session["CurrentUserId"] = user.UserID;
                         Session["IsAdmin"] = false;
+                        Session["MobileNumber"] = user.MobileNumber;
 
                         return RedirectToAction("Index", "Home");
                     }

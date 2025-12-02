@@ -1,4 +1,4 @@
-﻿﻿@model sem3.Models.Entities.PostpaidBill
+﻿@model sem3.Models.Entities.PostpaidBill
 @{
     ViewBag.Title = "Pay Bill";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,29 +7,118 @@
 <link href="~/Content/Client/postpaid.css" rel="stylesheet" />
 
 <div class="content-wrapper">
-    <div class="page-header">
-        <h1>Pay Postpaid Bill</h1>
-        <p>Confirm and complete your bill payment</p>
+    <div class="page-header text-center mb-4">
+        <h1 class="fw-bold">Pay Postpaid Bill</h1>
+        <p class="text-muted">Confirm payment before proceeding</p>
     </div>
 
-    <div class="form-container">
+    <div class="card shadow-sm border-0 p-4 bill-card">
+
         @if (TempData["Error"] != null)
         {
             <div class="alert alert-danger">@TempData["Error"]</div>
         }
 
-        <table class="table table-bordered">
-            <tr><th>Mobile Number</th><td>@Model.MobileNumber</td></tr>
-            <tr><th>Billing Date</th><td>@Model.BillingCycle.ToString("dd/MM/yyyy hh:mm tt")</td></tr>
-            <tr><th>Total Amount</th><td>@String.Format("{0:0,0} VND", Model.TotalAmount)</td></tr>
-            <tr><th>Payment Due</th><td>@(Model.PaymentDueDate?.ToString("dd/MM/yyyy hh:mm tt") ?? "N/A")</td></tr>
-        </table>
+        <!-- BILL SUMMARY CARD -->
+        <div class="bill-summary mb-4">
+            <h4 class="fw-bold text-primary">📌 Bill Summary</h4>
 
+            <div class="summary-line">
+                <span>Mobile Number</span>
+                <strong>@Model.MobileNumber</strong>
+            </div>
+
+            <div class="summary-line">
+                <span>Billing Date</span>
+                <strong>@Model.BillingCycle.ToString("dd/MM/yyyy")</strong>
+            </div>
+
+            <div class="summary-line">
+                <span>Total Amount</span>
+                <strong class="text-danger fs-5">@String.Format("{0:0,0} VND", Model.TotalAmount)</strong>
+            </div>
+
+            <div class="summary-line">
+                <span>Payment Due</span>
+                <strong>
+                    @(Model.PaymentDueDate?.ToString("dd/MM/yyyy") ?? "N/A")
+                </strong>
+            </div>
+
+            @* Highlight if due soon *@
+            @{
+                var daysLeft = Model.PaymentDueDate.HasValue
+                ? (Model.PaymentDueDate.Value - DateTime.Now).Days
+                : (int?)null;
+
+                if (daysLeft <= 3 && daysLeft >= 0)
+                {
+                    <div class="alert alert-warning mt-3">
+                        ⚠ Your bill is due in <strong>@daysLeft days</strong>. Please pay as soon as possible.
+                    </div>
+                }
+                else if (daysLeft < 0)
+                {
+                    <div class="alert alert-danger mt-3">
+                        ⛔ This bill is <strong>past due</strong>. Payment should be completed immediately.
+                    </div>
+                }
+            }
+        </div>
+
+        <!-- PAYMENT FORM -->
         <form method="post" action="/Postpaid/PayPost">
             <input type="hidden" name="billId" value="@Model.BillID" />
-            <button type="submit" class="btn btn-success w-100 mt-3">Confirm Payment</button>
+
+            <button type="submit" class="btn btn-success w-100 py-2 fs-5 rounded-pill">
+                ✅ Confirm & Pay
+            </button>
         </form>
 
-        <a href="/Postpaid" class="btn btn-secondary w-100 mt-2">Cancel</a>
+        <a href="/Postpaid" class="btn btn-secondary w-100 mt-3 py-2 rounded-pill">Cancel</a>
     </div>
 </div>
+
+<style>
+    .bill-card {
+        max-width: 650px;
+        margin: auto;
+    }
+
+    .bill-summary {
+        background: #f8f9fb;
+        border: 1px solid #e2e6ea;
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .summary-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-size: 1rem;
+    }
+
+        .summary-line span {
+            color: #6c757d;
+        }
+
+        .summary-line strong {
+            color: #333;
+        }
+
+    .btn-success {
+        font-weight: 600;
+    }
+
+    @@media (max-width: 768px) {
+        .summary-line {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+            .summary-line strong {
+                margin-top: 4px;
+            }
+    }
+</style>
