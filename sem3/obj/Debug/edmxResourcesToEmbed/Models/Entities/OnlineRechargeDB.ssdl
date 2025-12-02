@@ -58,6 +58,7 @@
       <PropertyRef Name="PlanID" />
     </Key>
     <Property Name="PlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlanName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="PlanType" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="TalkTimeMinutes" Type="int" />
@@ -65,7 +66,6 @@
     <Property Name="Details" Type="nvarchar" MaxLength="255" />
     <Property Name="Operator" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="IsActive" Type="bit" />
-    <Property Name="PlanName" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Services">
     <Key>
@@ -74,25 +74,6 @@
     <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ServiceName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="ServiceDescription" Type="nvarchar" MaxLength="255" />
-  </EntityType>
-  <EntityType Name="SiteContent">
-    <Key>
-      <PropertyRef Name="ContentID" />
-    </Key>
-    <Property Name="ContentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PageName" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Title" Type="nvarchar" MaxLength="100" />
-    <Property Name="ContentText" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="SystemSettings">
     <Key>
@@ -134,7 +115,6 @@
     <Property Name="Email" Type="varchar" MaxLength="100" />
     <Property Name="Address" Type="nvarchar" MaxLength="255" />
     <Property Name="RegistrationDate" Type="datetime" />
-    <Property Name="WalletBalance" Type="decimal" Precision="18" Scale="2" />
     <Property Name="PostpaidMonthlyFee" Type="decimal" Precision="10" Scale="2" />
     <Property Name="Active" Type="bit" />
   </EntityType>
@@ -275,8 +255,6 @@
     <EntitySet Name="PostpaidBills" EntityType="Self.PostpaidBills" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RechargePlans" EntityType="Self.RechargePlans" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="SiteContent" EntityType="Self.SiteContent" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SystemSettings" EntityType="Self.SystemSettings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TransactionScripts" EntityType="Self.TransactionScripts" Schema="dbo" store:Type="Tables" />

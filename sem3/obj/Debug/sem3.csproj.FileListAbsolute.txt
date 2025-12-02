@@ -225,8 +225,6 @@ C:\Users\zooxo\Downloads\rẻer\sem3\bin\Antlr3.Runtime.pdb
 C:\Users\zooxo\Downloads\rẻer\sem3\obj\Debug\sem3.csproj.Up2Date
 C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\obj\Debug\sem3.csproj.AssemblyReference.cache
 C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\obj\Debug\sem3.csproj.CoreCompileInputs.cache
-C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\obj\Debug\sem3.dll
-C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\obj\Debug\sem3.pdb
 C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\bin\.env
 C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\bin\sem3.dll.config
 C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\bin\sem3.dll
@@ -302,3 +300,5 @@ C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\bin\Syst
 C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\bin\System.Web.Optimization.xml
 C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\bin\Antlr3.Runtime.pdb
 C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\obj\Debug\sem3.csproj.Up2Date
+C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\obj\Debug\sem3.dll
+C:\Users\duc47\OneDrive\Máy tính\a\Online_Mobile_Recharge_System\sem3\obj\Debug\sem3.pdb

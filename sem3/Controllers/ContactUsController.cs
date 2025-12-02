@@ -1,4 +1,4 @@
-﻿using sem3.Helpers;
+﻿using sem3.Models.Helpers;
 using System;
 using System.Net;
 using System.Net.Mail;

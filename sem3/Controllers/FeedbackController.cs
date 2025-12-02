@@ -1,5 +1,5 @@
-﻿using sem3.Helpers;
-using sem3.Models.Entities;
+﻿using sem3.Models.Entities;
+using sem3.Models.Helpers;
 using sem3.Models.ModelViews;
 using System;
 using System.Linq;

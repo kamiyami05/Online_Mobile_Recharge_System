@@ -347,6 +347,7 @@
     <Compile Include="Models\Entities\UserServiceSetting.cs">
       <DependentUpon>OnlineRechargeDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Helpers\CaptchaHelper.cs" />
     <Compile Include="Models\ModelViews\ChatRequestModel.cs" />
     <Compile Include="Models\ModelViews\AdminAuthorizeAttribute .cs" />
     <Compile Include="Models\ModelViews\ChangeEmail.cs" />
@@ -2278,7 +2279,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Models\Helpers\" />
     <Folder Include="Views\Api\" />
   </ItemGroup>
   <ItemGroup>

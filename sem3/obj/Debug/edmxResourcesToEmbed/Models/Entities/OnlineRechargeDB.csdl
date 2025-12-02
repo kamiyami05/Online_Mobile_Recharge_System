@@ -10,6 +10,16 @@
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="MobileNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="FAQ">
+    <Key>
+      <PropertyRef Name="FAQID" />
+    </Key>
+    <Property Name="FAQID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrderIndex" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
   <EntityType Name="Feedback">
     <Key>
       <PropertyRef Name="FeedbackID" />
@@ -51,6 +61,7 @@
       <PropertyRef Name="PlanID" />
     </Key>
     <Property Name="PlanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PlanName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="PlanType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="TalkTimeMinutes" Type="Int32" />
@@ -58,7 +69,6 @@
     <Property Name="Details" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Operator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="IsActive" Type="Boolean" />
-    <Property Name="PlanName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
   <EntityType Name="Service">
     <Key>
@@ -69,25 +79,6 @@
     <Property Name="ServiceDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="UserServices" Relationship="Self.FK__UserServi__Servi__5DCAEF64" FromRole="Services" ToRole="UserServices" />
     <NavigationProperty Name="UserServiceSettings" Relationship="Self.FK__UserServi__Servi__6477ECF3" FromRole="Services" ToRole="UserServiceSettings" />
-  </EntityType>
-  <EntityType Name="SiteContent">
-    <Key>
-      <PropertyRef Name="ContentID" />
-    </Key>
-    <Property Name="ContentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PageName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="ContentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="SystemSetting">
     <Key>
@@ -134,7 +125,6 @@
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
-    <Property Name="WalletBalance" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="PostpaidMonthlyFee" Type="Decimal" Precision="10" Scale="2" />
     <Property Name="Active" Type="Boolean" />
     <NavigationProperty Name="Feedbacks" Relationship="Self.FK__Feedback__UserID__68487DD7" FromRole="Users" ToRole="Feedback" />
@@ -277,13 +267,12 @@
   </Association>
   <EntityContainer Name="OnlineRechargeDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="AdminUsers" EntityType="Self.AdminUser" />
+    <EntitySet Name="FAQs" EntityType="Self.FAQ" />
     <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
     <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetail" />
     <EntitySet Name="PostpaidBills" EntityType="Self.PostpaidBill" />
     <EntitySet Name="RechargePlans" EntityType="Self.RechargePlan" />
     <EntitySet Name="Services" EntityType="Self.Service" />
-    <EntitySet Name="SiteContents" EntityType="Self.SiteContent" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="SystemSettings" EntityType="Self.SystemSetting" />
     <EntitySet Name="Transactions" EntityType="Self.Transaction" />
     <EntitySet Name="TransactionScripts" EntityType="Self.TransactionScript" />
@@ -326,16 +315,5 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="UserServiceSettings" EntitySet="UserServiceSettings" />
     </AssociationSet>
-    <EntitySet Name="FAQs" EntityType="OnlineRechargeDBModel.FAQ" />
   </EntityContainer>
-  <EntityType Name="FAQ">
-    <Key>
-      <PropertyRef Name="FAQID" />
-    </Key>
-    <Property Name="FAQID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Question" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="Answer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="OrderIndex" Type="Int32" />
-    <Property Name="IsActive" Type="Boolean" />
-  </EntityType>
 </Schema>

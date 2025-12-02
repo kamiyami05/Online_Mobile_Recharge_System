@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Web;
 
-namespace sem3.Helpers
+namespace sem3.Models.Helpers
 {
     public static class CaptchaHelper
     {
@@ -54,4 +57,5 @@ namespace sem3.Helpers
             }
         }
     }
+
 }

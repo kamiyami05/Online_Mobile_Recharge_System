@@ -1,6 +1,6 @@
 ﻿using sem3.Models.Entities;
 using sem3.Models.ModelViews;
-using sem3.Models.Repositories;
+using sem3.Models.Repositoties;
 using System;
 using System.Web.Mvc;
 
